@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Good_Luck
 {
@@ -8,6 +10,11 @@ namespace Good_Luck
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        //Save File Fields
+        private string fileName;
+        private int highScoreCount;
+        HighScoreData saveData;
 
         public Game1()
         {
@@ -18,7 +25,24 @@ namespace Good_Luck
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //Name of save file with the number of high scores
+            fileName = "../../../HighScores.txt";
+            highScoreCount = 5;
+            //Check to see if save file exists
+            if (!File.Exists(fileName))
+            {
+                //If the file doesn't exist, make a default one
+                HighScoreData data = new HighScoreData(highScoreCount);
+                for (int i = 0; i < highScoreCount; i++)
+                {
+                    data.levels[i] = (0);
+                    data.scores[i] = (000);
+                }
+
+                HighScoreData.SaveHighScores(data, fileName);
+            }
+            //Load in save data from file to variable
+            saveData = HighScoreData.LoadHighScores(fileName);
 
             base.Initialize();
         }
@@ -48,5 +72,43 @@ namespace Good_Luck
 
             base.Draw(gameTime);
         }
+
+        //Methods
+        // To Be Finished when player class
+        ///// <summary>
+        ///// Sorts and saves the player's data
+        ///// </summary>
+        //private void SaveHighScore()
+        //{
+        //    //Create the data to save
+        //    HighScoreData data = HighScoreData.LoadHighScores(fileName);
+        //
+        //    int scoreIndex = -1;
+        //    //Loop through saved data to find where to place new data
+        //    for (int i = 0; i < highScoreCount; i++)
+        //    {
+        //        if (player.TotalScore > data.scores[i])
+        //        {
+        //            scoreIndex = i;
+        //            break;
+        //        }
+        //    }
+        //
+        //    //If new score is found, insert into list
+        //    if (scoreIndex > -1)
+        //    {
+        //        for (int i = highScoreCount - 1; i > scoreIndex; i--)
+        //        {
+        //            data.scores[i] = data.scores[i - 1];
+        //            data.levels[i] = data.levels[i - 1];
+        //        }
+        //
+        //        data.scores[scoreIndex] = player.TotalScore;
+        //        data.levels[scoreIndex] = level;
+        //
+        //        HighScoreData.SaveHighScores(data, fileName);
+        //    }
+        //
+        //}
     }
 }
