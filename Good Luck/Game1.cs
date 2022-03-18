@@ -3,13 +3,50 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Xml.Serialization;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Good_Luck
 {
+    //Enums
+    /// <summary>
+    /// The various states of the game with different screens
+    /// </summary>
+    enum GameState
+    {
+        Title,
+        Tutorial,
+        Credits,
+        Game,
+        Pause,
+        Options,
+        Keybinds,
+        GameOver
+    }
+    /// <summary>
+    /// enum to define which mouseButton you want to check for 
+    /// similar to Keys for keyboard input
+    /// </summary>
+    enum MouseButton
+    {
+        Left,
+        Right
+    }
+
     public class Game1 : Game
     {
+        //Fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private GameState gameState;
+        MouseState previousMouseState;
+        MouseState mouseState;
+        KeyboardState kb;
+        KeyboardState previousKb;
+        List<Button> buttons;
+
+        //Assets
+        Texture2D smallSquare;
+        Texture2D smallSquareGray;
 
         //Save File Fields
         private string fileName;
@@ -25,6 +62,12 @@ namespace Good_Luck
 
         protected override void Initialize()
         {
+            //Initialize fields
+            gameState = GameState.Title;
+            buttons = new List<Button>();
+
+
+
             //Name of save file with the number of high scores
             fileName = "../../../HighScores.txt";
             highScoreCount = 5;
@@ -51,29 +94,173 @@ namespace Good_Luck
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            smallSquare = Content.Load<Texture2D>("smallSquare");
+            smallSquareGray = Content.Load<Texture2D>("smallSquareGray");
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            //Get input from mouse and keyboard
+            mouseState = Mouse.GetState();
+            kb = Keyboard.GetState();
 
-            // TODO: Add your update logic here
+            switch (gameState)
+            {
+                case GameState.Title:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Create buttons
+                    buttons.Add(new Button(GameState.Tutorial, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Credits, new Rectangle(20, 40, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Options, new Rectangle(20, 70, 50, 20), smallSquare, smallSquareGray));
 
+                    //Check if buttons are clicked and act accordingly
+                    CheckButtons();
+
+                    
+                    break;
+                case GameState.Tutorial:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Back Button
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    //Check if buttons are clicked and change gameState
+                    CheckButtons();
+
+                    break;
+                case GameState.Credits:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Back Button
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    //Check if buttons are clicked and change gameState
+                    CheckButtons();
+                    break;
+                case GameState.Game:
+                    break;
+                case GameState.Pause:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Back Button
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    //Check if buttons are clicked and change gameState
+                    CheckButtons();
+                    break;
+                case GameState.Options:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Back Button
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    //Check if buttons are clicked and change gameState
+                    CheckButtons();
+                    break;
+                case GameState.Keybinds:
+                    break;
+                case GameState.GameOver:
+                    break;
+            }
+
+            previousKb = kb;
+            previousMouseState = mouseState;
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            switch (gameState)
+            {
+                case GameState.Title:
+                    //Draw all the buttons
+                    DrawButtons();
+                    break;
+                case GameState.Tutorial:
+                    //Draw all the buttons
+                    DrawButtons();
+                    break;
+                case GameState.Credits:
+                    //Draw all the buttons
+                    DrawButtons();
+                    break;
+                case GameState.Game:
+                    break;
+                case GameState.Pause:
+                    break;
+                case GameState.Options:
+                    //Draw all the buttons
+                    DrawButtons();
+                    break;
+                case GameState.Keybinds:
+                    break;
+                case GameState.GameOver:
+                    break;
+            }
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
 
         //Methods
+        /// <summary>
+        /// Checks if a desired mouse button has been newly pressed
+        /// </summary>
+        /// <param name="button">the mouse button to check for (left or right)</param>
+        /// <returns>True if the desired button has been pressed down this frame but not the last</returns>
+        private bool SingleMouseClick(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    return (mouseState.LeftButton.Equals(ButtonState.Pressed) && !previousMouseState.LeftButton.Equals(ButtonState.Pressed));
+                case MouseButton.Right:
+                    return (mouseState.RightButton.Equals(ButtonState.Pressed) && !previousMouseState.RightButton.Equals(ButtonState.Pressed));
+                //Default case otherwise visual studio complains
+                default:
+                    return false;
+            }
+        }
+        /// <summary>
+        /// Loop through every button to check if it was clicked,
+        /// If it was, call its clicked method to change the state
+        /// </summary>
+        private void CheckButtons()
+        {
+            //If the left mouse button is clicked, loop through buttons to see if they were clicked
+            if (SingleMouseClick(MouseButton.Left))
+            {
+                for (int i = 0; i < buttons.Count;)
+                {
+                    //If a button was clicked, change the gameState to the button's state
+                    if (buttons[i].Collision(mouseState))
+                    {
+                        gameState = buttons[i].ClickedGetState();
+                        return;
+                    }
+                    else
+                    {
+                        i++;
+                    };
+                }
+            }
+        }
+        /// <summary>
+        /// Draw every button in the buttons list
+        /// </summary>
+        private void DrawButtons()
+        {
+            foreach (Button button in buttons)
+            {
+                //Check for collision to determine for each button if the
+                //cursor is hovering over them then draw accordingly
+                button.Collision(mouseState);
+                button.Draw(_spriteBatch);
+            }
+        }
+
         // To Be Finished when player class
         ///// <summary>
         ///// Sorts and saves the player's data
