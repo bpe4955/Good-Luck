@@ -17,44 +17,53 @@ namespace Good_Luck
         //Fields
         private Texture2D defaultImage;
         private Texture2D hoverImage;
+        private Texture2D clickImage;
         private Rectangle rect;
         private bool isHovered;
+        private bool isClicked;
         private GameState gameState;
 
         //Constructor
         /// <summary>
-        /// creates a button with a position, default, hover, and click images
+        /// creates a <see cref="Button"/> with a position, default, hover, and click images
         /// </summary>
-        /// /// <param name="gameState">The GameState the button returns</param>
-        /// <param name="rect">The position and size of the button</param>
-        /// <param name="defaultImage">The button's standard image</param>
-        /// <param name="hoverImage">The image of the button when it is hovered</param>
-        public Button(GameState gameState, Rectangle rect, Texture2D defaultImage, Texture2D hoverImage)
+        /// /// <param name="gameState">The <see cref="GameState"/> the <see cref="Button"/> returns</param>
+        /// <param name="rect">The position and size of the <see cref="Button"/></param>
+        /// <param name="defaultImage">The <see cref="Button"/>'s standard image</param>
+        /// <param name="hoverImage">The image of the <see cref="Button"/> when it is hovered</param>
+        /// <param name="clickImage">The image of the <see cref="Button"/> when clicked</param>
+        public Button(GameState gameState, Rectangle rect, Texture2D defaultImage, Texture2D hoverImage, Texture2D clickImage)
         {
             this.defaultImage = defaultImage;
             this.hoverImage = hoverImage;
             this.rect = rect;
             this.gameState = gameState;
+            this.clickImage = clickImage;
             isHovered = false;
+            isClicked = false;
         }
         /// <summary>
-        /// Constructor for a button with no hover image
+        /// Constructor for a <see cref="Button"/> with no hover image
         /// </summary>
-        /// <param name="gameState">The GameState the button returns</param>
-        /// <param name="rect">The position and size of the button</param>
-        /// <param name="defaultImage">The button's standard image</param>
+        /// <param name="gameState">The <see cref="GameState"/> the <see cref="Button"/> returns</param>
+        /// <param name="rect">The position and size of the <see cref="Button"/></param>
+        /// <param name="defaultImage">The <see cref="Button"/>'s standard image</param>
         public Button(GameState gameState, Rectangle rect, Texture2D defaultImage)
-            : this(gameState, rect, defaultImage, defaultImage) { }
+            : this(gameState, rect, defaultImage, defaultImage, defaultImage) { }
 
 
         //Methods
         /// <summary>
-        /// Draws the button depending on if it is hovered or not
+        /// Draws the <see cref="Button"/> depending on if it is hovered or not
         /// </summary>
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            if (isHovered)
+            if (isClicked)
+            {
+                sb.Draw(clickImage, rect, Color.White);
+            }
+            else if (isHovered)
             {
                 sb.Draw(hoverImage, rect, Color.White);
             }
@@ -64,22 +73,23 @@ namespace Good_Luck
             }
         }
         /// <summary>
-        /// Checks if the current mouse position
-        /// is contained in the button's position rectangle
+        /// Checks if the current <see cref="Mouse"/> position
+        /// is contained in the <see cref="Button"/>'s position rectangle
         /// </summary>
-        /// <param name="ms">The current mouseState</param>
-        /// <returns>True if the mouse's position is within the coin</returns>
+        /// <param name="ms">The current <see cref="MouseState"/></param>
+        /// <returns>True if the <see cref="Mouse"/>'s position is within the <see cref="Button"/></returns>
         public bool Collision(MouseState ms)
         {
             isHovered = rect.Contains(ms.Position);
             return isHovered;
         }
         /// <summary>
-        /// When the button is clicked, return its corresponding GameState value
+        /// When the <see cref="Button"/> is clicked, return its corresponding <see cref="GameState"/> value
         /// </summary>
-        /// <returns>The button's GameState Value</returns>
+        /// <returns>The <see cref="Button"/>'s <see cref="GameState"/> Value</returns>
         public GameState ClickedGetState()
         {
+            isClicked = true;
             return gameState;
         }
     }

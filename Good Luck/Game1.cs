@@ -23,8 +23,8 @@ namespace Good_Luck
         GameOver
     }
     /// <summary>
-    /// enum to define which mouseButton you want to check for 
-    /// similar to Keys for keyboard input
+    /// enum to define which <see cref="MouseButton"/> you want to check for 
+    /// similar to <see cref="Keys"/> for <see cref="Keyboard"/> input
     /// </summary>
     enum MouseButton
     {
@@ -47,6 +47,7 @@ namespace Good_Luck
         //Assets
         Texture2D smallSquare;
         Texture2D smallSquareGray;
+        Texture2D buttonClick;
         SpriteFont MetalMania20;
 
         //Save File Fields
@@ -95,8 +96,9 @@ namespace Good_Luck
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            smallSquare = Content.Load<Texture2D>("smallSquare");
-            smallSquareGray = Content.Load<Texture2D>("smallSquareGray");
+            smallSquare = Content.Load<Texture2D>("ButtonDefault");
+            smallSquareGray = Content.Load<Texture2D>("ButtonHover");
+            buttonClick = Content.Load<Texture2D>("ButtonClick");
             MetalMania20 = Content.Load<SpriteFont>("MetalMania20");
         }
 
@@ -114,9 +116,9 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Create buttons
-                    buttons.Add(new Button(GameState.Tutorial, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
-                    buttons.Add(new Button(GameState.Credits, new Rectangle(20, 40, 50, 20), smallSquare, smallSquareGray));
-                    buttons.Add(new Button(GameState.Options, new Rectangle(20, 70, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Tutorial, new Rectangle(20, 10, 79, 20), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Credits, new Rectangle(20, 40, 79, 20), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Options, new Rectangle(20, 70, 79, 20), smallSquare, smallSquareGray, buttonClick));
 
                     //Check if buttons are clicked and act accordingly
                     CheckButtons();
@@ -127,7 +129,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
 
@@ -136,7 +138,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
@@ -146,7 +148,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
@@ -154,7 +156,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
