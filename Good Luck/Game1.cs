@@ -47,6 +47,7 @@ namespace Good_Luck
         //Assets
         Texture2D smallSquare;
         Texture2D smallSquareGray;
+        SpriteFont MetalMania20;
 
         //Save File Fields
         private string fileName;
@@ -96,6 +97,7 @@ namespace Good_Luck
 
             smallSquare = Content.Load<Texture2D>("smallSquare");
             smallSquareGray = Content.Load<Texture2D>("smallSquareGray");
+            MetalMania20 = Content.Load<SpriteFont>("MetalMania20");
         }
 
         protected override void Update(GameTime gameTime)
