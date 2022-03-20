@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
@@ -48,7 +49,17 @@ namespace Good_Luck
         Texture2D smallSquare;
         Texture2D smallSquareGray;
         Texture2D buttonClick;
+        Texture2D menuItemTextures;
+        //This will hold the backdrop, pause, key box
+        //mouse image, crossbones, and skull
+        //source rectangle data in that order
+        Rectangle[] menuItems;
         SpriteFont MetalMania20;
+        SpriteFont JelleeRoman20;
+
+        //Misc
+        Color lightPurple;
+        Color darkPurple;
 
         //Save File Fields
         private string fileName;
@@ -67,8 +78,17 @@ namespace Good_Luck
             //Initialize fields
             gameState = GameState.Title;
             buttons = new List<Button>();
-
-
+            menuItems = new Rectangle[6]
+            {
+                new Rectangle(0, 0, 500, 500),
+                new Rectangle(505, 0, 59, 56),
+                new Rectangle(505, 61, 50, 50),
+                new Rectangle(505, 116, 86, 131),
+                new Rectangle(0, 505, 272, 76),
+                new Rectangle(277, 505, 52, 63)
+            };
+            lightPurple = new Color(232, 216, 255);
+            darkPurple = new Color(21, 0, 51);
 
             //Name of save file with the number of high scores
             fileName = "../../../HighScores.txt";
@@ -100,6 +120,8 @@ namespace Good_Luck
             smallSquareGray = Content.Load<Texture2D>("ButtonHover");
             buttonClick = Content.Load<Texture2D>("ButtonClick");
             MetalMania20 = Content.Load<SpriteFont>("MetalMania20");
+            JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
+            menuItemTextures = Content.Load<Texture2D>("MenuImages");
         }
 
         protected override void Update(GameTime gameTime)
@@ -116,6 +138,22 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Create buttons
+                    int width = 198;
+                    int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
+                    int height = (int)Math.Round(width * .25f);
+                    int spacing = (int)(height * 1.1f);
+                    int currentY = 135;
+                    buttons.Add(new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+                    currentY += spacing;
+                    buttons.Add(new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+                    currentY += spacing;
+                    buttons.Add(new Button(GameState.Options, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+                    currentY += spacing;
+                    buttons.Add(new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+                    currentY += spacing;
+                    //There's no exit... But there's and exit button
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+
                     buttons.Add(new Button(GameState.Tutorial, new Rectangle(20, 10, 79, 20), smallSquare, smallSquareGray, buttonClick));
                     buttons.Add(new Button(GameState.Credits, new Rectangle(20, 40, 79, 20), smallSquare, smallSquareGray, buttonClick));
                     buttons.Add(new Button(GameState.Options, new Rectangle(20, 70, 79, 20), smallSquare, smallSquareGray, buttonClick));
@@ -179,8 +217,35 @@ namespace Good_Luck
             switch (gameState)
             {
                 case GameState.Title:
+                    _spriteBatch.Draw(menuItemTextures, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
+                        menuItems[0], Color.White);
+                    float titleSize = MetalMania20.MeasureString("Good Luck~").X;
+                    _spriteBatch.DrawString(MetalMania20, "Good Luck~", new Vector2(
+                        (_graphics.PreferredBackBufferWidth / 2) - (titleSize / 2), 50), lightPurple);
+
+
                     //Draw all the buttons
                     DrawButtons();
+
+                    if (buttons.Count >= 5)
+                    {
+
+                        float widthSpacing = 3.5f;
+
+                        _spriteBatch.DrawString(MetalMania20, "Start", new Vector2((int)(buttons[0].Rect.X + buttons[0].Rect.Width / widthSpacing),
+                            buttons[0].Rect.Y + buttons[0].Rect.Height / 10), darkPurple);
+                        _spriteBatch.DrawString(MetalMania20, "Tutorial", new Vector2((int)(buttons[1].Rect.X + buttons[1].Rect.Width / widthSpacing),
+                            buttons[1].Rect.Y + buttons[1].Rect.Height / 10), darkPurple);
+                        _spriteBatch.DrawString(MetalMania20, "Options", new Vector2((int)(buttons[2].Rect.X + buttons[2].Rect.Width / widthSpacing),
+                            buttons[2].Rect.Y + buttons[2].Rect.Height / 10), darkPurple);
+                        _spriteBatch.DrawString(MetalMania20, "Credits", new Vector2((int)(buttons[3].Rect.X + buttons[3].Rect.Width / widthSpacing),
+                            buttons[3].Rect.Y + buttons[3].Rect.Height / 10), darkPurple);
+                        _spriteBatch.DrawString(MetalMania20, "Exit", new Vector2((int)(buttons[4].Rect.X + buttons[4].Rect.Width / widthSpacing),
+                            buttons[4].Rect.Y + buttons[4].Rect.Height / 10), darkPurple);
+
+                    }
+
+
                     break;
                 case GameState.Tutorial:
                     //Draw all the buttons

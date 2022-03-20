@@ -23,6 +23,8 @@ namespace Good_Luck
         private bool isClicked;
         private GameState gameState;
 
+        public Rectangle Rect { get { return rect; } }
+
         //Constructor
         /// <summary>
         /// creates a <see cref="Button"/> with a position, default, hover, and click images
