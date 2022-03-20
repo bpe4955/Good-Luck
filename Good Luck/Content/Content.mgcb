@@ -68,12 +68,26 @@
 /processorParam:TextureFormat=Color
 /build:MenuImages.png
 
-#begin MetalMania20.spritefont
+#begin MetalManiaButtons.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:MetalMania20.spritefont
+/build:MetalManiaButtons.spritefont
+
+#begin MetalManiaNormal.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MetalManiaNormal.spritefont
+
+#begin MetalManiaTitle.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MetalManiaTitle.spritefont
 
 #begin smallSquare.png
 /importer:TextureImporter
