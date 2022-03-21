@@ -21,7 +21,8 @@ namespace Good_Luck
         Pause,
         Options,
         Keybinds,
-        GameOver
+        GameOver,
+        Exit
     }
     /// <summary>
     /// enum to define which <see cref="MouseButton"/> you want to check for 
@@ -164,7 +165,7 @@ namespace Good_Luck
                     buttons.Add(new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     currentY += spacing;
                     //There's no exit... But there's and exit button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
 
                     //Check if buttons are clicked and act accordingly
                     CheckButtons();
@@ -215,6 +216,9 @@ namespace Good_Luck
                 case GameState.Keybinds:
                     break;
                 case GameState.GameOver:
+                    break;
+                case GameState.Exit:
+                    Exit();
                     break;
             }
 
