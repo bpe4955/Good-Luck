@@ -208,11 +208,25 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    buttons.Add(new Button(GameState.Title, new Rectangle(20, 10, 50, 20), smallSquare, smallSquareGray, buttonClick));
+                    width = 198;
+                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
+                    height = (int)Math.Round(width * .25f);
+                    spacing = (int)(height * 1.1f);
+                    buttons.Add(new Button(GameState.Keybinds, new Rectangle(midX, 370 - spacing, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
                 case GameState.Keybinds:
+                    //Reset the button list
+                    buttons.Clear();
+                    //Back Button
+                    width = 198;
+                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
+                    height = (int)Math.Round(width * .25f);
+                    buttons.Add(new Button(GameState.Options, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    //Check if buttons are clicked and change gameState
+                    CheckButtons();
                     break;
                 case GameState.GameOver:
                     break;
@@ -322,10 +336,57 @@ namespace Good_Luck
                 case GameState.Pause:
                     break;
                 case GameState.Options:
+                    DisplayBackAndTitle("Options");
+
                     //Draw all the buttons
                     DrawButtons();
+
+                    if (buttons.Count > 1)
+                    {
+                        _spriteBatch.DrawString(MetalManiaButtons, "Keybinds",
+                            new Vector2((int)(buttons[0].Rect.X + buttons[0].Rect.Width / 3.5f),
+                                              buttons[0].Rect.Y + buttons[0].Rect.Height / 10), darkPurple);
+                        _spriteBatch.DrawString(MetalManiaButtons, "Back",
+                            new Vector2((int)(buttons[1].Rect.X + buttons[1].Rect.Width / 3.5f),
+                                              buttons[1].Rect.Y + buttons[1].Rect.Height / 10), darkPurple);
+                    }
+
                     break;
                 case GameState.Keybinds:
+                    DisplayBackAndTitle("Keybindings");
+
+                    string[] text = new string[4]
+                    {
+                        "Up",
+                        "Left",
+                        "Down",
+                        "Right"
+                    };
+
+                    //Keys
+                    spacing = 60;
+                    initX = 315;
+                    initY = 190;
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        Point pos = new Point(initX, initY + (spacing * (i - 1)));
+                        _spriteBatch.Draw(menuItemTextures, new Rectangle(pos.X, pos.Y, 50, 50), menuItems[2], Color.White);
+                        fontSize = JelleeRoman20.MeasureString(bindings[i].ToString());
+                        _spriteBatch.DrawString(JelleeRoman20, bindings[i].ToString(),
+                            new Vector2(pos.X + (int)(25 - (fontSize.X / 2)),
+                                        pos.Y + (int)(25 - (fontSize.Y / 2))), lightPurple);
+                        _spriteBatch.DrawString(MetalManiaNormal, text[i], new Vector2(pos.X + 75, pos.Y), lightPurple);
+                    }
+
+                    //Draw all the buttons
+                    DrawButtons();
+
+                    if (buttons.Count > 0)
+                    {
+                        _spriteBatch.DrawString(MetalManiaButtons, "Back",
+                            new Vector2((int)(buttons[0].Rect.X + buttons[0].Rect.Width / 2.5f),
+                                              buttons[0].Rect.Y + buttons[0].Rect.Height / 10), darkPurple);
+                    }
                     break;
                 case GameState.GameOver:
                     break;
