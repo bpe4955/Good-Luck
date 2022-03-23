@@ -19,12 +19,17 @@ namespace Good_Luck
         public int Health { get { return health; } set { health = value; } }
         public int DefenseStat { get { return defenseStat; } set { defenseStat = value; } }
 
-        public Player(Rectangle playerRect, Texture2D playerCharacter, float speed, int maxhealth, int defense) : base()
+        /// <summary>
+        /// Creates the Player Character that will be controlled in Gameplay
+        /// </summary>
+        /// <param name="playerRect"> Bounding Box of the Player </param>
+        /// <param name="playerTexture"> Texture of the Player and how it looks </param>
+        /// <param name="speed"> Speed of the Player's Movement </param>
+        /// <param name="maxhealth"> Maximum Health of the Player </param>
+        /// <param name="defense"> Defense against Damage caused to the Player </param>
+        public Player(Rectangle playerRect, Texture2D playerTexture, float speed, int maxhealth, int defense) 
+            : base(playerTexture, playerRect, speed)
         {
-            Rect = playerRect;
-            Texture = playerCharacter;
-            Speed = speed;
-            IsActive = true;
 
             this.maxhealth = maxhealth;
             this.health = maxhealth;
@@ -33,17 +38,22 @@ namespace Good_Luck
 
         public void Move(KeyboardState kb)
         {
-            /*
-            if (kb.IsKeyDown(Keys.W)) { rect.X -= Speed; }
-            if (kb.IsKeyDown(Keys.A)) { rect.X -= Speed; }
-            if (kb.IsKeyDown(Keys.S)) { rect.Y += Speed; }
-            if (kb.IsKeyDown(Keys.D)) { rect.X += Speed; }
-            */
+            if (kb.IsKeyDown(Keys.W)) { rect.Y -= (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Keys.A)) { rect.X -= (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Keys.S)) { rect.Y += (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Keys.D)) { rect.X += (int)Math.Floor(speed); }
+        }
+        public void Shoot(KeyboardState kb)
+        {
+            if () 
+            {
+                System.Diagnostics.Debug.WriteLine("Shoot!");
+            }
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rect, Color.White);
+            sb.Draw(texture, rect, Color.White);
         }
 
 
@@ -64,9 +74,9 @@ namespace Good_Luck
         /// <param name="amount"></param>
         public void Heal(int amount)
         {
-            if (amount + health > maxhealth)
+            if (amount + health > MaxHealth)
             {
-                health = maxhealth;
+                health = MaxHealth;
             }
             else
             {
@@ -79,16 +89,16 @@ namespace Good_Luck
         /// <param name="amount"></param>
         public void TakeDamage(int amount)
         {
-            if (amount >= health)
+            if (amount - defenseStat >= health)
             {
                 health = 0;
-                IsActive = false;
+                isActive = false;
             }
             else
             {
-                health -= amount;
+                health -= amount - defenseStat;
+
             }
-            
         }
     }
 }

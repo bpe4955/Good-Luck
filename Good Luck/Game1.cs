@@ -52,6 +52,10 @@ namespace Good_Luck
         Texture2D buttonClick;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
+
+        Rectangle playerRect;
+        Player player;
+
         //This will hold the backdrop, pause, key box
         //mouse image, crossbones, and skull
         //source rectangle data in that order
@@ -92,6 +96,9 @@ namespace Good_Luck
                 new Rectangle(0, 505, 272, 76),
                 new Rectangle(277, 505, 52, 63)
             };
+            playerRect = new Rectangle(250, 250, 50, 50);
+            
+
             lightPurple = new Color(232, 216, 255);
             darkPurple = new Color(21, 0, 51);
             bindings = new Keys[4]
@@ -128,6 +135,7 @@ namespace Good_Luck
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            // Texture Loading
             smallSquare = Content.Load<Texture2D>("ButtonDefault");
             smallSquareGray = Content.Load<Texture2D>("ButtonHover");
             buttonClick = Content.Load<Texture2D>("ButtonClick");
@@ -137,6 +145,9 @@ namespace Good_Luck
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("smallSquare");
+
+            // Entity Loading
+            player = new Player(playerRect, playerTexture, 5, 10, 0);
         }
 
         protected override void Update(GameTime gameTime)
@@ -198,8 +209,8 @@ namespace Good_Luck
                     CheckButtons();
                     break;
                 case GameState.Game:
-                    
-
+                    player.Move(kb);
+                    player.Shoot(kb);
                     break;
                 case GameState.Pause:
                     //Reset the button list
@@ -340,6 +351,7 @@ namespace Good_Luck
                     }
                     break;
                 case GameState.Game:
+                    player.Draw(_spriteBatch);
                     break;
                 case GameState.Pause:
                     break;
@@ -417,6 +429,16 @@ namespace Good_Luck
         }
 
         /// <summary>
+        /// Checks if the key press is done once.
+        /// </summary>
+        /// <param name="key"> The key being pressed</param>
+        /// <returns></returns>
+        public bool SingleKeyPress(Keys key)
+        {
+            return kb.IsKeyDown(key) && previousKb.IsKeyUp(key);
+        }
+
+        /// <summary>
         /// Checks if a desired mouse button has been newly pressed
         /// </summary>
         /// <param name="button">the mouse button to check for (left or right)</param>
@@ -458,6 +480,7 @@ namespace Good_Luck
                 }
             }
         }
+
         /// <summary>
         /// Draw every button in the buttons list
         /// </summary>
