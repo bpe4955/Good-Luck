@@ -88,15 +88,6 @@ namespace Good_Luck
             //Initialize fields
             gameState = GameState.Title;
             buttons = new List<Button>();
-            menuItems = new Rectangle[6]
-            {
-                new Rectangle(0, 0, 500, 500),
-                new Rectangle(505, 0, 59, 56),
-                new Rectangle(505, 61, 50, 50),
-                new Rectangle(505, 116, 84, 132),
-                new Rectangle(0, 505, 272, 76),
-                new Rectangle(277, 505, 52, 63)
-            };
             playerRect = new Rectangle(250, 250, 50, 50);
             
 
@@ -137,18 +128,6 @@ namespace Good_Luck
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Texture Loading
-            smallSquare = Content.Load<Texture2D>("ButtonDefault");
-            smallSquareGray = Content.Load<Texture2D>("ButtonHover");
-            buttonClick = Content.Load<Texture2D>("ButtonClick");
-            MetalManiaButtons = Content.Load<SpriteFont>("MetalManiaButtons");
-            MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
-            MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
-            JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
-            menuItemTextures = Content.Load<Texture2D>("MenuImages");
-            playerTexture = Content.Load<Texture2D>("smallSquare");
-
-            // Entity Loading
-            player = new Player(playerRect, playerTexture, 5, 10, 0);
             menuItemTextures = Content.Load<Texture2D>("MenuImagesV2");
             buttonImage = Content.Load<Texture2D>("Button");
             int height = buttonImage.Height / 3;
@@ -166,6 +145,16 @@ namespace Good_Luck
                 menuItemTextures.GetTexture(new Rectangle(300, 485, 272, 76), GraphicsDevice),
                 menuItemTextures.GetTexture(new Rectangle(577, 485, 52, 63), GraphicsDevice)
             };
+            MetalManiaButtons = Content.Load<SpriteFont>("MetalManiaButtons");
+            MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
+            MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
+            JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
+            menuItemTextures = Content.Load<Texture2D>("MenuImages");
+            playerTexture = Content.Load<Texture2D>("smallSquare");
+
+            // Entity Loading
+            player = new Player(playerRect, playerTexture, 5, 10, 0);
+
         }
 
         protected override void Update(GameTime gameTime)
