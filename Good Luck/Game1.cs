@@ -57,6 +57,8 @@ namespace Good_Luck
         Rectangle playerRect;
         Player player;
 
+        List<Bullet> bullets;
+
         //This will hold the backdrop, pause, key box
         //mouse image, crossbones, and skull
         //textures in that order

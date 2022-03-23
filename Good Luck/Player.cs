@@ -45,14 +45,19 @@ namespace Good_Luck
         }
         public void Shoot(MouseState mb)
         {
-            
+            Vector2 mouseBetweenPlayer = new Vector2(mb.Position.X - rect.X, mb.Position.Y - rect.Y);
+
+            mouseBetweenPlayer.GetAngle();
 
             System.Diagnostics.Debug.WriteLine("Shoot!");
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rect, Color.White);
+            if (isActive)
+            {
+                sb.Draw(texture, rect, Color.White);
+            }
         }
 
 
