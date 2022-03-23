@@ -9,6 +9,10 @@ namespace Good_Luck
 {
     abstract class Entity
     {
+        // Fields
+
+
+
         /// <summary>
         /// The <see cref="Texture2D"/> of this <see cref="Entity"/>
         /// </summary>

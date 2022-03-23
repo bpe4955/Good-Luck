@@ -51,6 +51,7 @@ namespace Good_Luck
         Texture2D smallSquareGray;
         Texture2D buttonClick;
         Texture2D menuItemTextures;
+        Texture2D playerTexture;
         //This will hold the backdrop, pause, key box
         //mouse image, crossbones, and skull
         //source rectangle data in that order
@@ -135,6 +136,7 @@ namespace Good_Luck
             MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
+            playerTexture = Content.Load<Texture2D>("smallSquare");
         }
 
         protected override void Update(GameTime gameTime)
@@ -196,6 +198,8 @@ namespace Good_Luck
                     CheckButtons();
                     break;
                 case GameState.Game:
+                    
+
                     break;
                 case GameState.Pause:
                     //Reset the button list

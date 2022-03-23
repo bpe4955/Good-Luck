@@ -13,7 +13,6 @@ namespace Good_Luck
         private int maxhealth;
         private int health;
         private int defenseStat;
-        private Rectangle rect;
 
         // Properties
         public int MaxHealth { get { return health; } }
@@ -34,10 +33,12 @@ namespace Good_Luck
 
         public void Move(KeyboardState kb)
         {
+            /*
             if (kb.IsKeyDown(Keys.W)) { rect.X -= Speed; }
             if (kb.IsKeyDown(Keys.A)) { rect.X -= Speed; }
             if (kb.IsKeyDown(Keys.S)) { rect.Y += Speed; }
             if (kb.IsKeyDown(Keys.D)) { rect.X += Speed; }
+            */
         }
 
         public override void Draw(SpriteBatch sb)
