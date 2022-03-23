@@ -212,7 +212,7 @@ namespace Good_Luck
                     player.Move(kb);
                     if (SingleMouseClick(MouseButton.Left))
                     {
-                        player.Shoot();
+                        player.Shoot(mouseState);
                     }
                     break;
                 case GameState.Pause:
