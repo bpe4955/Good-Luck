@@ -9,7 +9,6 @@ namespace Good_Luck
 {
     abstract class Entity
     {
-        private float speed;
         /// <summary>
         /// The <see cref="Texture2D"/> of this <see cref="Entity"/>
         /// </summary>
@@ -25,13 +24,13 @@ namespace Good_Luck
         /// <summary>
         /// How fast this <see cref="Entity"/> moves
         /// </summary>
-        public float Speed { get { return speed; } }
+        public float Speed { get; set; }
         /// <summary>
         /// Determines if this <see cref="Entity"/> is colliding
         /// with anything else
         /// </summary>
         /// <returns>Whether or not this <see cref="Entity"/> is colliding</returns>
-        public abstract bool IsColliding();
+        public abstract bool IsColliding(Entity other);
         /// <summary>
         /// Draws this <see cref="Entity"/> to he screen
         /// </summary>
