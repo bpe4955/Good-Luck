@@ -210,7 +210,10 @@ namespace Good_Luck
                     break;
                 case GameState.Game:
                     player.Move(kb);
-                    player.Shoot(kb);
+                    if (SingleMouseClick(MouseButton.Left))
+                    {
+                        player.Shoot();
+                    }
                     break;
                 case GameState.Pause:
                     //Reset the button list
@@ -433,7 +436,7 @@ namespace Good_Luck
         /// </summary>
         /// <param name="key"> The key being pressed</param>
         /// <returns></returns>
-        public bool SingleKeyPress(Keys key)
+        private bool SingleKeyPress(Keys key)
         {
             return kb.IsKeyDown(key) && previousKb.IsKeyUp(key);
         }

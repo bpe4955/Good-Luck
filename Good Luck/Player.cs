@@ -43,12 +43,11 @@ namespace Good_Luck
             if (kb.IsKeyDown(Keys.S)) { rect.Y += (int)Math.Floor(speed); }
             if (kb.IsKeyDown(Keys.D)) { rect.X += (int)Math.Floor(speed); }
         }
-        public void Shoot(KeyboardState kb)
+        public void Shoot(MouseState mb)
         {
-            if () 
-            {
-                System.Diagnostics.Debug.WriteLine("Shoot!");
-            }
+            
+
+            System.Diagnostics.Debug.WriteLine("Shoot!");
         }
 
         public override void Draw(SpriteBatch sb)
