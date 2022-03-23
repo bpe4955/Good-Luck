@@ -36,5 +36,10 @@ namespace Good_Luck
             //Return the new texture
             return newTexture;
         }
+
+        public static float GetAngle(this Vector2 vector)
+        {
+            return (float)Math.Atan2(vector.Y, vector.X);
+        }
     }
 }
