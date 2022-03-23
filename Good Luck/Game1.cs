@@ -123,7 +123,7 @@ namespace Good_Luck
             MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
             MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
-            menuItemTextures = Content.Load<Texture2D>("MenuImages");
+            menuItemTextures = Content.Load<Texture2D>("MenuImagesV2");
             buttonImage = Content.Load<Texture2D>("Button");
             int height = buttonImage.Height / 3;
             int width = buttonImage.Width;
@@ -133,12 +133,12 @@ namespace Good_Luck
 
             menuItems = new Texture2D[6]
             {
-                menuItemTextures.GetTexture(new Rectangle(0, 0, 500, 500), GraphicsDevice),
-                menuItemTextures.GetTexture(new Rectangle(505, 0, 59, 56), GraphicsDevice),
-                menuItemTextures.GetTexture(new Rectangle(505, 61, 50, 50), GraphicsDevice),
-                menuItemTextures.GetTexture(new Rectangle(505, 116, 84, 132), GraphicsDevice),
-                menuItemTextures.GetTexture(new Rectangle(0, 505, 272, 76), GraphicsDevice),
-                menuItemTextures.GetTexture(new Rectangle(277, 505, 52, 63), GraphicsDevice)
+                menuItemTextures.GetTexture(new Rectangle(0, 0, 800, 480), GraphicsDevice),
+                menuItemTextures.GetTexture(new Rectangle(805, 0, 59, 56), GraphicsDevice),
+                menuItemTextures.GetTexture(new Rectangle(805, 61, 50, 50), GraphicsDevice),
+                menuItemTextures.GetTexture(new Rectangle(805, 116, 84, 132), GraphicsDevice),
+                menuItemTextures.GetTexture(new Rectangle(300, 485, 272, 76), GraphicsDevice),
+                menuItemTextures.GetTexture(new Rectangle(577, 485, 52, 63), GraphicsDevice)
             };
         }
 
@@ -150,17 +150,19 @@ namespace Good_Luck
             mouseState = Mouse.GetState();
             kb = Keyboard.GetState();
 
+            int width = 198;
+            int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
+            int height = (int)Math.Round(width * .25f);
+            int spacing = (int)(height * 1.1f);
+            int currentY = 370;
+
             switch (gameState)
             {
                 case GameState.Title:
                     //Reset the button list
                     buttons.Clear();
                     //Create buttons
-                    int width = 198;
-                    int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    int height = (int)Math.Round(width * .25f);
-                    int spacing = (int)(height * 1.1f);
-                    int currentY = 135;
+                    currentY = 135;
                     buttons.Add(new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     currentY += spacing;
                     buttons.Add(new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
@@ -170,8 +172,6 @@ namespace Good_Luck
                     buttons.Add(new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     currentY += spacing;
                     buttons.Add(new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
-                    currentY += spacing;
-                    buttons.Add(new Button(GameState.Pause, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
 
                     //Check if buttons are clicked and act accordingly
                     CheckButtons();
@@ -182,10 +182,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
 
@@ -194,10 +191,7 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
@@ -206,11 +200,6 @@ namespace Good_Luck
                 case GameState.Pause:
                     //Reset the button list
                     buttons.Clear();
-
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    spacing = (int)(height * 1.1f);
                     currentY = (_graphics.PreferredBackBufferHeight / 2) - spacing;
                     buttons.Add(new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     currentY += spacing;
@@ -224,12 +213,8 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    spacing = (int)(height * 1.1f);
-                    buttons.Add(new Button(GameState.Keybinds, new Rectangle(midX, 370 - spacing, width, height), smallSquare, smallSquareGray, buttonClick));
-                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Keybinds, new Rectangle(midX, currentY - spacing, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
@@ -237,23 +222,15 @@ namespace Good_Luck
                     //Reset the button list
                     buttons.Clear();
                     //Back Button
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    buttons.Add(new Button(GameState.Options, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Options, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
                     break;
                 case GameState.GameOver:
                     //Reset the button list
                     buttons.Clear();
-
-                    width = 198;
-                    midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                    height = (int)Math.Round(width * .25f);
-                    spacing = (int)(height * 1.1f);
-                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, 370 - spacing, width, height), smallSquare, smallSquareGray, buttonClick));
-                    buttons.Add(new Button(GameState.Exit, new Rectangle(midX, 370, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Title, new Rectangle(midX, currentY - spacing, width, height), smallSquare, smallSquareGray, buttonClick));
+                    buttons.Add(new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick));
                     
                     //Check if buttons are clicked and change gameState
                     CheckButtons();
@@ -289,7 +266,6 @@ namespace Good_Luck
                         DrawTextToButton("Options", buttons[2].Rect, 3.5f);
                         DrawTextToButton("Credits", buttons[3].Rect, 3.5f);
                         DrawTextToButton("Exit", buttons[4].Rect, 3.5f);
-                        DrawTextToButton("Debug", buttons[5].Rect, 3.5f);
                     }
 
 
@@ -402,7 +378,7 @@ namespace Good_Luck
 
                     if (buttons.Count > 0)
                     {
-                        DrawTextToButton("Back", buttons[0].Rect, 2.5f);
+                        DrawTextToButton("Back", buttons[0].Rect, 3.5f);
                     }
                     break;
                 case GameState.GameOver:
