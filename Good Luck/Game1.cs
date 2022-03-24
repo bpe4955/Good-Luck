@@ -53,6 +53,7 @@ namespace Good_Luck
         Texture2D buttonImage;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
+        Texture2D bulletTexture;
 
         Rectangle playerRect;
         Player player;
@@ -153,9 +154,10 @@ namespace Good_Luck
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("smallSquare");
+            bulletTexture = Content.Load<Texture2D>("Bullet");
 
             // Entity Loading
-            player = new Player(playerRect, playerTexture, 5, 10, 0);
+            player = new Player(playerRect, playerTexture, 5, 10, 0, 2);
 
         }
 
@@ -216,7 +218,8 @@ namespace Good_Luck
                     player.Move(kb);
                     if (SingleMouseClick(MouseButton.Left))
                     {
-                        player.Shoot(mouseState);
+                        player.Shoot(mouseState, bulletTexture);
+
                     }
                     break;
                 case GameState.Pause:
