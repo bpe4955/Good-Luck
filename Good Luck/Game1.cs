@@ -92,7 +92,8 @@ namespace Good_Luck
             gameState = GameState.Title;
             buttons = new List<Button>();
             playerRect = new Rectangle(250, 250, 50, 50);
-            
+            bullets = new List<Bullet>();
+
 
             lightPurple = new Color(232, 216, 255);
             darkPurple = new Color(21, 0, 51);
@@ -218,8 +219,7 @@ namespace Good_Luck
                     player.Move(kb);
                     if (SingleMouseClick(MouseButton.Left))
                     {
-                        player.Shoot(mouseState, bulletTexture);
-
+                        bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     break;
                 case GameState.Pause:
@@ -343,6 +343,7 @@ namespace Good_Luck
                     break;
                 case GameState.Game:
                     player.Draw(_spriteBatch);
+                    DrawBullets();
                     break;
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
@@ -538,6 +539,18 @@ namespace Good_Luck
                 //cursor is hovering over them then draw accordingly
                 button.Collision(mouseState);
                 button.Draw(_spriteBatch);
+            }
+        }
+
+        /// <summary>
+        /// Draw every bullet in the bullet list
+        /// </summary>
+        private void DrawBullets()
+        {
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Draw(_spriteBatch);
+                bullet.Move();
             }
         }
 
