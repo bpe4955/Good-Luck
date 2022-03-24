@@ -21,7 +21,7 @@ namespace Good_Luck
         public void Move()
         {
             int xOffset = (int)(Math.Sin(bulletAngle) * speed);
-            int yOffset = -(int)(Math.Sin(bulletAngle) * speed);
+            int yOffset = (int)(-Math.Cos(bulletAngle) * speed);
 
             rect.X += xOffset;
             rect.Y += yOffset;
