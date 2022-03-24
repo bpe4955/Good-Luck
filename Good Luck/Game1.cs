@@ -158,7 +158,7 @@ namespace Good_Luck
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             // Entity Loading
-            player = new Player(playerRect, playerTexture, 5, 10, 0, 2);
+            player = new Player(playerRect, playerTexture, 5, 10, 0, 8);
 
         }
 
