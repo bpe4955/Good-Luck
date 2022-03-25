@@ -12,6 +12,7 @@ namespace Good_Luck
         // Fields
         private int maxhealth;
         private int health;
+        private int damage;
         private int defenseStat;
         private int bulletSpeed;
         private int totalScore;
@@ -20,6 +21,7 @@ namespace Good_Luck
         public int MaxHealth { get { return health; } }
         public int Health { get { return health; } set { health = value; } }
         public int DefenseStat { get { return defenseStat; } set { defenseStat = value; } }
+        public int Damage { get { return damage; } set { damage = value; } }
         public int TotalScore { get { return totalScore; } set { totalScore = value; } }
 
         /// <summary>
@@ -30,13 +32,14 @@ namespace Good_Luck
         /// <param name="speed"> Speed of the Player's Movement </param>
         /// <param name="maxhealth"> Maximum Health of the Player </param>
         /// <param name="defense"> Defense against Damage caused to the Player </param>
-        public Player(Rectangle playerRect, Texture2D playerTexture, float speed, int maxhealth, int defense, int bulletSpeed) 
+        public Player(Rectangle playerRect, Texture2D playerTexture, float speed, int maxhealth, int defense, int bulletSpeed, int damage) 
             : base(playerTexture, playerRect, speed)
         {
 
             this.maxhealth = maxhealth;
             this.health = maxhealth;
             this.defenseStat = defense;
+            this.damage = damage;
             this.bulletSpeed = bulletSpeed;
         }
 

@@ -37,7 +37,7 @@ namespace Good_Luck
         {
             Rectangle collidedRect = new Rectangle(other.Rect.X, other.Rect.Y, other.Rect.Width, other.Rect.Height);
 
-            if (Rect.Intersects(collidedRect) && other is Bullet)
+            if (Rect.Intersects(collidedRect) && other is Bullet && other.IsActive)
             {
                 Bullet shot = (Bullet)other;
                 if (shot.BulletOwner != this)
@@ -51,7 +51,12 @@ namespace Good_Luck
 
         public void TakeDamage(int amount)
         {
-            throw new NotImplementedException();
+            health-=amount;
+
+            if (health <= 0)
+            {
+                isActive = false;
+            }
         }
     }
 }
