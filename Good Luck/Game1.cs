@@ -254,8 +254,9 @@ namespace Good_Luck
                     for (int i = 0; i < bullets.Count; )
                     {
                         //When the bullet is off the screen
+                        //May want to replace with wall collision
                         if(bullets[i].Rect.X <=  0 - bullets[i].Rect.Width || bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
-                            || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight)
+                            || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight + bullets[i].Rect.Height)
                         {
                             //Delete the button
                             bullets.RemoveAt(i);
