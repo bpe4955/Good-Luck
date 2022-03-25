@@ -12,12 +12,14 @@ namespace Good_Luck
         public List<Bullet> bullets { get; set; }
         public List<Enemy> enemies { get; set; }
         public Player player { get; private set; }
+        public List<Wall> walls { get; set; }
 
         public EntityManager(Player player)
         {
             this.player = player;
             bullets = new List<Bullet>();
             enemies = new List<Enemy>();
+            walls = new List<Wall>();
         }
 
         public void Draw(SpriteBatch sb)
@@ -31,6 +33,11 @@ namespace Good_Luck
                 enemies[i].Draw(sb);
             }
             player.Draw(sb);
+
+            for(int i = 0; i < walls.Count; ++i)
+            {
+                walls[i].Draw(sb);
+            }
         }
 
         public void CheckBulletCollision(GraphicsDeviceManager _graphics)
@@ -45,6 +52,16 @@ namespace Good_Luck
                     //Delete the button
                     bullets.RemoveAt(i);
                     return;
+                }
+
+                //Wall collisions
+                for(int w = 0; w < walls.Count; ++w)
+                {
+                    if (walls[w].Rect.Intersects(bullets[i].Rect))
+                    {
+                        bullets.RemoveAt(i);
+                        return;
+                    }
                 }
 
                 //When the bullet hits an enemy, delete the bullet and make the enemy take damage

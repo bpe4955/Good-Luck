@@ -227,6 +227,7 @@ namespace Good_Luck
 
             entityManager = new EntityManager(player);
             entityManager.enemies.Add(enemy);
+            entityManager.walls.Add(wall);
         }
 
         protected override void Update(GameTime gameTime)
@@ -347,8 +348,6 @@ namespace Good_Luck
 
                 case GameState.Game:
                     entityManager.Draw(_spriteBatch);
-                    wall.Draw(_spriteBatch);
-
                     break;
 
                 case GameState.Pause:
