@@ -129,7 +129,7 @@ namespace Good_Luck
 
             //Name of save file with the number of high scores
             fileName = "../../../HighScores.txt";
-            highScoreCount = 5;
+            highScoreCount = 1;
             //Check to see if save file exists
             if (!File.Exists(fileName))
             {
@@ -428,8 +428,8 @@ namespace Good_Luck
                         _spriteBatch.DrawString(MetalManiaNormal, $"Highscore: {saveData.scores[0]}", new Vector2(
                             (int)(halfWidth - (fontSize.X / 2)), initY), lightPurple);
                     }
-                    fontSize = MetalManiaNormal.MeasureString($"Level: {level}");
-                    _spriteBatch.DrawString(MetalManiaNormal, $"Level: {level}", new Vector2(
+                    fontSize = MetalManiaNormal.MeasureString($"Level: {saveData.levels[0]}");
+                    _spriteBatch.DrawString(MetalManiaNormal, $"Level: {saveData.levels[0]}", new Vector2(
                         (int)(halfWidth - (fontSize.X / 2)), initY + spacing), lightPurple);
 
                     DrawButtons(6);

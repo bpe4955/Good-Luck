@@ -102,6 +102,10 @@ namespace Good_Luck
                     {
                         bullets.RemoveAt(i);
                         enemies[e].TakeDamage(player.Damage);
+                        if (!enemies[e].IsActive)
+                        {
+                            enemies.RemoveAt(e);
+                        }
                         return;
                     }
                 }
