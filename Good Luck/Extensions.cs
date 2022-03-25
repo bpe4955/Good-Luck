@@ -36,7 +36,11 @@ namespace Good_Luck
             //Return the new texture
             return newTexture;
         }
-
+        /// <summary>
+        /// Gets the angle of a vector (+ 90 degrees)
+        /// </summary>
+        /// <param name="vector">The vector to get the angle of</param>
+        /// <returns>The angle</returns>
         public static float GetAngle(this Vector2 vector)
         {
             return (float)Math.Atan2(vector.Y, vector.X) + (float)(90 * Math.PI/180);
