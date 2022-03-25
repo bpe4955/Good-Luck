@@ -53,7 +53,7 @@ namespace Good_Luck
         public Bullet Shoot(MouseState mb, Texture2D bulletTexture)
         {
             Vector2 mouseBetweenPlayer = new Vector2(mb.Position.X - rect.X, mb.Position.Y - rect.Y);
-            Rectangle bulletRect = new Rectangle(rect.X, rect.Y, 25, 25);
+            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2), rect.Y+(rect.Height/2), 25, 25);
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, Extensions.GetAngle(mouseBetweenPlayer));
 
