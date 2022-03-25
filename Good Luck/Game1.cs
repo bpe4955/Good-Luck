@@ -273,6 +273,10 @@ namespace Good_Luck
                     }
                     break;
                 case GameState.Pause:
+                    if (SingleKeyPress(Keys.Escape))
+                    {
+                        gameState = GameState.Game;
+                    }
                     CheckButtons(3);
                     break;
                 case GameState.Options:
