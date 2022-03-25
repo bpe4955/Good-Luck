@@ -17,7 +17,7 @@ namespace Good_Luck
         /// <summary>
         /// What's he highest amount of health this <see cref="IDamageable"/> Object can have
         /// </summary>
-        public int MaxHealth { get; protected set; }
+        public int MaxHealth { get; }
         /// <summary>
         /// Reduces the health of this <see cref="IDamageable"/> Object
         /// by given amount

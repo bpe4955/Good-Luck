@@ -39,7 +39,7 @@ namespace Good_Luck
 
         public static float GetAngle(this Vector2 vector)
         {
-            return (float)Math.Atan2(vector.Y, vector.X);
+            return (float)Math.Atan2(vector.Y, vector.X) + (float)(90 * Math.PI/180);
         }
     }
 }

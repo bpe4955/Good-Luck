@@ -40,6 +40,7 @@ namespace Good_Luck
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState gameState;
+        int level;
         MouseState previousMouseState;
         MouseState mouseState;
         KeyboardState kb;
@@ -52,6 +53,17 @@ namespace Good_Luck
         Texture2D buttonClick;
         Texture2D buttonImage;
         Texture2D menuItemTextures;
+        Texture2D playerTexture;
+        Texture2D enemyTexture;
+        Texture2D bulletTexture;
+
+        Rectangle playerRect;
+        Rectangle enemyRect;
+        Player player;
+        Enemy enemy;
+
+        List<Bullet> bullets;
+
         //This will hold the backdrop, pause, key box
         //mouse image, crossbones, and skull
         //textures in that order
@@ -83,6 +95,12 @@ namespace Good_Luck
             //Initialize fields
             gameState = GameState.Title;
             buttons = new List<Button>();
+            playerRect = new Rectangle(250, 250, 50, 50);
+            enemyRect = new Rectangle(300, 100, 100, 100);
+            bullets = new List<Bullet>();
+            level = 0;
+
+
             lightPurple = new Color(232, 216, 255);
             darkPurple = new Color(21, 0, 51);
             bindings = new Keys[4]
@@ -119,10 +137,7 @@ namespace Good_Luck
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            MetalManiaButtons = Content.Load<SpriteFont>("MetalManiaButtons");
-            MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
-            MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
-            JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
+            // Texture Loading
             menuItemTextures = Content.Load<Texture2D>("MenuImagesV2");
             buttonImage = Content.Load<Texture2D>("Button");
             int height = buttonImage.Height / 3;
@@ -140,6 +155,19 @@ namespace Good_Luck
                 menuItemTextures.GetTexture(new Rectangle(300, 485, 272, 76), GraphicsDevice),
                 menuItemTextures.GetTexture(new Rectangle(577, 485, 52, 63), GraphicsDevice)
             };
+            MetalManiaButtons = Content.Load<SpriteFont>("MetalManiaButtons");
+            MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
+            MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
+            JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
+            menuItemTextures = Content.Load<Texture2D>("MenuImages");
+            playerTexture = Content.Load<Texture2D>("smallSquare");
+            enemyTexture = Content.Load<Texture2D>("BunnyBomb");
+            bulletTexture = Content.Load<Texture2D>("Bullet");
+
+            // Entity Loading
+            player = new Player(playerRect, playerTexture, 5, 10, 0, 6);
+            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -196,6 +224,18 @@ namespace Good_Luck
                     CheckButtons();
                     break;
                 case GameState.Game:
+                    player.Move(kb);
+                    if (SingleMouseClick(MouseButton.Left))
+                    {
+                        bullets.Add(player.Shoot(mouseState, bulletTexture));
+                    }
+                    foreach (Bullet bullet in bullets)
+                    {
+                        if (enemy.IsColliding(bullet))
+                        {
+                            enemy.IsActive = false;
+                        }
+                    }
                     break;
                 case GameState.Pause:
                     //Reset the button list
@@ -317,6 +357,9 @@ namespace Good_Luck
                     }
                     break;
                 case GameState.Game:
+                    player.Draw(_spriteBatch);
+                    enemy.Draw(_spriteBatch);
+                    DrawBullets();
                     break;
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
@@ -449,6 +492,16 @@ namespace Good_Luck
         }
 
         /// <summary>
+        /// Checks if the key press is done once.
+        /// </summary>
+        /// <param name="key"> The key being pressed</param>
+        /// <returns></returns>
+        private bool SingleKeyPress(Keys key)
+        {
+            return kb.IsKeyDown(key) && previousKb.IsKeyUp(key);
+        }
+
+        /// <summary>
         /// Checks if a desired mouse button has been newly pressed
         /// </summary>
         /// <param name="button">the mouse button to check for (left or right)</param>
@@ -490,6 +543,7 @@ namespace Good_Luck
                 }
             }
         }
+
         /// <summary>
         /// Draw every button in the buttons list
         /// </summary>
@@ -504,41 +558,52 @@ namespace Good_Luck
             }
         }
 
-        // To Be Finished when player class
-        ///// <summary>
-        ///// Sorts and saves the player's data
-        ///// </summary>
-        //private void SaveHighScore()
-        //{
-        //    //Create the data to save
-        //    HighScoreData data = HighScoreData.LoadHighScores(fileName);
-        //
-        //    int scoreIndex = -1;
-        //    //Loop through saved data to find where to place new data
-        //    for (int i = 0; i < highScoreCount; i++)
-        //    {
-        //        if (player.TotalScore > data.scores[i])
-        //        {
-        //            scoreIndex = i;
-        //            break;
-        //        }
-        //    }
-        //
-        //    //If new score is found, insert into list
-        //    if (scoreIndex > -1)
-        //    {
-        //        for (int i = highScoreCount - 1; i > scoreIndex; i--)
-        //        {
-        //            data.scores[i] = data.scores[i - 1];
-        //            data.levels[i] = data.levels[i - 1];
-        //        }
-        //
-        //        data.scores[scoreIndex] = player.TotalScore;
-        //        data.levels[scoreIndex] = level;
-        //
-        //        HighScoreData.SaveHighScores(data, fileName);
-        //    }
-        //
-        //}
+        /// <summary>
+        /// Draw every bullet in the bullet list
+        /// </summary>
+        private void DrawBullets()
+        {
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Draw(_spriteBatch);
+                bullet.Move();
+            }
+        }
+
+        /// <summary>
+        /// Sorts and saves the player's data
+        /// </summary>
+        private void SaveHighScore()
+        {
+            //Create the data to save
+            HighScoreData data = HighScoreData.LoadHighScores(fileName);
+        
+            int scoreIndex = -1;
+            //Loop through saved data to find where to place new data
+            for (int i = 0; i < highScoreCount; i++)
+            {
+                if (player.TotalScore > data.scores[i])
+                {
+                    scoreIndex = i;
+                    break;
+                }
+            }
+        
+            //If new score is found, insert into list
+            if (scoreIndex > -1)
+            {
+                for (int i = highScoreCount - 1; i > scoreIndex; i--)
+                {
+                    data.scores[i] = data.scores[i - 1];
+                    data.levels[i] = data.levels[i - 1];
+                }
+        
+                data.scores[scoreIndex] = player.TotalScore;
+                data.levels[scoreIndex] = level;
+        
+                HighScoreData.SaveHighScores(data, fileName);
+            }
+        
+        }
     }
 }

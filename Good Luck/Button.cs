@@ -71,7 +71,7 @@ namespace Good_Luck
             }
             else
             {
-                sb.Draw(defaultImage, rect, Color.White);
+                sb.Draw(defaultImage, rect, Color.White); 
             }
         }
         /// <summary>
