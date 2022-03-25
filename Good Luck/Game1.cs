@@ -221,8 +221,8 @@ namespace Good_Luck
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();*/
             //Get input from mouse and keyboard
             mouseState = Mouse.GetState();
             kb = Keyboard.GetState();
@@ -239,6 +239,12 @@ namespace Good_Luck
                     CheckButtons(2);
                     break;
                 case GameState.Game:
+                    if (SingleKeyPress(Keys.Escape))
+                    {
+                        gameState = GameState.Pause;
+                    }
+
+
                     player.Move(kb);
                     if (SingleMouseClick(MouseButton.Left))
                     {
