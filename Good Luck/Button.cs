@@ -61,11 +61,7 @@ namespace Good_Luck
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            if (isClicked)
-            {
-                sb.Draw(clickImage, rect, Color.White);
-            }
-            else if (isHovered)
+            if (isHovered)
             {
                 sb.Draw(hoverImage, rect, Color.White);
             }
