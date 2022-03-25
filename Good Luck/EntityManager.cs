@@ -32,5 +32,35 @@ namespace Good_Luck
             }
             player.Draw(sb);
         }
+
+        public void CheckBulletCollision(GraphicsDeviceManager _graphics)
+        {
+            for (int i = 0; i < bullets.Count;)
+            {
+                //When the bullet is off the screen
+                //May want to replace with wall collision
+                if (bullets[i].Rect.X <= 0 - bullets[i].Rect.Width || bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
+                    || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight + bullets[i].Rect.Height)
+                {
+                    //Delete the button
+                    bullets.RemoveAt(i);
+                    return;
+                }
+
+                //When the bullet hits an enemy, delete the bullet and make the enemy take damage
+                for(int e = 0; e < enemies.Count; ++e)
+                {
+                    if (enemies[e].IsActive && enemies[e].IsColliding(bullets[i]))
+                    {
+                        bullets.RemoveAt(i);
+                        enemies[e].TakeDamage(player.Damage);
+                        return;
+                    }
+                }
+                //If this bullet hits nothing, move on to the next bullet
+                bullets[i].Move();
+                i++;
+            }
+        }
     }
 }
