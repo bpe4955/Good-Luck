@@ -226,8 +226,8 @@ namespace Good_Luck
             wall = new Wall(wallRect, wallTexture);
 
             entityManager = new EntityManager(player);
-            entityManager.enemies.Add(enemy);
-            entityManager.walls.Add(wall);
+            entityManager.Enemies.Add(enemy);
+            entityManager.Walls.Add(wall);
         }
 
         protected override void Update(GameTime gameTime)
@@ -256,7 +256,7 @@ namespace Good_Luck
                     }
                     if (SingleMouseClick(MouseButton.Left))
                     {
-                        entityManager.bullets.Add(player.Shoot(mouseState, bulletTexture));
+                        entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb);

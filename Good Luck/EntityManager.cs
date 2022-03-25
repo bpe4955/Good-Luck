@@ -10,48 +10,70 @@ namespace Good_Luck
 {
     class EntityManager
     {
-        public List<Bullet> bullets { get; set; }
-        public List<Enemy> enemies { get; set; }
-        public Player player { get; private set; }
-        public List<Wall> walls { get; set; }
-
+        /// <summary>
+        /// All the <see cref="Bullet"/>s on screen
+        /// </summary>
+        public List<Bullet> Bullets { get; set; }
+        /// <summary>
+        /// All the <see cref="Enemy"/>s on screen
+        /// </summary>
+        public List<Enemy> Enemies { get; set; }
+        /// <summary>
+        /// The main <see cref="Good_Luck.Player"/>
+        /// </summary>
+        public Player Player { get; private set; }
+        /// <summary>
+        /// All the <see cref="Wall"/>s in the level
+        /// </summary>
+        public List<Wall> Walls { get; set; }
+        /// <summary>
+        /// Creates a new <see cref="EntityManager"/>
+        /// </summary>
+        /// <param name="player">reference to the <see cref="Good_Luck.Player"/></param>
         public EntityManager(Player player)
         {
-            this.player = player;
-            bullets = new List<Bullet>();
-            enemies = new List<Enemy>();
-            walls = new List<Wall>();
+            Player = player;
+            Bullets = new List<Bullet>();
+            Enemies = new List<Enemy>();
+            Walls = new List<Wall>();
         }
-
+        /// <summary>
+        /// Draws all the <see cref="Entity"/>s and <see cref="Wall"/>s
+        /// </summary>
+        /// <param name="sb">The <see cref="SpriteBatch"/> to draw to</param>
         public void Draw(SpriteBatch sb)
         {
-            for(int i = 0; i < bullets.Count; ++i)
+            for(int i = 0; i < Bullets.Count; ++i)
             {
-                bullets[i].Draw(sb);
+                Bullets[i].Draw(sb);
             }
-            for (int i = 0; i < enemies.Count; ++i)
+            for (int i = 0; i < Enemies.Count; ++i)
             {
-                enemies[i].Draw(sb);
+                Enemies[i].Draw(sb);
             }
-            player.Draw(sb);
+            Player.Draw(sb);
 
-            for(int i = 0; i < walls.Count; ++i)
+            for(int i = 0; i < Walls.Count; ++i)
             {
-                walls[i].Draw(sb);
+                Walls[i].Draw(sb);
             }
         }
-
+        /// <summary>
+        /// Updates all the <see cref="Entity"/>s and checks for collisions
+        /// </summary>
+        /// <param name="_graphics">The main <see cref="GraphicsDeviceManager"/></param>
+        /// <param name="kb">The current <see cref="KeyboardState"/></param>
         public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb)
         {
-            player.Move(kb);
-            if (walls.Exists(x => x.Rect.Intersects(player.Rect)))
+            Player.Move(kb);
+            if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
             {
-                Wall w = walls.Find(x => x.Rect.Intersects(player.Rect));
-                Rectangle rect = Rectangle.Intersect(w.Rect, player.Rect);
-                Vector2 pos = new Vector2(player.Rect.X, player.Rect.Y);
+                Wall w = Walls.Find(x => x.Rect.Intersects(Player.Rect));
+                Rectangle rect = Rectangle.Intersect(w.Rect, Player.Rect);
+                Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
                 if (rect.Width <= rect.Height)
                 {
-                    if (w.Rect.X > player.Rect.X)
+                    if (w.Rect.X > Player.Rect.X)
                     {
                         pos.X -= rect.Width;
                     }
@@ -62,7 +84,7 @@ namespace Good_Luck
                 }
                 else
                 {
-                    if (w.Rect.Y > player.Rect.Y)
+                    if (w.Rect.Y > Player.Rect.Y)
                     {
                         pos.Y -= rect.Height;
                     }
@@ -71,46 +93,46 @@ namespace Good_Luck
                         pos.Y += rect.Height;
                     }
                 }
-                player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
+                Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
             }
-            for (int i = 0; i < bullets.Count;)
+            for (int i = 0; i < Bullets.Count;)
             {
                 //When the bullet is off the screen
                 //May want to replace with wall collision
-                if (bullets[i].Rect.X <= 0 - bullets[i].Rect.Width || bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
-                    || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight + bullets[i].Rect.Height)
+                if (Bullets[i].Rect.X <= 0 - Bullets[i].Rect.Width || Bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
+                    || Bullets[i].Rect.Y <= 0 - Bullets[i].Rect.Height || Bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight + Bullets[i].Rect.Height)
                 {
                     //Delete the button
-                    bullets.RemoveAt(i);
+                    Bullets.RemoveAt(i);
                     return;
                 }
 
                 //Wall collisions
-                for(int w = 0; w < walls.Count; ++w)
+                for(int w = 0; w < Walls.Count; ++w)
                 {
-                    if (walls[w].Rect.Intersects(bullets[i].Rect))
+                    if (Walls[w].Rect.Intersects(Bullets[i].Rect))
                     {
-                        bullets.RemoveAt(i);
+                        Bullets.RemoveAt(i);
                         return;
                     }
                 }
 
                 //When the bullet hits an enemy, delete the bullet and make the enemy take damage
-                for(int e = 0; e < enemies.Count; ++e)
+                for(int e = 0; e < Enemies.Count; ++e)
                 {
-                    if (enemies[e].IsActive && enemies[e].IsColliding(bullets[i]))
+                    if (Enemies[e].IsActive && Enemies[e].IsColliding(Bullets[i]))
                     {
-                        bullets.RemoveAt(i);
-                        enemies[e].TakeDamage(player.Damage);
-                        if (!enemies[e].IsActive)
+                        Bullets.RemoveAt(i);
+                        Enemies[e].TakeDamage(Player.Damage);
+                        if (!Enemies[e].IsActive)
                         {
-                            enemies.RemoveAt(e);
+                            Enemies.RemoveAt(e);
                         }
                         return;
                     }
                 }
                 //If this bullet hits nothing, move on to the next bullet
-                bullets[i].Move();
+                Bullets[i].Move();
                 ++i;
             }
         }
