@@ -59,7 +59,7 @@ namespace Good_Luck
                 }
                 //If this bullet hits nothing, move on to the next bullet
                 bullets[i].Move();
-                i++;
+                ++i;
             }
         }
     }
