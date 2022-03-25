@@ -96,7 +96,7 @@ namespace Good_Luck
             gameState = GameState.Title;
             buttons = new List<Button>();
             playerRect = new Rectangle(250, 250, 50, 50);
-            enemyRect = new Rectangle(300, 100, 100, 100);
+            enemyRect = new Rectangle(50, 100, 100, 100);
             bullets = new List<Bullet>();
             level = 0;
 
@@ -229,15 +229,40 @@ namespace Good_Luck
                     {
                         bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
-                    foreach (Bullet bullet in bullets)
+                    for (int i = 0; i < bullets.Count; )
                     {
-                        if (enemy.IsColliding(bullet))
+                        //When the bullet is off the screen
+                        if(bullets[i].Rect.X <=  0 - bullets[i].Rect.Width || bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
+                            || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight)
                         {
-                            bullet.IsActive = false;
-                            enemy.TakeDamage(player.Damage);
-                            
+                            bullets[i].IsActive = false;
+                            bullets.RemoveAt(i);
+                            return;
                         }
+                        if (enemy.IsActive && enemy.IsColliding(bullets[i]))
+                        {
+                            bullets.RemoveAt(i);
+                            enemy.TakeDamage(player.Damage);
+                            return;
+                        }
+
+                        i++;
                     }
+                    //foreach (Bullet bullet in bullets)
+                    //{
+                    //    //When the bullet is off the screen
+                    //    if(bullet.Rect.X <= 0-bullet.Rect.Width && bullet.Rect.X >= 50 
+                    //        && bullet.Rect.Y <= 0 - bullet.Rect.Height && bullet.Rect.Y >= _graphics.PreferredBackBufferHeight)
+                    //    {
+                    //        bullet.IsActive = false;
+                    //    }
+                    //    if (enemy.IsActive && enemy.IsColliding(bullet))
+                    //    {
+                    //        bullet.IsActive = false;
+                    //        enemy.TakeDamage(player.Damage);
+                    //        
+                    //    }
+                    //}
                     break;
                 case GameState.Pause:
                     //Reset the button list
