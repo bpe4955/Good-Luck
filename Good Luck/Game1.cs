@@ -165,7 +165,7 @@ namespace Good_Luck
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             // Entity Loading
-            player = new Player(playerRect, playerTexture, 5, 10, 0, 6);
+            player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
             enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6);
 
         }
@@ -233,7 +233,9 @@ namespace Good_Luck
                     {
                         if (enemy.IsColliding(bullet))
                         {
-                            enemy.IsActive = false;
+                            bullet.IsActive = false;
+                            enemy.TakeDamage(player.Damage);
+                            
                         }
                     }
                     break;
