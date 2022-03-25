@@ -357,9 +357,9 @@ namespace Good_Luck
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
                     break;
                 case GameState.Game:
+                    DrawBullets();
                     player.Draw(_spriteBatch);
                     enemy.Draw(_spriteBatch);
-                    DrawBullets();
                     break;
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
