@@ -229,40 +229,27 @@ namespace Good_Luck
                     {
                         bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
+                    //Loop through every bullet
                     for (int i = 0; i < bullets.Count; )
                     {
                         //When the bullet is off the screen
                         if(bullets[i].Rect.X <=  0 - bullets[i].Rect.Width || bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
                             || bullets[i].Rect.Y <= 0 - bullets[i].Rect.Height || bullets[i].Rect.Y >= _graphics.PreferredBackBufferHeight)
                         {
-                            bullets[i].IsActive = false;
+                            //Delete the button
                             bullets.RemoveAt(i);
                             return;
                         }
+                        //When the bullet hits an enemy, delete the bullet and make the enemy take damage
                         if (enemy.IsActive && enemy.IsColliding(bullets[i]))
                         {
                             bullets.RemoveAt(i);
                             enemy.TakeDamage(player.Damage);
                             return;
                         }
-
+                        //If this bullet hits nothing, move on to the next bullet
                         i++;
                     }
-                    //foreach (Bullet bullet in bullets)
-                    //{
-                    //    //When the bullet is off the screen
-                    //    if(bullet.Rect.X <= 0-bullet.Rect.Width && bullet.Rect.X >= 50 
-                    //        && bullet.Rect.Y <= 0 - bullet.Rect.Height && bullet.Rect.Y >= _graphics.PreferredBackBufferHeight)
-                    //    {
-                    //        bullet.IsActive = false;
-                    //    }
-                    //    if (enemy.IsActive && enemy.IsColliding(bullet))
-                    //    {
-                    //        bullet.IsActive = false;
-                    //        enemy.TakeDamage(player.Damage);
-                    //        
-                    //    }
-                    //}
                     break;
                 case GameState.Pause:
                     //Reset the button list
