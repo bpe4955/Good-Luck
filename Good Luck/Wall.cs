@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Good_Luck
 {
-    class Wall 
+    class Wall
     {
         //fields
         private Rectangle rect;
@@ -36,6 +36,16 @@ namespace Good_Luck
         {
             this.rect = rect;
             this.texture = texture;
+        }
+
+        //Method
+        /// <summary>
+        /// Draws the wall to the screen
+        /// </summary>
+        /// <param name="sb">The spritebatch needed to draw</param>
+        public void Draw(SpriteBatch sb)
+        {
+            sb.Draw(texture, rect, Color.White);
         }
     }
 }

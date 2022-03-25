@@ -56,12 +56,15 @@ namespace Good_Luck
         Texture2D menuItemTextures;
         Texture2D playerTexture;
         Texture2D enemyTexture;
+        Texture2D wallTexture;
         Texture2D bulletTexture;
 
         Rectangle playerRect;
         Rectangle enemyRect;
+        Rectangle wallRect;
         Player player;
         Enemy enemy;
+        Wall wall;
 
         List<Bullet> bullets;
 
@@ -98,6 +101,7 @@ namespace Good_Luck
             //buttons = new List<Button>();
             playerRect = new Rectangle(250, 250, 50, 50);
             enemyRect = new Rectangle(50, 100, 100, 100);
+            wallRect = new Rectangle(500, 250, 75, 75);
             bullets = new List<Bullet>();
             level = 0;
 
@@ -173,6 +177,8 @@ namespace Good_Luck
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("smallSquare");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
+            wallTexture = Content.Load<Texture2D>("smallSquareGray");
+            
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
@@ -216,6 +222,7 @@ namespace Good_Luck
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
             enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6);
+            wall = new Wall(wallRect, wallTexture);
 
         }
 
@@ -356,11 +363,14 @@ namespace Good_Luck
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
                     break;
+
                 case GameState.Game:
                     DrawBullets();
                     player.Draw(_spriteBatch);
                     enemy.Draw(_spriteBatch);
+                    wall.Draw(_spriteBatch);
                     break;
+
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
 
@@ -377,6 +387,7 @@ namespace Good_Luck
                     DrawTextToButton("Menu", buttons[3][1].Rect, 3.5f);
                     DrawTextToButton("Quit", buttons[3][2].Rect, 3.5f);
                     break;
+
                 case GameState.Options:
                     DisplayBackAndTitle("Options");
 
@@ -386,6 +397,7 @@ namespace Good_Luck
                     DrawTextToButton("Back", buttons[4][1].Rect, 3.5f);
 
                     break;
+
                 case GameState.Keybinds:
                     DisplayBackAndTitle("Keybindings");
 
