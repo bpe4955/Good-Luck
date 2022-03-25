@@ -104,6 +104,7 @@ namespace Good_Luck
                         enemies[e].TakeDamage(player.Damage);
                         if (!enemies[e].IsActive)
                         {
+                            player.TotalScore += enemies[e].Score;
                             enemies.RemoveAt(e);
                         }
                         return;

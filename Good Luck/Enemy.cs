@@ -12,17 +12,20 @@ namespace Good_Luck
         private int maxhealth;
         private int health;
         private int bulletSpeed;
+        private int score;
 
         // Properties
         public int MaxHealth { get { return health; } }
         public int Health { get { return health; } set { health = value; } }
+        public int Score { get { return score; } set { score = value; } }
 
-        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed)
+        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score)
         : base(enemyTexture, enemyRect, speed)
         {
             this.maxhealth = maxhealth;
             this.health = maxhealth;
             this.bulletSpeed = bulletSpeed;
+            this.score = score;
         }
 
         public override void Draw(SpriteBatch sb)
