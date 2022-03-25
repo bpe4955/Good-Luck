@@ -40,6 +40,7 @@ namespace Good_Luck
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState gameState;
+        int level;
         MouseState previousMouseState;
         MouseState mouseState;
         KeyboardState kb;
@@ -97,6 +98,7 @@ namespace Good_Luck
             playerRect = new Rectangle(250, 250, 50, 50);
             enemyRect = new Rectangle(300, 100, 100, 100);
             bullets = new List<Bullet>();
+            level = 0;
 
 
             lightPurple = new Color(232, 216, 255);
@@ -568,41 +570,40 @@ namespace Good_Luck
             }
         }
 
-        // To Be Finished when player class
-        ///// <summary>
-        ///// Sorts and saves the player's data
-        ///// </summary>
-        //private void SaveHighScore()
-        //{
-        //    //Create the data to save
-        //    HighScoreData data = HighScoreData.LoadHighScores(fileName);
-        //
-        //    int scoreIndex = -1;
-        //    //Loop through saved data to find where to place new data
-        //    for (int i = 0; i < highScoreCount; i++)
-        //    {
-        //        if (player.TotalScore > data.scores[i])
-        //        {
-        //            scoreIndex = i;
-        //            break;
-        //        }
-        //    }
-        //
-        //    //If new score is found, insert into list
-        //    if (scoreIndex > -1)
-        //    {
-        //        for (int i = highScoreCount - 1; i > scoreIndex; i--)
-        //        {
-        //            data.scores[i] = data.scores[i - 1];
-        //            data.levels[i] = data.levels[i - 1];
-        //        }
-        //
-        //        data.scores[scoreIndex] = player.TotalScore;
-        //        data.levels[scoreIndex] = level;
-        //
-        //        HighScoreData.SaveHighScores(data, fileName);
-        //    }
-        //
-        //}
+        /// <summary>
+        /// Sorts and saves the player's data
+        /// </summary>
+        private void SaveHighScore()
+        {
+            //Create the data to save
+            HighScoreData data = HighScoreData.LoadHighScores(fileName);
+        
+            int scoreIndex = -1;
+            //Loop through saved data to find where to place new data
+            for (int i = 0; i < highScoreCount; i++)
+            {
+                if (player.TotalScore > data.scores[i])
+                {
+                    scoreIndex = i;
+                    break;
+                }
+            }
+        
+            //If new score is found, insert into list
+            if (scoreIndex > -1)
+            {
+                for (int i = highScoreCount - 1; i > scoreIndex; i--)
+                {
+                    data.scores[i] = data.scores[i - 1];
+                    data.levels[i] = data.levels[i - 1];
+                }
+        
+                data.scores[scoreIndex] = player.TotalScore;
+                data.levels[scoreIndex] = level;
+        
+                HighScoreData.SaveHighScores(data, fileName);
+            }
+        
+        }
     }
 }

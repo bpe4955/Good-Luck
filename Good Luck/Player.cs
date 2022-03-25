@@ -14,11 +14,13 @@ namespace Good_Luck
         private int health;
         private int defenseStat;
         private int bulletSpeed;
+        private int totalScore;
 
         // Properties
         public int MaxHealth { get { return health; } }
         public int Health { get { return health; } set { health = value; } }
         public int DefenseStat { get { return defenseStat; } set { defenseStat = value; } }
+        public int TotalScore { get { return totalScore; } set { totalScore = value; } }
 
         /// <summary>
         /// Creates the Player Character that will be controlled in Gameplay
