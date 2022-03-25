@@ -254,13 +254,12 @@ namespace Good_Luck
                     {
                         gameState = GameState.Pause;
                     }
-                    player.Move(kb);
                     if (SingleMouseClick(MouseButton.Left))
                     {
                         entityManager.bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
-                    entityManager.CheckBulletCollision(_graphics);
+                    entityManager.UpdateEntities(_graphics, kb);
                     break;
                 case GameState.Pause:
                     if (SingleKeyPress(Keys.Escape))

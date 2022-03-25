@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Good_Luck
 {
@@ -40,8 +41,38 @@ namespace Good_Luck
             }
         }
 
-        public void CheckBulletCollision(GraphicsDeviceManager _graphics)
+        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb)
         {
+            player.Move(kb);
+            if (walls.Exists(x => x.Rect.Intersects(player.Rect)))
+            {
+                Wall w = walls.Find(x => x.Rect.Intersects(player.Rect));
+                Rectangle rect = Rectangle.Intersect(w.Rect, player.Rect);
+                Vector2 pos = new Vector2(player.Rect.X, player.Rect.Y);
+                if (rect.Width <= rect.Height)
+                {
+                    if (w.Rect.X > player.Rect.X)
+                    {
+                        pos.X -= rect.Width;
+                    }
+                    else
+                    {
+                        pos.X += rect.Width;
+                    }
+                }
+                else
+                {
+                    if (w.Rect.Y > player.Rect.Y)
+                    {
+                        pos.Y -= rect.Height;
+                    }
+                    else
+                    {
+                        pos.Y += rect.Height;
+                    }
+                }
+                player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
+            }
             for (int i = 0; i < bullets.Count;)
             {
                 //When the bullet is off the screen
