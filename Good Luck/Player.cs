@@ -69,9 +69,14 @@ namespace Good_Luck
         {
             Rectangle collidedRect = new Rectangle(other.Rect.X, other.Rect.Y, other.Rect.Width, other.Rect.Height);
 
-            if (Rect.Intersects(collidedRect))
+            if (Rect.Intersects(collidedRect) && other is Bullet)
             {
-                return true;
+                Bullet shot = (Bullet)other;
+                if (shot.BulletOwner != this)
+                {
+                    return true;
+                }
+
             }
             return false;
         }

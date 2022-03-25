@@ -11,6 +11,8 @@ namespace Good_Luck
         private Entity bulletOwner;
         private float bulletAngle;
 
+        public Entity BulletOwner { get { return bulletOwner; } }
+
         public Bullet(Rectangle bulletRect, Texture2D bulletTexture, float bulletSpeed, Entity bulletOwner, float bulletAngle)
             :base(bulletTexture, bulletRect, bulletSpeed)
         {

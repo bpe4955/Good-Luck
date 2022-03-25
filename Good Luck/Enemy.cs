@@ -2,29 +2,51 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Good_Luck
 {
-    class Enemy
+    class Enemy : Entity
     {
-        public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int DefenseStat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        // Fields
+        private int maxhealth;
+        private int health;
+        private int bulletSpeed;
 
-        public int MaxHealth => throw new NotImplementedException();
+        // Properties
+        public int MaxHealth { get { return health; } }
+        public int Health { get { return health; } set { health = value; } }
+
+        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed)
+        : base(enemyTexture, enemyRect, speed)
+        {
+            this.maxhealth = maxhealth;
+            this.health = maxhealth;
+            this.bulletSpeed = bulletSpeed;
+        }
 
         public override void Draw(SpriteBatch sb)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Heal(int amount)
-        {
-            throw new NotImplementedException();
+            if (isActive)
+            {
+                sb.Draw(texture, rect, Color.White);
+            }
         }
 
         public override bool IsColliding(Entity other)
         {
-            throw new NotImplementedException();
+            Rectangle collidedRect = new Rectangle(other.Rect.X, other.Rect.Y, other.Rect.Width, other.Rect.Height);
+
+            if (Rect.Intersects(collidedRect) && other is Bullet)
+            {
+                Bullet shot = (Bullet)other;
+                if (shot.BulletOwner != this)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void TakeDamage(int amount)

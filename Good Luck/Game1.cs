@@ -53,10 +53,13 @@ namespace Good_Luck
         Texture2D buttonImage;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
+        Texture2D enemyTexture;
         Texture2D bulletTexture;
 
         Rectangle playerRect;
+        Rectangle enemyRect;
         Player player;
+        Enemy enemy;
 
         List<Bullet> bullets;
 
@@ -92,6 +95,7 @@ namespace Good_Luck
             gameState = GameState.Title;
             buttons = new List<Button>();
             playerRect = new Rectangle(250, 250, 50, 50);
+            enemyRect = new Rectangle(300, 100, 100, 100);
             bullets = new List<Bullet>();
 
 
@@ -155,10 +159,12 @@ namespace Good_Luck
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("smallSquare");
+            enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6);
+            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6);
 
         }
 
@@ -220,6 +226,13 @@ namespace Good_Luck
                     if (SingleMouseClick(MouseButton.Left))
                     {
                         bullets.Add(player.Shoot(mouseState, bulletTexture));
+                    }
+                    foreach (Bullet bullet in bullets)
+                    {
+                        if (enemy.IsColliding(bullet))
+                        {
+                            enemy.IsActive = false;
+                        }
                     }
                     break;
                 case GameState.Pause:
@@ -343,6 +356,7 @@ namespace Good_Luck
                     break;
                 case GameState.Game:
                     player.Draw(_spriteBatch);
+                    enemy.Draw(_spriteBatch);
                     DrawBullets();
                     break;
                 case GameState.Pause:
