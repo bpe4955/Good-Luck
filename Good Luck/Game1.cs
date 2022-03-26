@@ -260,7 +260,7 @@ namespace Good_Luck
                     }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb);
-                    if(entityManager.enemies.Count == 0)
+                    if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(fileName);
