@@ -45,10 +45,10 @@ namespace Good_Luck
 
         public void Move(KeyboardState kb)
         {
-            if (kb.IsKeyDown(Keys.W)) { rect.Y -= (int)Math.Floor(speed); }
-            if (kb.IsKeyDown(Keys.A)) { rect.X -= (int)Math.Floor(speed); }
-            if (kb.IsKeyDown(Keys.S)) { rect.Y += (int)Math.Floor(speed); }
-            if (kb.IsKeyDown(Keys.D)) { rect.X += (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Game1.bindings[0])) { rect.Y -= (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Game1.bindings[1])) { rect.X -= (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Game1.bindings[2])) { rect.Y += (int)Math.Floor(speed); }
+            if (kb.IsKeyDown(Game1.bindings[3])) { rect.X += (int)Math.Floor(speed); }
         }
         public Bullet Shoot(MouseState mb, Texture2D bulletTexture)
         {

@@ -33,7 +33,6 @@ namespace Good_Luck
         Left,
         Right
     }
-
     public class Game1 : Game
     {
         //Fields
@@ -80,7 +79,8 @@ namespace Good_Luck
         //Misc
         Color lightPurple;
         Color darkPurple;
-        Keys[] bindings;
+        public static Keys[] bindings;
+        KeybindButton[] keybindButtons;
         EntityManager entityManager;
 
         //Save File Fields
@@ -126,6 +126,7 @@ namespace Good_Luck
                 Keys.S,
                 Keys.D
             };
+            keybindButtons = new KeybindButton[4];
 
             //Name of save file with the number of high scores
             fileName = "../../../HighScores.txt";
@@ -183,12 +184,12 @@ namespace Good_Luck
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
+            width = 198;
+            int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
+            height = (int)Math.Round(width * .25f);
+            int currentY = 135;
+            int spacing = (int)(height * 1.1f);
             {
-                width = 198;
-                int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
-                height = (int)Math.Round(width * .25f);
-                int spacing = (int)(height * 1.1f);
-                int currentY = 135;
                 buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
                 currentY += spacing;
                 buttons[0][1] = new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
@@ -218,6 +219,15 @@ namespace Good_Luck
                 buttons[3][1] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
                 currentY += spacing;
                 buttons[3][2] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+            }
+
+            spacing = 60;
+            int initX = 315;
+            int initY = 190;
+            for (int i = 0; i < 4; ++i)
+            {
+                Point pos = new Point(initX, initY + (spacing * (i - 1)));
+                keybindButtons[i] = new KeybindButton(menuItems[2], new Color(.5f, .5f, .5f), bindings[i], lightPurple, JelleeRoman20, pos);
             }
 
             // Entity Loading
@@ -279,6 +289,7 @@ namespace Good_Luck
                     break;
                 case GameState.Keybinds:
                     CheckButtons(5);
+                    CheckKeybinds();
                     break;
                 case GameState.GameOver:
                     CheckButtons(6);
@@ -394,14 +405,11 @@ namespace Good_Luck
                     };
 
                     //Keys
-                    spacing = 60;
-                    initX = 315;
-                    initY = 190;
                     for (int i = 0; i < 4; ++i)
                     {
-                        Point pos = new Point(initX, initY + (spacing * (i - 1)));
-                        DrawKeybind(pos, i);
-                        _spriteBatch.DrawString(MetalManiaNormal, text[i], new Vector2(pos.X + 75, pos.Y), lightPurple);
+                        keybindButtons[i].Draw(_spriteBatch);
+                        _spriteBatch.DrawString(MetalManiaNormal, text[i],
+                            new Vector2(keybindButtons[i].Rect.X + 75, keybindButtons[i].Rect.Y), lightPurple);
                     }
 
                     //Draw all the buttons
@@ -535,6 +543,28 @@ namespace Good_Luck
                     {
                         i++;
                     };
+                }
+            }
+        }
+
+        private void CheckKeybinds()
+        {
+            if (SingleMouseClick(MouseButton.Left))
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    if (keybindButtons[i].Collision(mouseState))
+                    {
+                        keybindButtons[i].Selected = true;
+                    }
+                }
+            }
+            else if(Keyboard.GetState().GetPressedKeyCount() > 0)
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    keybindButtons[i].Rebind();
+                    bindings[i] = keybindButtons[i].Key;
                 }
             }
         }
