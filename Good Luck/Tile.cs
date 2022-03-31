@@ -86,31 +86,43 @@ namespace Good_Luck
             switch (prefix)
             {
                 case ("01"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile01");
                     break;
                 case ("02"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile02");
                     break;
                 case ("03"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile03");
                     break;
                 case ("04"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile04");
                     break;
                 case ("05"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile05");
                     break;
                 case ("06"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile06");
                     break;
                 case ("07"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile07");
                     break;
                 case ("08"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile08");
                     break;
                 case ("09"):
-                    texture = content.Load<Texture2D>("smallSquare");
+                    texture = content.Load<Texture2D>("tile09");
+                    break;
+                case ("10"):
+                    texture = content.Load<Texture2D>("tile10");
+                    break;
+                case ("11"):
+                    texture = content.Load<Texture2D>("tile11");
+                    break;
+                case ("12"):
+                    texture = content.Load<Texture2D>("tile12");
+                    break;
+                case ("13"):
+                    texture = content.Load<Texture2D>("tile13");
                     break;
             }
         }

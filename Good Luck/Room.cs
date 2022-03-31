@@ -44,7 +44,7 @@ namespace Good_Luck
                     //Go through the line to generate each tile in the row
                     for (int x = 0; x < data.Length; x++)
                     {
-                        tiles.Add(new Tile(data[x], content, new Rectangle((x*50)+50,(y*50)+50,50,50)));
+                        tiles.Add(new Tile(data[x], content, new Rectangle((x*50),(y*50),50,50)));
                     }
                     //increment the collumn spacing
                     y++;
