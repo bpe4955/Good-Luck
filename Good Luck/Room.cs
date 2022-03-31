@@ -22,7 +22,7 @@ namespace Good_Luck
         public Room(string filename, ContentManager content)
         {
             //Will need to know where the doors are in order to connect rooms
-
+            tiles = new List<Tile>();
             //Loading in tiles
             StreamReader input = null;
             try

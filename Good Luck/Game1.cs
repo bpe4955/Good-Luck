@@ -242,8 +242,8 @@ namespace Good_Luck
             entityManager.Enemies.Add(enemy);
             entityManager.Walls.Add(wall);
 
-            //Testing room loading F
-            roomTest = new Room("room save", Content);
+            //Testing room loading 
+            roomTest = new Room("Content/Tiles.txt", Content);
         }
 
         protected override void Update(GameTime gameTime)

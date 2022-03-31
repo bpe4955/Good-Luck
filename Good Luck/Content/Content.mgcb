@@ -125,6 +125,9 @@
 /processorParam:TextureFormat=Color
 /build:smallSquareGray.png
 
+#begin Tiles.txt
+/copy:Tiles.txt
+
 #begin TileSheet.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
