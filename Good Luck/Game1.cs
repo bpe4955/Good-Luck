@@ -84,9 +84,12 @@ namespace Good_Luck
         EntityManager entityManager;
 
         //Save File Fields
-        private string fileName;
+        private string saveFileName;
         private int highScoreCount;
         HighScoreData saveData;
+
+        //Testing room loading
+        Room roomTest;
 
         public Game1()
         {
@@ -129,10 +132,10 @@ namespace Good_Luck
             keybindButtons = new KeybindButton[4];
 
             //Name of save file with the number of high scores
-            fileName = "../../../HighScores.txt";
+            saveFileName = "../../../HighScores.txt";
             highScoreCount = 1;
             //Check to see if save file exists
-            if (!File.Exists(fileName))
+            if (!File.Exists(saveFileName))
             {
                 //If the file doesn't exist, make a default one
                 HighScoreData data = new HighScoreData(highScoreCount);
@@ -142,10 +145,10 @@ namespace Good_Luck
                     data.scores[i] = (000);
                 }
 
-                HighScoreData.SaveHighScores(data, fileName);
+                HighScoreData.SaveHighScores(data, saveFileName);
             }
             //Load in save data from file to variable
-            saveData = HighScoreData.LoadHighScores(fileName);
+            saveData = HighScoreData.LoadHighScores(saveFileName);
 
             base.Initialize();
         }
@@ -238,6 +241,9 @@ namespace Good_Luck
             entityManager = new EntityManager(player);
             entityManager.Enemies.Add(enemy);
             entityManager.Walls.Add(wall);
+
+            //Testing room loading F
+            roomTest = new Room("room save", Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -273,7 +279,7 @@ namespace Good_Luck
                     if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();
-                        saveData = HighScoreData.LoadHighScores(fileName);
+                        saveData = HighScoreData.LoadHighScores(saveFileName);
                         gameState = GameState.GameOver;
                     }
                     break;
@@ -363,6 +369,7 @@ namespace Good_Luck
                     break;
 
                 case GameState.Game:
+                    roomTest.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     break;
 
@@ -602,7 +609,7 @@ namespace Good_Luck
         private void SaveHighScore()
         {
             //Create the data to save
-            HighScoreData data = HighScoreData.LoadHighScores(fileName);
+            HighScoreData data = HighScoreData.LoadHighScores(saveFileName);
         
             int scoreIndex = -1;
             //Loop through saved data to find where to place new data
@@ -627,7 +634,7 @@ namespace Good_Luck
                 data.scores[scoreIndex] = player.TotalScore;
                 data.levels[scoreIndex] = level;
         
-                HighScoreData.SaveHighScores(data, fileName);
+                HighScoreData.SaveHighScores(data, saveFileName);
             }
         
         }
