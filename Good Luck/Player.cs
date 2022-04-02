@@ -57,7 +57,6 @@ namespace Good_Luck
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, mouseBetweenPlayer.GetAngle());
 
-
             return playerBullet;
         }
 

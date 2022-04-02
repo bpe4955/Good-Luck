@@ -57,6 +57,7 @@ namespace Good_Luck
         Texture2D enemyTexture;
         Texture2D wallTexture;
         Texture2D bulletTexture;
+        Texture2D[] health;
 
         Rectangle playerRect;
         Rectangle enemyRect;
@@ -172,6 +173,14 @@ namespace Good_Luck
                 menuItemTextures.GetTexture(new Rectangle(300, 485, 272, 76), GraphicsDevice),
                 menuItemTextures.GetTexture(new Rectangle(577, 485, 52, 63), GraphicsDevice)
             };
+
+            Texture2D healthTexture = Content.Load<Texture2D>("HealthSpriteSheet");
+            health = new Texture2D[11];
+            for(int i = 0; i < 11; ++i)
+            {
+                health[i] = healthTexture.GetTexture(new Rectangle(i * 320, 0, 320, 320), GraphicsDevice);
+            }
+
             MetalManiaButtons = Content.Load<SpriteFont>("MetalManiaButtons");
             MetalManiaTitle = Content.Load<SpriteFont>("MetalManiaTitle");
             MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
@@ -364,6 +373,7 @@ namespace Good_Luck
 
                 case GameState.Game:
                     entityManager.Draw(_spriteBatch);
+                    DrawHud();
                     break;
 
                 case GameState.Pause:
@@ -457,6 +467,17 @@ namespace Good_Luck
         }
 
         //Methods
+
+        /// <summary>
+        /// Draws the game hud
+        /// </summary>
+        private void DrawHud()
+        {
+            _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
+                new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {level}\nScore: xxx", new Vector2(10, 5), lightPurple);
+        }
+
         /// <summary>
         /// Draws a keybind button with the correct keybinding
         /// </summary>
