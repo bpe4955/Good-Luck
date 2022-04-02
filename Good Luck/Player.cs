@@ -10,7 +10,7 @@ namespace Good_Luck
     class Player : Entity, IDamageable
     {
         // Fields
-        private int maxhealth;
+        private int maxHealth;
         private int health;
         private int damage;
         private int defenseStat;
@@ -18,7 +18,7 @@ namespace Good_Luck
         private int totalScore;
 
         // Properties
-        public int MaxHealth { get { return health; } }
+        public int MaxHealth { get { return maxHealth; } }
         public int Health { get { return health; } set { health = value; } }
         public int DefenseStat { get { return defenseStat; } set { defenseStat = value; } }
         public int Damage { get { return damage; } set { damage = value; } }
@@ -36,7 +36,7 @@ namespace Good_Luck
             : base(playerTexture, playerRect, speed)
         {
 
-            this.maxhealth = maxhealth;
+            this.maxHealth = maxhealth;
             this.health = maxhealth;
             this.defenseStat = defense;
             this.damage = damage;
