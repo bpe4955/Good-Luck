@@ -19,7 +19,7 @@ namespace Good_Luck
         private List<Wall> doors;
 
         //constructor
-        public Room(string filename, ContentManager content)
+        public Room(string filename, ContentManager content, EntityManager entityManager)
         {
             //Will need to know where the doors are in order to connect rooms
             tiles = new List<Tile>();
@@ -44,7 +44,7 @@ namespace Good_Luck
                     //Go through the line to generate each tile in the row
                     for (int x = 0; x < data.Length; x++)
                     {
-                        tiles.Add(new Tile(data[x], content, new Rectangle((x*50),(y*50),50,50)));
+                        tiles.Add(new Tile(data[x], content, entityManager, new Rectangle((x*50),(y*50),50,50)));
                     }
                     //increment the collumn spacing
                     y++;

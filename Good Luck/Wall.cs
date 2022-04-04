@@ -41,6 +41,7 @@ namespace Good_Luck
         {
             this.rect = rect;
             this.texture = texture;
+            isDoor = false;
         }
         /// <summary>
         /// Constructor for an invisible wall with only a rectangle
@@ -49,6 +50,7 @@ namespace Good_Luck
         public Wall(Rectangle rect)
         {
             this.rect = rect;
+            isDoor = false;
         }
 
         //Method
@@ -58,7 +60,7 @@ namespace Good_Luck
         /// <param name="sb">The spritebatch needed to draw</param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rect, Color.White);
+            if(texture != null) { sb.Draw(texture, rect, Color.White); }
         }
     }
 }

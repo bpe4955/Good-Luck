@@ -30,6 +30,10 @@ namespace Good_Luck
         private Texture2D texture;
         private Rectangle rect;
         private TileProperty property;
+        private int wallThickness = 7;
+
+        private Wall topWall;
+        private Wall sideWall;
 
         //Properties
         /// <summary>
@@ -60,11 +64,13 @@ namespace Good_Luck
         /// <param name="code">The tile's code from the external tool</param>
         /// <param name="content">The manager needed to load content</param>
         /// <param name="rect">The position and size of the tile</param>
-        public Tile(string code, ContentManager content, Rectangle rect)
+        public Tile(string code, ContentManager content, EntityManager entityManager, Rectangle rect)
         {
+            this.rect = rect;
             LoadTexture(code.Substring(0, 2), content);
             LoadProperty(code.Substring(2, 2));
-            this.rect = rect;
+            GenerateWalls(entityManager);
+            
         }
 
         //Methods
@@ -78,6 +84,7 @@ namespace Good_Luck
         }
         /// <summary>
         /// Loads in the texture for the tile based on the first two character's of its code
+        /// Also generate walls where necessary
         /// </summary>
         /// <param name="prefix">the first two character's of its code</param>
         /// <param name="content">The manager needed to load content</param>
@@ -85,44 +92,77 @@ namespace Good_Luck
         {
             switch (prefix)
             {
+                //Top-Left
                 case ("01"):
                     texture = content.Load<Texture2D>("tile01");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
+                    sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
+                //Top-Center
                 case ("02"):
                     texture = content.Load<Texture2D>("tile02");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     break;
+                //Top-Right
                 case ("03"):
                     texture = content.Load<Texture2D>("tile03");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
+                    sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
+                //Left
                 case ("04"):
                     texture = content.Load<Texture2D>("tile04");
+                    sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
+                //Center
                 case ("05"):
                     texture = content.Load<Texture2D>("tile05");
                     break;
+                //Right
                 case ("06"):
                     texture = content.Load<Texture2D>("tile06");
+                    sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
+                //Bottom-Left
                 case ("07"):
                     texture = content.Load<Texture2D>("tile07");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y+rect.Height-wallThickness, rect.Width, wallThickness)); //Bottom Wall
+                    sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
+                //Bottom-Center
                 case ("08"):
                     texture = content.Load<Texture2D>("tile08");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     break;
+                //Bottom-Right
                 case ("09"):
                     texture = content.Load<Texture2D>("tile09");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
+                    sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
+                //Top-Door
                 case ("10"):
                     texture = content.Load<Texture2D>("tile10");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
+                    topWall.IsDoor = true;
                     break;
+                //Right-Door
                 case ("11"):
                     texture = content.Load<Texture2D>("tile11");
+                    sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
+                    sideWall.IsDoor = true;
                     break;
+                //Bottom-Door
                 case ("12"):
                     texture = content.Load<Texture2D>("tile12");
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
+                    topWall.IsDoor = true;
                     break;
+                //Left-Door
                 case ("13"):
                     texture = content.Load<Texture2D>("tile13");
+                    sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
+                    sideWall.IsDoor = true;
                     break;
             }
         }
@@ -153,6 +193,15 @@ namespace Good_Luck
                     property = TileProperty.Default;
                     break;
             }
+        }
+        /// <summary>
+        /// Give the wall data to the EntityManager to allow for collision
+        /// </summary>
+        /// <param name="entityManager">The class that handles entity collisions</param>
+        private void GenerateWalls(EntityManager entityManager)
+        {
+            if (topWall != null) { entityManager.Walls.Add(topWall); }
+            if (sideWall != null) { entityManager.Walls.Add(sideWall); }
         }
 
     }
