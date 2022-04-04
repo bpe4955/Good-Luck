@@ -18,10 +18,24 @@ namespace Good_Luck
         private List<Tile> tiles;
         private List<Wall> doors;
 
+        //Connecting fields
+        private Room topRoom;
+        private bool hasTopDoor;
+        private Room leftRoom;
+        private bool hasLeftDoor;
+        private Room bottomRoom;
+        private bool hasBottomDoor;
+        private Room rightRoom;
+        private bool hasRightDoor;
+
         //constructor
         public Room(string filename, ContentManager content, EntityManager entityManager)
         {
-            //Will need to know where the doors are in order to connect rooms
+            //Will need to know where the doors are in order to connect rooms (will be first line of external tool
+            hasTopDoor = false;
+            hasBottomDoor = false;
+            hasLeftDoor = false;
+            hasRightDoor = false;
             tiles = new List<Tile>();
             //Loading in tiles
             StreamReader input = null;
@@ -63,6 +77,7 @@ namespace Good_Luck
                     input.Close();
                 }
             }
+            
         }
 
         //Methods 

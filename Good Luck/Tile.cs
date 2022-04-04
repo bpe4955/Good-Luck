@@ -35,6 +35,7 @@ namespace Good_Luck
         private Wall topWall;
         private Wall sideWall;
 
+
         //Properties
         /// <summary>
         /// Get the tile's texture but cannot set it

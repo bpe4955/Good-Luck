@@ -89,7 +89,9 @@ namespace Good_Luck
         HighScoreData saveData;
 
         //Testing room loading
-        Room roomTest;
+        LevelManager levelManager;
+        Room roomTest1;
+        Room roomTest2;
 
         public Game1()
         {
@@ -243,7 +245,9 @@ namespace Good_Luck
             entityManager.Walls.Add(wall);
 
             //Testing room loading 
-            roomTest = new Room("Content/Tiles.txt", Content, entityManager);
+            levelManager = new LevelManager(Content, entityManager);
+            roomTest1 = new Room("Content/Tiles.txt", Content, entityManager);
+            roomTest2 = new Room("Content/Tiles.txt", Content, entityManager);
         }
 
         protected override void Update(GameTime gameTime)
@@ -280,7 +284,6 @@ namespace Good_Luck
                     {
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
-                        gameState = GameState.GameOver;
                     }
                     break;
                 case GameState.Pause:
@@ -369,7 +372,7 @@ namespace Good_Luck
                     break;
 
                 case GameState.Game:
-                    roomTest.Draw(_spriteBatch);
+                    roomTest1.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     break;
 
