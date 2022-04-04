@@ -66,6 +66,13 @@ namespace Good_Luck
         public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb)
         {
             Player.Move(kb);
+            for (int i = 0; i < Enemies.Count; ++i)
+            {
+                if (Enemies[i].IsActive)
+                {
+                    Enemies[i].Move();
+                }
+            }
             if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
             {
                 Wall w = Walls.Find(x => x.Rect.Intersects(Player.Rect));
