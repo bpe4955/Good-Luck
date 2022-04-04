@@ -9,20 +9,20 @@ namespace Good_Luck
     class Enemy : Entity
     {
         // Fields
-        private int maxhealth;
+        private int maxHealth;
         private int health;
         private int bulletSpeed;
         private int score;
 
         // Properties
-        public int MaxHealth { get { return health; } }
+        public int MaxHealth { get { return maxHealth; } }
         public int Health { get { return health; } set { health = value; } }
         public int Score { get { return score; } set { score = value; } }
 
         public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score)
         : base(enemyTexture, enemyRect, speed)
         {
-            this.maxhealth = maxhealth;
+            this.maxHealth = maxhealth;
             this.health = maxhealth;
             this.bulletSpeed = bulletSpeed;
             this.score = score;
