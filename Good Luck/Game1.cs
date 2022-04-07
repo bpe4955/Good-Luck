@@ -90,8 +90,11 @@ namespace Good_Luck
 
         //Testing room loading
         LevelManager levelManager;
+        Room currentRoom;
         Room roomTest1;
         Room roomTest2;
+        Room roomTest3;
+        Room roomTest4;
 
         public Game1()
         {
@@ -246,8 +249,16 @@ namespace Good_Luck
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
-            roomTest1 = new Room("Content/Tiles.txt", Content, entityManager);
-            roomTest2 = new Room("Content/Tiles.txt", Content, entityManager);
+            //roomTest1 = new Room("Content/TopRoom.level", Content, entityManager);
+            //levelManager.AddRoom(roomTest1);
+            //roomTest2 = new Room("Content/RightRoom.level", Content, entityManager);
+            //levelManager.AddRoom(roomTest2);
+            //roomTest3 = new Room("Content/BottomRoom.Level", Content, entityManager);
+            //levelManager.AddRoom(roomTest3);
+            //roomTest4 = new Room("Content/LeftRoom.Level", Content, entityManager);
+            //levelManager.AddRoom(roomTest4);
+            //currentRoom = levelManager.AdjacencyList[0][0];
+            currentRoom = new Room("Content/MiddleRoom.Level", Content, entityManager);
         }
 
         protected override void Update(GameTime gameTime)
@@ -269,6 +280,10 @@ namespace Good_Luck
                 case GameState.Credits:
                     CheckButtons(2);
                     break;
+
+                //
+                // GAME
+                //
                 case GameState.Game:
                     if (SingleKeyPress(Keys.Escape))
                     {
@@ -286,6 +301,9 @@ namespace Good_Luck
                         saveData = HighScoreData.LoadHighScores(saveFileName);
                     }
                     break;
+
+
+
                 case GameState.Pause:
                     if (SingleKeyPress(Keys.Escape))
                     {
@@ -372,7 +390,7 @@ namespace Good_Luck
                     break;
 
                 case GameState.Game:
-                    roomTest1.Draw(_spriteBatch);
+                    currentRoom.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     break;
 

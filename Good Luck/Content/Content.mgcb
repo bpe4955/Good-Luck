@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BottomRoom.level
+/copy:BottomRoom.level
+
 #begin Bullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -55,6 +58,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:JelleeRoman20.spritefont
+
+#begin LeftRoom.level
+/copy:LeftRoom.level
 
 #begin MenuImages.png
 /importer:TextureImporter
@@ -100,6 +106,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:MetalManiaTitle.spritefont
+
+#begin MiddleRoom.level
+/copy:MiddleRoom.level
+
+#begin RightRoom.level
+/copy:RightRoom.level
 
 #begin smallSquare.png
 /importer:TextureImporter
@@ -284,6 +296,30 @@
 /processorParam:TextureFormat=Color
 /build:tile13.png
 
+#begin tile14.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tile14.png
+
+#begin tile15.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tile15.png
+
 #begin Tiles.txt
 /copy:Tiles.txt
 
@@ -298,4 +334,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileSheet.jpg
+
+#begin TopRoom.level
+/copy:TopRoom.level
 

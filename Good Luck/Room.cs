@@ -16,26 +16,41 @@ namespace Good_Luck
         private int height;
         private List<Wall> walls;
         private List<Tile> tiles;
-        private List<Wall> doors;
+        private Dictionary<string, int> doorLocations;
 
         //Connecting fields
-        private Room topRoom;
         private bool hasTopDoor;
-        private Room leftRoom;
         private bool hasLeftDoor;
-        private Room bottomRoom;
         private bool hasBottomDoor;
-        private Room rightRoom;
         private bool hasRightDoor;
+
+        //Parameters
+        /// <summary>
+        /// Get and set whether the door has an viable top-door
+        /// </summary>
+        public bool HasTopDoor { get => hasTopDoor; set => hasTopDoor = value; }
+        /// <summary>
+        /// Get and set whether the door has an viable left-door
+        /// </summary>
+        public bool HasLeftDoor { get => hasLeftDoor; set => hasLeftDoor = value; }
+        /// <summary>
+        /// Get and set whether the door has an viable bottom-door
+        /// </summary>
+        public bool HasBottomDoor { get => hasBottomDoor; set => hasBottomDoor = value; }
+        /// <summary>
+        /// Get and set whether the door has an viable right-door
+        /// </summary>
+        public bool HasRightDoor { get => hasRightDoor; set => hasRightDoor = value; }
 
         //constructor
         public Room(string filename, ContentManager content, EntityManager entityManager)
         {
-            //Will need to know where the doors are in order to connect rooms (will be first line of external tool
+            //Will need to know where the doors are in order to connect rooms (will be first line of external tool)
             hasTopDoor = false;
             hasBottomDoor = false;
             hasLeftDoor = false;
             hasRightDoor = false;
+            doorLocations = new Dictionary<string, int>();
             tiles = new List<Tile>();
             //Loading in tiles
             StreamReader input = null;
@@ -43,13 +58,22 @@ namespace Good_Luck
             {
                 input = new StreamReader(filename);
                 string line = null;
-                ////Get the height and width
-                //if ((line = input.ReadLine()) != null)
-                //{
-                //    string[] data = line.Split(',');
-                //    width = Int32.Parse(data[0]);
-                //    height = Int32.Parse(data[1]);
-                //}
+                //Get the door information
+                line = input.ReadLine();
+                int doorIndex;
+                Int32.TryParse(line, out doorIndex);
+                doorLocations.Add("top", doorIndex);
+                line = input.ReadLine();
+                doorIndex = Int32.Parse(line);
+                doorLocations.Add("left", doorIndex);
+                line = input.ReadLine();
+                doorIndex = Int32.Parse(line);
+                doorLocations.Add("right", doorIndex);
+                line = input.ReadLine();
+                doorIndex = Int32.Parse(line);
+                doorLocations.Add("bottom", doorIndex);
+
+
                 //loop through each line in the file 
                 int y = 0;
                 while ((line = input.ReadLine()) != null)
@@ -58,7 +82,7 @@ namespace Good_Luck
                     //Go through the line to generate each tile in the row
                     for (int x = 0; x < data.Length; x++)
                     {
-                        tiles.Add(new Tile(data[x], content, entityManager, new Rectangle((x*50),(y*50),50,50)));
+                        tiles.Add(new Tile(data[x], content, entityManager, new Rectangle((x * 80), (y * 80), 80, 80)));
                     }
                     //increment the collumn spacing
                     y++;
@@ -68,6 +92,7 @@ namespace Good_Luck
             catch (Exception e)
             {
                 Console.WriteLine("Error reading file: " + e.Message);
+                System.Diagnostics.Debug.WriteLine("Error reading file " + filename);
             }
             finally
             {
@@ -77,16 +102,33 @@ namespace Good_Luck
                     input.Close();
                 }
             }
-            
+            //CheckForDoors();
+
         }
 
+
         //Methods 
+        /// <summary>
+        /// Draws the room and all its tiles
+        /// </summary>
+        /// <param name="sb">Sprite_Batch needed to draw</param>
         public void Draw(SpriteBatch sb)
         {
             foreach (Tile tile in tiles)
             {
                 tile.Draw(sb);
             }
+        }
+        /// <summary>
+        /// Check top, bottom, left, and right tiles for doors
+        /// and set values accordingly
+        /// </summary>
+        private void CheckForDoors()
+        {
+            if (doorLocations["top"] != -1) { HasTopDoor = true; }
+            if (doorLocations["left"] != -1) { HasLeftDoor = true; }
+            if (doorLocations["right"] != -1) { HasRightDoor = true; }
+            if (doorLocations["bottom"] != -1) { HasBottomDoor = true; }
         }
 
     }

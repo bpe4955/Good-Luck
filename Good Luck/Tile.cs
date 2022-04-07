@@ -34,6 +34,7 @@ namespace Good_Luck
 
         private Wall topWall;
         private Wall sideWall;
+        private Wall centerWall;
 
 
         //Properties
@@ -51,6 +52,10 @@ namespace Good_Luck
         /// then gets set to default
         /// </summary>
         public TileProperty Property { get => property; private set => property = value; }
+        /// <summary>
+        /// Get whether the tile has a door or not
+        /// </summary>
+        public bool HasDoor { get; private set; }
 
         //Constructor
         public Tile(Texture2D texture, Rectangle rect)
@@ -68,6 +73,7 @@ namespace Good_Luck
         public Tile(string code, ContentManager content, EntityManager entityManager, Rectangle rect)
         {
             this.rect = rect;
+            HasDoor = false;
             LoadTexture(code.Substring(0, 2), content);
             LoadProperty(code.Substring(2, 2));
             GenerateWalls(entityManager);
@@ -81,7 +87,8 @@ namespace Good_Luck
         /// <param name="sb">The SpriteBatch needed to draw the tile</param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rect, Color.White);
+            if(texture != null)
+                sb.Draw(texture, rect, Color.White);
         }
         /// <summary>
         /// Loads in the texture for the tile based on the first two character's of its code
@@ -146,24 +153,38 @@ namespace Good_Luck
                     texture = content.Load<Texture2D>("tile10");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     topWall.IsDoor = true;
+                    HasDoor = true;
                     break;
                 //Right-Door
                 case ("11"):
                     texture = content.Load<Texture2D>("tile11");
                     sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     sideWall.IsDoor = true;
+                    HasDoor = true;
                     break;
                 //Bottom-Door
                 case ("12"):
                     texture = content.Load<Texture2D>("tile12");
-                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness), texture); //Bottom Wall
                     topWall.IsDoor = true;
+                    HasDoor = true;
                     break;
                 //Left-Door
                 case ("13"):
                     texture = content.Load<Texture2D>("tile13");
                     sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     sideWall.IsDoor = true;
+                    HasDoor = true;
+                    break;
+                //Center-Wall
+                case ("14"):
+                    texture = content.Load<Texture2D>("tile14");
+                    centerWall = new Wall(new Rectangle(rect.X+rect.Width/2, rect.Y+rect.Height, wallThickness, wallThickness)); //center Wall
+                    break;
+                //Whole-Wall
+                case ("15"):
+                    texture = content.Load<Texture2D>("tile15");
+                    centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height),texture); //full Wall
                     break;
             }
         }
@@ -203,6 +224,7 @@ namespace Good_Luck
         {
             if (topWall != null) { entityManager.Walls.Add(topWall); }
             if (sideWall != null) { entityManager.Walls.Add(sideWall); }
+            if (centerWall != null) { entityManager.Walls.Add(centerWall); }
         }
 
     }
