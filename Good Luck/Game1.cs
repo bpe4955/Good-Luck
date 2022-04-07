@@ -41,7 +41,6 @@ namespace Good_Luck
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState gameState;
-        int level;
         MouseState previousMouseState;
         MouseState mouseState;
         KeyboardState kb;
@@ -115,7 +114,6 @@ namespace Good_Luck
             enemyRect = new Rectangle(50, 100, 100, 100);
             wallRect = new Rectangle(500, 250, 75, 75);
             bullets = new List<Bullet>();
-            level = 1;
 
             buttons = new Button[7][]
             {
@@ -504,7 +502,7 @@ namespace Good_Luck
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
                 new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
-            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
         }
 
         /// <summary>
@@ -675,7 +673,7 @@ namespace Good_Luck
                 }
         
                 data.scores[scoreIndex] = player.TotalScore;
-                data.levels[scoreIndex] = level;
+                data.levels[scoreIndex] = levelManager.Level;
         
                 HighScoreData.SaveHighScores(data, saveFileName);
             }

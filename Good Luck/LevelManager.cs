@@ -16,6 +16,7 @@ namespace Good_Luck
         private ContentManager content;
         private EntityManager entityManager;
         private int lastDoorIndex;
+        private int level;
 
         private List<Room> possibleRooms = new List<Room>();
         private List<Room> floorRooms = new List<Room>();
@@ -26,6 +27,7 @@ namespace Good_Luck
         //Property
         public List<Room[]> AdjacencyList { get => adjacencyList; }
         internal Room CurrentRoom { get => currentRoom; private set => currentRoom = value; }
+        public int Level { get => level; private set => level = value; }
 
 
         //Constructor
@@ -33,6 +35,7 @@ namespace Good_Luck
         {
             this.entityManager = entityManager;
             this.content = content;
+            level = 1;
         }
 
 
