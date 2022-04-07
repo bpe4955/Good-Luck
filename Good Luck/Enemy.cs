@@ -68,6 +68,18 @@ namespace Good_Luck
 
             return false;
         }
+        /// <summary>
+        /// Attacks the player when called
+        /// </summary>
+        /// <returns>The damage amount for mele attacks</returns>
+        public int Attack()
+        {
+            //Code for bunny attack. Attacks by running into player
+
+
+            //Code for shooting. Creates a bullet
+            return -1;
+        }
 
         /// <summary>
         /// Moves the <see cref="Enemy"/>
