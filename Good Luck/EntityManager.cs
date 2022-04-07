@@ -156,20 +156,8 @@ namespace Good_Luck
             }
 
             //Remove inactive objects
-            for(int i = Enemies.Count - 1; i >= 0; --i)
-            {
-                if (!Enemies[i].IsActive)
-                {
-                    Enemies.RemoveAt(i);
-                }
-            }
-            for (int i = Bullets.Count - 1; i >= 0; --i)
-            {
-                if (!Bullets[i].IsActive)
-                {
-                    Bullets.RemoveAt(i);
-                }
-            }
+            Enemies = Enemies.RemoveInactive();
+            Bullets = Bullets.RemoveInactive();
         }
     }
 }

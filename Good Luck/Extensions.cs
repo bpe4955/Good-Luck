@@ -45,5 +45,28 @@ namespace Good_Luck
         {
             return (float)Math.Atan2(vector.Y, vector.X) + (float)(90 * Math.PI/180);
         }
+        /// <summary>
+        /// Removes inactive entities from given list
+        /// </summary>
+        /// <typeparam name="T">What type of entity</typeparam>
+        /// <param name="entities">The list of entities to search</param>
+        /// <returns>The new list with only active entities</returns>
+        public static List<T> RemoveInactive<T>(this List<T> entities)
+        {
+            if(entities.Count > 0)
+            {
+                if(entities[0] is Entity)
+                {
+                    for (int i = entities.Count - 1; i >= 0; --i)
+                    {
+                        if (!(entities[i] as Entity).IsActive)
+                        {
+                            entities.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+            return entities;
+        }
     }
 }
