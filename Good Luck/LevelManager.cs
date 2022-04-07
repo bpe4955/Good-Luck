@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Brian Egan
+// 4-6-2022
+// Manage all levels on the floor, along with adding them to
+// the list and moving on to another floor
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -25,8 +29,17 @@ namespace Good_Luck
         private Room currentRoom;
 
         //Property
+        /// <summary>
+        /// Get the adjacency list, cannot be set
+        /// </summary>
         public List<Room[]> AdjacencyList { get => adjacencyList; }
+        /// <summary>
+        /// Get the current room, can only be set in this class
+        /// </summary>
         internal Room CurrentRoom { get => currentRoom; private set => currentRoom = value; }
+        /// <summary>
+        /// Get the current level number, can only be set in this class
+        /// </summary>
         public int Level { get => level; private set => level = value; }
 
 
