@@ -27,6 +27,11 @@ namespace Good_Luck
         /// </summary>
         public List<Wall> Walls { get; set; }
         /// <summary>
+        /// Static instance of the <see cref="EntityManager"/> class
+        /// </summary>
+        public static EntityManager Instance { get; private set; }
+
+        /// <summary>
         /// Creates a new <see cref="EntityManager"/>
         /// </summary>
         /// <param name="player">reference to the <see cref="Good_Luck.Player"/></param>
@@ -36,6 +41,7 @@ namespace Good_Luck
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
             Walls = new List<Wall>();
+            Instance = this;
         }
         /// <summary>
         /// Draws all the <see cref="Entity"/>s and <see cref="Wall"/>s

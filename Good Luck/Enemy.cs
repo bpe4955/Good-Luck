@@ -69,10 +69,18 @@ namespace Good_Luck
             return false;
         }
 
-
+        /// <summary>
+        /// Moves the <see cref="Enemy"/>
+        /// </summary>
         public void Move()
         {
+            Player p = EntityManager.Instance.Player;
+            float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
+            int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
+            int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
 
+            rect.X += xOffset;
+            rect.Y += yOffset;
         }
         public void TakeDamage(int amount)
         {
