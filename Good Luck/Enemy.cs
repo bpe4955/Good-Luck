@@ -52,6 +52,12 @@ namespace Good_Luck
             return false;
         }
 
+
+        public void Move()
+        {
+
+        }
+
         public void TakeDamage(int amount)
         {
             health-=amount;
