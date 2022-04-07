@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Good_Luck
 {
+
     //Enums
     /// <summary>
     /// The various states of the game with different screens
@@ -35,6 +36,7 @@ namespace Good_Luck
     }
     public class Game1 : Game
     {
+
         //Fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -91,10 +93,10 @@ namespace Good_Luck
         //Testing room loading
         LevelManager levelManager;
         Room startingRoom;
-        Room roomTest1;
-        Room roomTest2;
-        Room roomTest3;
-        Room roomTest4;
+        Room roomTestTop;
+        Room roomTestRight;
+        Room roomTestBottom;
+        Room roomTestLeft;
 
         public Game1()
         {
@@ -251,15 +253,20 @@ namespace Good_Luck
             levelManager = new LevelManager(Content, entityManager);
             startingRoom = new Room("Content/RoomMiddle.Level", Content, entityManager);
             levelManager.SetStartRoom(startingRoom);
-            //roomTest1 = new Room("Content/RoomTop.level", Content, entityManager);
-            //levelManager.AddRoom(roomTest1);
-            //roomTest2 = new Room("Content/RoomRight.level", Content, entityManager);
-            //levelManager.AddRoom(roomTest2);
-            //roomTest3 = new Room("Content/RoomBottom.Level", Content, entityManager);
-            //levelManager.AddRoom(roomTest3);
-            //roomTest4 = new Room("Content/RoomLeft.Level", Content, entityManager);
-            //levelManager.AddRoom(roomTest4);
-            //currentRoom = levelManager.AdjacencyList[0][0];
+            //Testing Room Adding
+            roomTestTop = new Room("Content/RoomTop.level", Content, entityManager);
+            levelManager.AddRoom(roomTestTop);
+            roomTestRight = new Room("Content/RoomRight.level", Content, entityManager);
+            levelManager.AddRoom(roomTestRight);
+            roomTestBottom = new Room("Content/RoomBottom.Level", Content, entityManager);
+            levelManager.AddRoom(roomTestBottom);
+            roomTestLeft = new Room("Content/RoomLeft.Level", Content, entityManager);
+            levelManager.AddRoom(roomTestLeft);
+
+
+            //Hooking up events
+            entityManager.DoorCollided += levelManager.ChangeRoom;
+            entityManager.PlayerInWall += levelManager.MovePlayerToDoor;
 
         }
 

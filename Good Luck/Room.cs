@@ -45,6 +45,14 @@ namespace Good_Luck
         /// Get the list of walls in the room
         /// </summary>
         public List<Wall> Walls { get => walls; }
+        /// <summary>
+        /// Get the dictionary of door locations
+        /// </summary>
+        public Dictionary<string, int> DoorLocations { get => doorLocations; }
+        /// <summary>
+        /// Get the list of tiles in the room
+        /// </summary>
+        internal List<Tile> Tiles { get => tiles; }
 
         //constructor
         public Room(string filename, ContentManager content, EntityManager entityManager)

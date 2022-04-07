@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Good_Luck
 {
     class LevelManager
     {
+
         //Fields
         private ContentManager content;
         private EntityManager entityManager;
+        private int lastDoorIndex;
 
         private List<Room> possibleRooms = new List<Room>();
+        private List<Room> floorRooms = new List<Room>();
         private List<Room[]> adjacencyList = new List<Room[]>();
         private Room startingRoom;
         private Room currentRoom;
@@ -40,47 +46,42 @@ namespace Good_Luck
         /// <param name="room">The room to try to add to the floor</param>
         public void AddRoom(Room room)
         {
-            //Start off the graph with starting room
-            //if(adjacencyList.Count == 0)
-            //{
-            //    startingRoom = new Room("Content/RoomMiddle.txt", content, entityManager);
-            //    adjacencyList.Add(new Room[5]);
-            //    // first value in list is the starting room, 
-            //    // and 4 other values in the array are adjacent rooms
-            //    // [1] - Top, [2] - Right, [3] - Bottom, [4] - Left
-            //    adjacencyList[0][0] = startingRoom;
-            //}
-
             //Try to add room to starting room
             adjacencyList.Add(new Room[5]);
-            if(room.HasBottomDoor && startingRoom.HasTopDoor)
+            if(room.HasBottomDoor && startingRoom.HasTopDoor) // Top Room
             {
-                adjacencyList[0][1] = room;
-                adjacencyList[1][0] = room;
-                adjacencyList[1][3] = adjacencyList[0][0];
+                adjacencyList[0][1] = room; // Connect center room to new room
+                adjacencyList[^1][0] = room; // Connect new room to itself
+                floorRooms.Add(room); // Add to list of rooms on floor
+                adjacencyList[^1][3] = adjacencyList[0][0]; // Connect new room to center room
+                //Disable doors to avoid overlapping edges
                 room.HasBottomDoor = false;
                 startingRoom.HasTopDoor = false;
             }
-            else if (room.HasLeftDoor && startingRoom.HasRightDoor)
+            else if (room.HasLeftDoor && startingRoom.HasRightDoor) // Right Room
             {
                 adjacencyList[0][2] = room;
-                adjacencyList[1][0] = room;
-                adjacencyList[1][4] = adjacencyList[0][0];
+                adjacencyList[^1][0] = room;
+                floorRooms.Add(room); // Add to list of rooms on floor
+                adjacencyList[^1][4] = adjacencyList[0][0];
                 room.HasLeftDoor = false;
                 startingRoom.HasRightDoor = false;
             }
-            else if (room.HasTopDoor && startingRoom.HasBottomDoor)
+            else if (room.HasTopDoor && startingRoom.HasBottomDoor) // Bottom Room
             {
                 adjacencyList[0][3] = room;
-                adjacencyList[1][0] = room;
-                adjacencyList[1][1] = adjacencyList[0][0];
+                adjacencyList[^1][0] = room;
+                floorRooms.Add(room); // Add to list of rooms on floor
+                adjacencyList[^1][1] = adjacencyList[0][0];
                 room.HasTopDoor = false;
                 startingRoom.HasBottomDoor = false;
             }
-            else if (room.HasRightDoor && startingRoom.HasLeftDoor)
+            else if (room.HasRightDoor && startingRoom.HasLeftDoor) // Left Room
             {
                 adjacencyList[0][4] = room;
-                adjacencyList[1][2] = room;
+                adjacencyList[^1][0] = room;
+                floorRooms.Add(room); // Add to list of rooms on floor
+                adjacencyList[^1][2] = adjacencyList[0][0];
                 room.HasRightDoor = false;
                 startingRoom.HasLeftDoor = false;
             }
@@ -100,6 +101,7 @@ namespace Good_Luck
             // [1] - Top, [2] - Right, [3] - Bottom, [4] - Left
             adjacencyList[0][0] = startingRoom;
             currentRoom = startingRoom;
+            floorRooms.Add(startingRoom);
             LoadCurrentRoom();
         }
         /// <summary>
@@ -110,7 +112,42 @@ namespace Good_Luck
             entityManager.Walls.Clear();
             entityManager.Walls.AddRange(currentRoom.Walls);
         }
+        public void ChangeRoom(Wall door)
+        {
+            //if door matches top door object, swap current room with top room
+            if (currentRoom.DoorLocations["top"] != -1 && currentRoom.Tiles[currentRoom.DoorLocations["top"]].GetWalls().Contains(door))
+            {
+                currentRoom = adjacencyList[floorRooms.IndexOf(CurrentRoom)][1];
+                lastDoorIndex = 3;
+            }
+            //if door matches right door object, swap current room with right room
+            if (currentRoom.DoorLocations["right"] != -1 && currentRoom.Tiles[currentRoom.DoorLocations["right"]].GetWalls().Contains(door))
+            {
+                currentRoom = adjacencyList[floorRooms.IndexOf(CurrentRoom)][2];
+                lastDoorIndex = 4;
+            }
+            //if door matches bottom door object, swap current room with bottom room
+            if (currentRoom.DoorLocations["bottom"] != -1 && currentRoom.Tiles[currentRoom.DoorLocations["bottom"]].GetWalls().Contains(door))
+            {
+                currentRoom = adjacencyList[floorRooms.IndexOf(CurrentRoom)][3];
+                lastDoorIndex = 1;
+            }
+            //if door matches left door object, swap current room with left room
+            if (currentRoom.DoorLocations["left"] != -1 && currentRoom.Tiles[currentRoom.DoorLocations["left"]].GetWalls().Contains(door))
+            {
+                currentRoom = adjacencyList[floorRooms.IndexOf(CurrentRoom)][4];
+                lastDoorIndex = 2;
+            }
+            LoadCurrentRoom();
+        }
+        public void MovePlayerToDoor(Player player)
+        {
+            Vector2 pos = new Vector2(player.Rect.X, player.Rect.Y);
 
+
+            //Update player location
+            player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
+        }
         //If no enemies, enable doors
         public void UpdateRooms()
         {
