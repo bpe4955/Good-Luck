@@ -84,7 +84,7 @@ namespace Good_Luck
         /// </summary>
         /// <param name="_graphics">The main <see cref="GraphicsDeviceManager"/></param>
         /// <param name="kb">The current <see cref="KeyboardState"/></param>
-        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture)
+        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture, GameTime gameTime)
         {
             //Move Player
             Player.Move(kb);
@@ -94,7 +94,7 @@ namespace Good_Luck
             {
                 if (Enemies[i].IsActive)
                 {
-                    //Enemies[i].Move();
+                    Enemies[i].Move(gameTime);
                     if((damage = Enemies[i].Attack(bulletTexture)) > -1)
                     {
                         Player.TakeDamage(damage);

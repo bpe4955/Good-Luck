@@ -310,7 +310,7 @@ namespace Good_Luck
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
-                    entityManager.UpdateEntities(_graphics, kb, bulletTexture);
+                    entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime);
                     if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();
