@@ -143,7 +143,35 @@ namespace Good_Luck
         public void MovePlayerToDoor(Player player)
         {
             Vector2 pos = new Vector2(player.Rect.X, player.Rect.Y);
-
+            //Get the position of the door
+            Tile doorTile;
+            switch (lastDoorIndex)
+            {
+                //Go to top door
+                case 1:
+                    doorTile = currentRoom.Tiles[currentRoom.DoorLocations["top"]];
+                    pos.X = doorTile.Rect.X + 10;
+                    pos.Y = doorTile.Rect.Y + 10;
+                    break;
+                //Go to right door
+                case 2:
+                    doorTile = currentRoom.Tiles[currentRoom.DoorLocations["right"]];
+                    pos.X = doorTile.Rect.X + 10;
+                    pos.Y = doorTile.Rect.Y + 10;
+                    break;
+                //Go to bottom door
+                case 3:
+                    doorTile = currentRoom.Tiles[currentRoom.DoorLocations["bottom"]];
+                    pos.X = doorTile.Rect.X + 10;
+                    pos.Y = doorTile.Rect.Y + 10;
+                    break;
+                //Go to left door
+                case 4:
+                    doorTile = currentRoom.Tiles[currentRoom.DoorLocations["left"]];
+                    pos.X = doorTile.Rect.X + 10;
+                    pos.Y = doorTile.Rect.Y + 10;
+                    break;
+            }
 
             //Update player location
             player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
