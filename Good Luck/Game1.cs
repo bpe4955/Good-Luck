@@ -316,6 +316,8 @@ namespace Good_Luck
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
                     }
+
+                    //This exists entirely to have a break point and debug
                     if (kb.IsKeyDown(Keys.Space))
                     {
                         break;

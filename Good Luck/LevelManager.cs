@@ -31,10 +31,16 @@ namespace Good_Luck
 
 
         //Constructor
+        /// <summary>
+        /// Give access to the content manager and the entity manager
+        /// </summary>
+        /// <param name="content">Content Manager</param>
+        /// <param name="entityManager">Entity Manager handling all entities</param>
         public LevelManager(ContentManager content, EntityManager entityManager)
         {
             this.entityManager = entityManager;
             this.content = content;
+            //Initialize level to 1
             level = 1;
         }
 
@@ -97,6 +103,8 @@ namespace Good_Luck
         /// <param name="startRoom">The default "RoomMiddle" room</param>
         public void SetStartRoom(Room startRoom)
         {
+            //Clear the list to restart
+            adjacencyList.Clear();
             startingRoom = startRoom;
             adjacencyList.Add(new Room[5]);
             // first value in list is the starting room, 
@@ -115,6 +123,11 @@ namespace Good_Luck
             entityManager.Walls.Clear();
             entityManager.Walls.AddRange(currentRoom.Walls);
         }
+        /// <summary>
+        /// Takes in a door and changed the current room to what
+        /// that door/edge corresponds to
+        /// </summary>
+        /// <param name="door">The door being collided with</param>
         public void ChangeRoom(Wall door)
         {
             //if door matches top door object, swap current room with top room
@@ -143,6 +156,10 @@ namespace Good_Luck
             }
             LoadCurrentRoom();
         }
+        /// <summary>
+        /// Move player to the door tile that they enter from
+        /// </summary>
+        /// <param name="player">The player object</param>
         public void MovePlayerToDoor(Player player)
         {
             Vector2 pos = new Vector2(player.Rect.X, player.Rect.Y);
