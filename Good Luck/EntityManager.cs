@@ -77,7 +77,7 @@ namespace Good_Luck
             {
                 if (Enemies[i].IsActive)
                 {
-                    Enemies[i].Move();
+                    //Enemies[i].Move();
                     if((damage = Enemies[i].Attack(bulletTexture)) > -1)
                     {
                         Player.TakeDamage(damage);
