@@ -241,7 +241,7 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6, 20);
+            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20);
             wall = new Wall(wallRect, wallTexture);
 
             entityManager = new EntityManager(player);
@@ -278,7 +278,7 @@ namespace Good_Luck
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
-                    entityManager.UpdateEntities(_graphics, kb);
+                    entityManager.UpdateEntities(_graphics, kb, bulletTexture);
                     if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();

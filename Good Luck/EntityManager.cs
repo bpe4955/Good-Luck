@@ -69,14 +69,19 @@ namespace Good_Luck
         /// </summary>
         /// <param name="_graphics">The main <see cref="GraphicsDeviceManager"/></param>
         /// <param name="kb">The current <see cref="KeyboardState"/></param>
-        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb)
+        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture)
         {
             Player.Move(kb);
+            int damage;
             for (int i = 0; i < Enemies.Count; ++i)
             {
                 if (Enemies[i].IsActive)
                 {
                     Enemies[i].Move();
+                    if((damage = Enemies[i].Attack(bulletTexture)) > -1)
+                    {
+                        Player.TakeDamage(damage);
+                    }
                 }
             }
             if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
@@ -148,6 +153,22 @@ namespace Good_Luck
                 //If this bullet hits nothing, move on to the next bullet
                 Bullets[i].Move();
                 ++i;
+            }
+
+            //Remove inactive objects
+            for(int i = Enemies.Count - 1; i >= 0; --i)
+            {
+                if (!Enemies[i].IsActive)
+                {
+                    Enemies.RemoveAt(i);
+                }
+            }
+            for (int i = Bullets.Count - 1; i >= 0; --i)
+            {
+                if (!Bullets[i].IsActive)
+                {
+                    Bullets.RemoveAt(i);
+                }
             }
         }
     }
