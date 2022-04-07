@@ -15,6 +15,7 @@ namespace Good_Luck
         //fields
         private Rectangle rect;
         private Texture2D texture;
+        private bool isDoor;
 
         //Properties
         /// <summary>
@@ -25,6 +26,10 @@ namespace Good_Luck
         /// Get and set the wall's texture
         /// </summary>
         public Texture2D Texture { get => texture; set => texture = value; }
+        /// <summary>
+        /// Get and set whether the wall is a door or not
+        /// </summary>
+        public bool IsDoor { get => isDoor; set => isDoor = value; }
 
         //Constructor
         /// <summary>
@@ -36,6 +41,16 @@ namespace Good_Luck
         {
             this.rect = rect;
             this.texture = texture;
+            isDoor = false;
+        }
+        /// <summary>
+        /// Constructor for an invisible wall with only a rectangle
+        /// </summary>
+        /// <param name="rect">The position and size of the wall</param>
+        public Wall(Rectangle rect)
+        {
+            this.rect = rect;
+            isDoor = false;
         }
 
         //Method
@@ -45,7 +60,7 @@ namespace Good_Luck
         /// <param name="sb">The spritebatch needed to draw</param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rect, Color.White);
+            if(texture != null) { sb.Draw(texture, rect, Color.White); }
         }
     }
 }
