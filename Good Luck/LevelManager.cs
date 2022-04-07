@@ -19,6 +19,7 @@ namespace Good_Luck
 
         //Property
         public List<Room[]> AdjacencyList { get => adjacencyList; }
+        internal Room CurrentRoom { get => currentRoom; private set => currentRoom = value; }
 
 
         //Constructor
@@ -40,15 +41,15 @@ namespace Good_Luck
         public void AddRoom(Room room)
         {
             //Start off the graph with starting room
-            if(adjacencyList.Count == 0)
-            {
-                startingRoom = new Room("Content/MiddleRoom.txt", content, entityManager);
-                adjacencyList.Add(new Room[5]);
-                // first value in list is the starting room, 
-                // and 4 other values in the array are adjacent rooms
-                // [1] - Top, [2] - Right, [3] - Bottom, [4] - Left
-                adjacencyList[0][0] = startingRoom;
-            }
+            //if(adjacencyList.Count == 0)
+            //{
+            //    startingRoom = new Room("Content/RoomMiddle.txt", content, entityManager);
+            //    adjacencyList.Add(new Room[5]);
+            //    // first value in list is the starting room, 
+            //    // and 4 other values in the array are adjacent rooms
+            //    // [1] - Top, [2] - Right, [3] - Bottom, [4] - Left
+            //    adjacencyList[0][0] = startingRoom;
+            //}
 
             //Try to add room to starting room
             adjacencyList.Add(new Room[5]);
@@ -85,6 +86,29 @@ namespace Good_Luck
             }
 
             //If it cannot fit onto the starting room
+        }
+        /// <summary>
+        /// To be called before adding rooms, sets the start room
+        /// </summary>
+        /// <param name="startRoom">The default "RoomMiddle" room</param>
+        public void SetStartRoom(Room startRoom)
+        {
+            startingRoom = startRoom;
+            adjacencyList.Add(new Room[5]);
+            // first value in list is the starting room, 
+            // and 4 other values in the array are adjacent rooms
+            // [1] - Top, [2] - Right, [3] - Bottom, [4] - Left
+            adjacencyList[0][0] = startingRoom;
+            currentRoom = startingRoom;
+            LoadCurrentRoom();
+        }
+        /// <summary>
+        /// Clear the old room data and load the current room with all its walls
+        /// </summary>
+        public void LoadCurrentRoom()
+        {
+            entityManager.Walls.Clear();
+            entityManager.Walls.AddRange(currentRoom.Walls);
         }
 
         //If no enemies, enable doors

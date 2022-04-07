@@ -14,7 +14,7 @@ namespace Good_Luck
         //fields
         private int width;
         private int height;
-        private List<Wall> walls;
+        private List<Wall> walls = new List<Wall>();
         private List<Tile> tiles;
         private Dictionary<string, int> doorLocations;
 
@@ -41,6 +41,10 @@ namespace Good_Luck
         /// Get and set whether the door has an viable right-door
         /// </summary>
         public bool HasRightDoor { get => hasRightDoor; set => hasRightDoor = value; }
+        /// <summary>
+        /// Get the list of walls in the room
+        /// </summary>
+        public List<Wall> Walls { get => walls; }
 
         //constructor
         public Room(string filename, ContentManager content, EntityManager entityManager)
@@ -82,7 +86,8 @@ namespace Good_Luck
                     //Go through the line to generate each tile in the row
                     for (int x = 0; x < data.Length; x++)
                     {
-                        tiles.Add(new Tile(data[x], content, entityManager, new Rectangle((x * 80), (y * 80), 80, 80)));
+                        tiles.Add(new Tile(data[x], content, new Rectangle((x * 80), (y * 80), 80, 80)));
+                        walls.AddRange(tiles[y*10+x].GetWalls());
                     }
                     //increment the collumn spacing
                     y++;
@@ -102,7 +107,7 @@ namespace Good_Luck
                     input.Close();
                 }
             }
-            //CheckForDoors();
+            CheckForDoors();
 
         }
 

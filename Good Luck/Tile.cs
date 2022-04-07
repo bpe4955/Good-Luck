@@ -70,14 +70,12 @@ namespace Good_Luck
         /// <param name="code">The tile's code from the external tool</param>
         /// <param name="content">The manager needed to load content</param>
         /// <param name="rect">The position and size of the tile</param>
-        public Tile(string code, ContentManager content, EntityManager entityManager, Rectangle rect)
+        public Tile(string code, ContentManager content, Rectangle rect)
         {
             this.rect = rect;
             HasDoor = false;
             LoadTexture(code.Substring(0, 2), content);
             LoadProperty(code.Substring(2, 2));
-            GenerateWalls(entityManager);
-            
         }
 
         //Methods
@@ -165,7 +163,7 @@ namespace Good_Luck
                 //Bottom-Door
                 case ("12"):
                     texture = content.Load<Texture2D>("tile12");
-                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness), texture); //Bottom Wall
+                    topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     topWall.IsDoor = true;
                     HasDoor = true;
                     break;
@@ -184,7 +182,7 @@ namespace Good_Luck
                 //Whole-Wall
                 case ("15"):
                     texture = content.Load<Texture2D>("tile15");
-                    centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height),texture); //full Wall
+                    centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height)); //full Wall
                     break;
             }
         }
@@ -217,14 +215,16 @@ namespace Good_Luck
             }
         }
         /// <summary>
-        /// Give the wall data to the EntityManager to allow for collision
+        /// returns a list of all the tile's walls
         /// </summary>
-        /// <param name="entityManager">The class that handles entity collisions</param>
-        private void GenerateWalls(EntityManager entityManager)
+        /// <returns>a list of all the tile's walls</returns>
+        public List<Wall> GetWalls()
         {
-            if (topWall != null) { entityManager.Walls.Add(topWall); }
-            if (sideWall != null) { entityManager.Walls.Add(sideWall); }
-            if (centerWall != null) { entityManager.Walls.Add(centerWall); }
+            List<Wall> walls = new List<Wall>();
+            if (topWall != null) { walls.Add(topWall); }
+            if (sideWall != null) { walls.Add(sideWall); }
+            if (centerWall != null) { walls.Add(centerWall); }
+            return walls;
         }
 
     }

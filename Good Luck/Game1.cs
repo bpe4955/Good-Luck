@@ -90,7 +90,7 @@ namespace Good_Luck
 
         //Testing room loading
         LevelManager levelManager;
-        Room currentRoom;
+        Room startingRoom;
         Room roomTest1;
         Room roomTest2;
         Room roomTest3;
@@ -249,16 +249,18 @@ namespace Good_Luck
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
-            //roomTest1 = new Room("Content/TopRoom.level", Content, entityManager);
+            startingRoom = new Room("Content/RoomMiddle.Level", Content, entityManager);
+            levelManager.SetStartRoom(startingRoom);
+            //roomTest1 = new Room("Content/RoomTop.level", Content, entityManager);
             //levelManager.AddRoom(roomTest1);
-            //roomTest2 = new Room("Content/RightRoom.level", Content, entityManager);
+            //roomTest2 = new Room("Content/RoomRight.level", Content, entityManager);
             //levelManager.AddRoom(roomTest2);
-            //roomTest3 = new Room("Content/BottomRoom.Level", Content, entityManager);
+            //roomTest3 = new Room("Content/RoomBottom.Level", Content, entityManager);
             //levelManager.AddRoom(roomTest3);
-            //roomTest4 = new Room("Content/LeftRoom.Level", Content, entityManager);
+            //roomTest4 = new Room("Content/RoomLeft.Level", Content, entityManager);
             //levelManager.AddRoom(roomTest4);
             //currentRoom = levelManager.AdjacencyList[0][0];
-            currentRoom = new Room("Content/MiddleRoom.Level", Content, entityManager);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -300,6 +302,10 @@ namespace Good_Luck
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
                     }
+                    if (kb.IsKeyDown(Keys.Space))
+                    {
+                        break;
+                    }
                     break;
 
 
@@ -340,8 +346,6 @@ namespace Good_Luck
             {
                 case GameState.Title:
                     DisplayBackAndTitle("Good Luck~");
-
-
                     //Draw all the buttons
                     DrawButtons(0);
                     DrawTextToButton("Start", buttons[0][0].Rect, 3.5f);
@@ -350,9 +354,9 @@ namespace Good_Luck
                     DrawTextToButton("Credits", buttons[0][3].Rect, 3.5f);
                     DrawTextToButton("Exit", buttons[0][4].Rect, 3.5f);
                     break;
+
                 case GameState.Tutorial:
                     DisplayBackAndTitle("Controls");
-
                     //Keys
                     int spacing = 55;
                     int initX = 100;
@@ -363,47 +367,44 @@ namespace Good_Luck
                         DrawKeybind(pos, i);
                     }
                     DrawKeybind(new Point(initX + spacing, initY - spacing), 0);
-
                     _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing/4), initY + spacing), lightPurple);
-
                     //Mouse
                     _spriteBatch.Draw(menuItems[3], new Rectangle(400, initY - (int)(spacing / 1.5f), 84, 132), Color.White);
                     _spriteBatch.DrawString(MetalManiaNormal, "Left-Click\nto shoot", new Vector2(525, initY - (int)(spacing / 1.5f)), lightPurple);
-
                     //Draw all the buttons
                     DrawButtons(1);
                     DrawTextToButton("Back", buttons[1][0].Rect, 2.5f);
                     break;
+
                 case GameState.Credits:
                     DisplayBackAndTitle("Controls");
-
                     //Draw names
                     _spriteBatch.DrawString(MetalManiaNormal, "Made by...\n" +
                                                               "   - Aaron Bush\n" +
                                                               "   - Brian Egan\n" +
                                                               "   - John Haley\n" +
                                                               "   - Michaela Castle\n", new Vector2(100, 100), lightPurple);
-
                     //Draw all the buttons
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
                     break;
 
+                //
+                // Game
+                //
                 case GameState.Game:
-                    currentRoom.Draw(_spriteBatch);
+                    levelManager.CurrentRoom.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     break;
 
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
-
                     //Draw pause symbols
                     int widthDisplacement = 150;
                     initY = 65;
                     _spriteBatch.Draw(menuItems[1], new Rectangle(widthDisplacement, initY, menuItems[1].Width, menuItems[1].Height), Color.White);
                     _spriteBatch.Draw(menuItems[1], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[1].Width,
                                                                   initY, menuItems[1].Width, menuItems[1].Height), Color.White);
-
                     //Draw all the buttons
                     DrawButtons(3);
                     DrawTextToButton("Resume", buttons[3][0].Rect, 3.5f);
@@ -413,17 +414,14 @@ namespace Good_Luck
 
                 case GameState.Options:
                     DisplayBackAndTitle("Options");
-
                     //Draw all the buttons
                     DrawButtons(4);
                     DrawTextToButton("Keybinds", buttons[4][0].Rect, 3.5f);
                     DrawTextToButton("Back", buttons[4][1].Rect, 3.5f);
-
                     break;
 
                 case GameState.Keybinds:
                     DisplayBackAndTitle("Keybindings");
-
                     string[] text = new string[4]
                     {
                         "Up",
@@ -431,7 +429,6 @@ namespace Good_Luck
                         "Down",
                         "Right"
                     };
-
                     //Keys
                     for (int i = 0; i < 4; ++i)
                     {
@@ -439,27 +436,24 @@ namespace Good_Luck
                         _spriteBatch.DrawString(MetalManiaNormal, text[i],
                             new Vector2(keybindButtons[i].Rect.X + 75, keybindButtons[i].Rect.Y), lightPurple);
                     }
-
                     //Draw all the buttons
                     DrawButtons(5);
                     DrawTextToButton("Back", buttons[5][0].Rect, 3.5f);
                     break;
+
                 case GameState.GameOver:
                     DisplayBackAndTitle("Game Over");
-
                     //Draw the skulls
                     widthDisplacement = 150;
                     initY = 55;
                     _spriteBatch.Draw(menuItems[5], new Rectangle(widthDisplacement, initY, menuItems[5].Width, menuItems[5].Height), Color.White);
                     _spriteBatch.Draw(menuItems[5], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[5].Width,
                                                                   initY, menuItems[5].Width, menuItems[5].Height), Color.White);
-
                     //Draw the crossbones
                     int halfWidth = _graphics.PreferredBackBufferWidth / 2;
                     _spriteBatch.Draw(menuItems[4], new Rectangle(
                         halfWidth - (menuItems[4].Width / 2), initY + 55,
                         menuItems[4].Width, menuItems[4].Height), Color.White);
-
                     //Display the high score and level
                     initY = 200;
                     spacing = 50;
@@ -473,7 +467,6 @@ namespace Good_Luck
                     fontSize = MetalManiaNormal.MeasureString($"Level: {saveData.levels[0]}");
                     _spriteBatch.DrawString(MetalManiaNormal, $"Level: {saveData.levels[0]}", new Vector2(
                         (int)(halfWidth - (fontSize.X / 2)), initY + spacing), lightPurple);
-
                     DrawButtons(6);
                     DrawTextToButton("Menu", buttons[6][0].Rect, 2.5f);
                     DrawTextToButton("Quit", buttons[6][1].Rect, 2.5f);
@@ -484,7 +477,9 @@ namespace Good_Luck
             base.Draw(gameTime);
         }
 
+        //
         //Methods
+        //
         /// <summary>
         /// Draws a keybind button with the correct keybinding
         /// </summary>
