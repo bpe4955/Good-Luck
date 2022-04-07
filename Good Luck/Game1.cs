@@ -115,7 +115,7 @@ namespace Good_Luck
             enemyRect = new Rectangle(50, 100, 100, 100);
             wallRect = new Rectangle(500, 250, 75, 75);
             bullets = new List<Bullet>();
-            level = 0;
+            level = 1;
 
             buttons = new Button[7][]
             {
@@ -504,7 +504,7 @@ namespace Good_Luck
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
                 new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
-            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {level}\nScore: xxx", new Vector2(10, 5), lightPurple);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
         }
 
         /// <summary>
