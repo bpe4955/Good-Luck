@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using System.Timers;
 
 namespace Good_Luck
 {
@@ -15,6 +16,13 @@ namespace Good_Luck
         private int score;
         private int reloadSpeed;
         private int damage;
+
+        private TimeSpan intervalBetweenAttack = TimeSpan.FromMilliseconds(3000);
+        private TimeSpan lastTimeAttack;
+        private Timer t = new Timer(3000f);
+
+        private bool paused;
+
         // Properties
         public int MaxHealth { get { return maxHealth; } }
         public int Health { get { return health; } set { health = value; } }
@@ -39,6 +47,8 @@ namespace Good_Luck
             this.score = score;
             reloadSpeed = 20;
             damage = 3;
+
+
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
@@ -118,16 +128,45 @@ namespace Good_Luck
         /// <summary>
         /// Moves the <see cref="Enemy"/>
         /// </summary>
-        public void Move()
+        public void Move(GameTime gameTime)
         {
             Player p = EntityManager.Instance.Player;
             float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
             int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
             int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
 
+
+
             rect.X += xOffset;
             rect.Y += yOffset;
+
+            if (lastTimeAttack + intervalBetweenAttack < gameTime.TotalGameTime)
+            {
+                Wait();
+                lastTimeAttack = gameTime.TotalGameTime;
+            }
         }
+
+        public void Wait()
+        {
+            /*
+            t.Start();
+
+            if (t.IsActive)//set by the .start method
+            {
+                if (t.isComplete)
+                {
+                    //do some stuff
+                    t.Stop();
+                }
+                else
+                {
+                    //we're still timing, nothing to do here
+                }
+            }
+            */
+        }
+
         /// <summary>
         /// Decreases the Health by the given amount
         /// </summary>
