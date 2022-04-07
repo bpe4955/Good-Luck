@@ -82,6 +82,10 @@ namespace Good_Luck
             rect.X += xOffset;
             rect.Y += yOffset;
         }
+        /// <summary>
+        /// Decreases the Health by the given amount
+        /// </summary>
+        /// <param name="amount">How much to decrease the health</param>
         public void TakeDamage(int amount)
         {
             health-=amount;
@@ -91,7 +95,10 @@ namespace Good_Luck
                 isActive = false;
             }
         }
-
+        /// <summary>
+        /// Increases the Health by the given amount
+        /// </summary>
+        /// <param name="amount">How much to increase the health</param>
         public void Heal(int amount)
         {
             if (amount + health > MaxHealth)
