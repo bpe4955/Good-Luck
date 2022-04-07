@@ -68,32 +68,34 @@ namespace Good_Luck
             Player.Move(kb);
             if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
             {
-                Wall w = Walls.Find(x => x.Rect.Intersects(Player.Rect));
-                Rectangle rect = Rectangle.Intersect(w.Rect, Player.Rect);
-                Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
-                if (rect.Width <= rect.Height)
+                foreach (Wall item in Walls)
                 {
-                    if (w.Rect.X > Player.Rect.X)
+                    Rectangle rect = Rectangle.Intersect(item.Rect, Player.Rect);
+                    Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
+                    if (rect.Width <= rect.Height)
                     {
-                        pos.X -= rect.Width;
+                        if (item.Rect.X > Player.Rect.X)
+                        {
+                            pos.X -= rect.Width;
+                        }
+                        else
+                        {
+                            pos.X += rect.Width;
+                        }
                     }
                     else
                     {
-                        pos.X += rect.Width;
+                        if (item.Rect.Y > Player.Rect.Y)
+                        {
+                            pos.Y -= rect.Height;
+                        }
+                        else
+                        {
+                            pos.Y += rect.Height;
+                        }
                     }
-                }
-                else
-                {
-                    if (w.Rect.Y > Player.Rect.Y)
-                    {
-                        pos.Y -= rect.Height;
-                    }
-                    else
-                    {
-                        pos.Y += rect.Height;
-                    }
-                }
-                Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
+                    Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
+                }                
             }
             for (int i = 0; i < Bullets.Count;)
             {
