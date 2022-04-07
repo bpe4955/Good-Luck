@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Good_Luck
 {
+
     //Enums
     /// <summary>
     /// The various states of the game with different screens
@@ -35,11 +36,11 @@ namespace Good_Luck
     }
     public class Game1 : Game
     {
+
         //Fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState gameState;
-        int level;
         MouseState previousMouseState;
         MouseState mouseState;
         KeyboardState kb;
@@ -85,9 +86,17 @@ namespace Good_Luck
         EntityManager entityManager;
 
         //Save File Fields
-        private string fileName;
+        private string saveFileName;
         private int highScoreCount;
         HighScoreData saveData;
+
+        //Testing room loading
+        LevelManager levelManager;
+        Room startingRoom;
+        Room roomTestTop;
+        Room roomTestRight;
+        Room roomTestBottom;
+        Room roomTestLeft;
 
         public Game1()
         {
@@ -105,7 +114,6 @@ namespace Good_Luck
             enemyRect = new Rectangle(50, 100, 100, 100);
             wallRect = new Rectangle(500, 250, 75, 75);
             bullets = new List<Bullet>();
-            level = 0;
 
             buttons = new Button[7][]
             {
@@ -130,10 +138,10 @@ namespace Good_Luck
             keybindButtons = new KeybindButton[4];
 
             //Name of save file with the number of high scores
-            fileName = "../../../HighScores.txt";
+            saveFileName = "../../../HighScores.txt";
             highScoreCount = 1;
             //Check to see if save file exists
-            if (!File.Exists(fileName))
+            if (!File.Exists(saveFileName))
             {
                 //If the file doesn't exist, make a default one
                 HighScoreData data = new HighScoreData(highScoreCount);
@@ -143,10 +151,10 @@ namespace Good_Luck
                     data.scores[i] = (000);
                 }
 
-                HighScoreData.SaveHighScores(data, fileName);
+                HighScoreData.SaveHighScores(data, saveFileName);
             }
             //Load in save data from file to variable
-            saveData = HighScoreData.LoadHighScores(fileName);
+            saveData = HighScoreData.LoadHighScores(saveFileName);
 
             base.Initialize();
         }
@@ -241,12 +249,32 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, 6, 20);
+            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20);
             wall = new Wall(wallRect, wallTexture);
 
             entityManager = new EntityManager(player);
             entityManager.Enemies.Add(enemy);
             entityManager.Walls.Add(wall);
+
+            //Testing room loading 
+            levelManager = new LevelManager(Content, entityManager);
+            startingRoom = new Room("Content/RoomMiddle.Level", Content, entityManager);
+            levelManager.SetStartRoom(startingRoom);
+            //Testing Room Adding
+            roomTestTop = new Room("Content/RoomTop.level", Content, entityManager);
+            levelManager.AddRoom(roomTestTop);
+            roomTestRight = new Room("Content/RoomRight.level", Content, entityManager);
+            levelManager.AddRoom(roomTestRight);
+            roomTestBottom = new Room("Content/RoomBottom.Level", Content, entityManager);
+            levelManager.AddRoom(roomTestBottom);
+            roomTestLeft = new Room("Content/RoomLeft.Level", Content, entityManager);
+            levelManager.AddRoom(roomTestLeft);
+
+
+            //Hooking up events
+            entityManager.DoorCollided += levelManager.ChangeRoom;
+            entityManager.PlayerInWall += levelManager.MovePlayerToDoor;
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -268,6 +296,10 @@ namespace Good_Luck
                 case GameState.Credits:
                     CheckButtons(2);
                     break;
+
+                //
+                // GAME
+                //
                 case GameState.Game:
                     if (SingleKeyPress(Keys.Escape))
                     {
@@ -278,14 +310,22 @@ namespace Good_Luck
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
-                    entityManager.UpdateEntities(_graphics, kb);
+                    entityManager.UpdateEntities(_graphics, kb, bulletTexture);
                     if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();
-                        saveData = HighScoreData.LoadHighScores(fileName);
-                        gameState = GameState.GameOver;
+                        saveData = HighScoreData.LoadHighScores(saveFileName);
+                    }
+
+                    //This exists entirely to have a break point and debug
+                    if (kb.IsKeyDown(Keys.Space))
+                    {
+                        break;
                     }
                     break;
+
+
+
                 case GameState.Pause:
                     if (SingleKeyPress(Keys.Escape))
                     {
@@ -322,8 +362,6 @@ namespace Good_Luck
             {
                 case GameState.Title:
                     DisplayBackAndTitle("Good Luck~");
-
-
                     //Draw all the buttons
                     DrawButtons(0);
                     DrawTextToButton("Start", buttons[0][0].Rect, 3.5f);
@@ -332,9 +370,9 @@ namespace Good_Luck
                     DrawTextToButton("Credits", buttons[0][3].Rect, 3.5f);
                     DrawTextToButton("Exit", buttons[0][4].Rect, 3.5f);
                     break;
+
                 case GameState.Tutorial:
                     DisplayBackAndTitle("Controls");
-
                     //Keys
                     int spacing = 55;
                     int initX = 100;
@@ -345,47 +383,45 @@ namespace Good_Luck
                         DrawKeybind(pos, i);
                     }
                     DrawKeybind(new Point(initX + spacing, initY - spacing), 0);
-
                     _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing/4), initY + spacing), lightPurple);
-
                     //Mouse
                     _spriteBatch.Draw(menuItems[3], new Rectangle(400, initY - (int)(spacing / 1.5f), 84, 132), Color.White);
                     _spriteBatch.DrawString(MetalManiaNormal, "Left-Click\nto shoot", new Vector2(525, initY - (int)(spacing / 1.5f)), lightPurple);
-
                     //Draw all the buttons
                     DrawButtons(1);
                     DrawTextToButton("Back", buttons[1][0].Rect, 2.5f);
                     break;
+
                 case GameState.Credits:
                     DisplayBackAndTitle("Controls");
-
                     //Draw names
                     _spriteBatch.DrawString(MetalManiaNormal, "Made by...\n" +
                                                               "   - Aaron Bush\n" +
                                                               "   - Brian Egan\n" +
                                                               "   - John Haley\n" +
                                                               "   - Michaela Castle\n", new Vector2(100, 100), lightPurple);
-
                     //Draw all the buttons
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
                     break;
 
+                //
+                // Game
+                //
                 case GameState.Game:
+                    levelManager.CurrentRoom.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     DrawHud();
                     break;
 
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
-
                     //Draw pause symbols
                     int widthDisplacement = 150;
                     initY = 65;
                     _spriteBatch.Draw(menuItems[1], new Rectangle(widthDisplacement, initY, menuItems[1].Width, menuItems[1].Height), Color.White);
                     _spriteBatch.Draw(menuItems[1], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[1].Width,
                                                                   initY, menuItems[1].Width, menuItems[1].Height), Color.White);
-
                     //Draw all the buttons
                     DrawButtons(3);
                     DrawTextToButton("Resume", buttons[3][0].Rect, 3.5f);
@@ -395,17 +431,14 @@ namespace Good_Luck
 
                 case GameState.Options:
                     DisplayBackAndTitle("Options");
-
                     //Draw all the buttons
                     DrawButtons(4);
                     DrawTextToButton("Keybinds", buttons[4][0].Rect, 3.5f);
                     DrawTextToButton("Back", buttons[4][1].Rect, 3.5f);
-
                     break;
 
                 case GameState.Keybinds:
                     DisplayBackAndTitle("Keybindings");
-
                     string[] text = new string[4]
                     {
                         "Up",
@@ -413,7 +446,6 @@ namespace Good_Luck
                         "Down",
                         "Right"
                     };
-
                     //Keys
                     for (int i = 0; i < 4; ++i)
                     {
@@ -421,27 +453,24 @@ namespace Good_Luck
                         _spriteBatch.DrawString(MetalManiaNormal, text[i],
                             new Vector2(keybindButtons[i].Rect.X + 75, keybindButtons[i].Rect.Y), lightPurple);
                     }
-
                     //Draw all the buttons
                     DrawButtons(5);
                     DrawTextToButton("Back", buttons[5][0].Rect, 3.5f);
                     break;
+
                 case GameState.GameOver:
                     DisplayBackAndTitle("Game Over");
-
                     //Draw the skulls
                     widthDisplacement = 150;
                     initY = 55;
                     _spriteBatch.Draw(menuItems[5], new Rectangle(widthDisplacement, initY, menuItems[5].Width, menuItems[5].Height), Color.White);
                     _spriteBatch.Draw(menuItems[5], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[5].Width,
                                                                   initY, menuItems[5].Width, menuItems[5].Height), Color.White);
-
                     //Draw the crossbones
                     int halfWidth = _graphics.PreferredBackBufferWidth / 2;
                     _spriteBatch.Draw(menuItems[4], new Rectangle(
                         halfWidth - (menuItems[4].Width / 2), initY + 55,
                         menuItems[4].Width, menuItems[4].Height), Color.White);
-
                     //Display the high score and level
                     initY = 200;
                     spacing = 50;
@@ -455,7 +484,6 @@ namespace Good_Luck
                     fontSize = MetalManiaNormal.MeasureString($"Level: {saveData.levels[0]}");
                     _spriteBatch.DrawString(MetalManiaNormal, $"Level: {saveData.levels[0]}", new Vector2(
                         (int)(halfWidth - (fontSize.X / 2)), initY + spacing), lightPurple);
-
                     DrawButtons(6);
                     DrawTextToButton("Menu", buttons[6][0].Rect, 2.5f);
                     DrawTextToButton("Quit", buttons[6][1].Rect, 2.5f);
@@ -466,6 +494,7 @@ namespace Good_Luck
             base.Draw(gameTime);
         }
 
+        //
         //Methods
 
         /// <summary>
@@ -475,7 +504,7 @@ namespace Good_Luck
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
                 new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
-            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {level}\nScore: xxx", new Vector2(10, 5), lightPurple);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
         }
 
         /// <summary>
@@ -623,7 +652,7 @@ namespace Good_Luck
         private void SaveHighScore()
         {
             //Create the data to save
-            HighScoreData data = HighScoreData.LoadHighScores(fileName);
+            HighScoreData data = HighScoreData.LoadHighScores(saveFileName);
         
             int scoreIndex = -1;
             //Loop through saved data to find where to place new data
@@ -646,9 +675,9 @@ namespace Good_Luck
                 }
         
                 data.scores[scoreIndex] = player.TotalScore;
-                data.levels[scoreIndex] = level;
+                data.levels[scoreIndex] = levelManager.Level;
         
-                HighScoreData.SaveHighScores(data, fileName);
+                HighScoreData.SaveHighScores(data, saveFileName);
             }
         
         }

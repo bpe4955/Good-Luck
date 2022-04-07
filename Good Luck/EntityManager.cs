@@ -8,8 +8,23 @@ using System.Linq;
 
 namespace Good_Luck
 {
+    /// <summary>
+    /// Delegate for a void method with a wall input
+    /// </summary>
+    /// <param name="wall">A wall object</param>
+    delegate void RoomDelegate(Wall wall);
+    /// <summary>
+    /// Delegate for a void method with a player input
+    /// </summary>
+    /// <param name="player">The player object</param>
+    delegate void PlayerDelegate(Player player);
+
     class EntityManager
     {
+        //Events
+        public event RoomDelegate DoorCollided;
+        public event PlayerDelegate PlayerInWall;
+        
         /// <summary>
         /// All the <see cref="Bullet"/>s on screen
         /// </summary>
@@ -27,6 +42,11 @@ namespace Good_Luck
         /// </summary>
         public List<Wall> Walls { get; set; }
         /// <summary>
+        /// Static instance of the <see cref="EntityManager"/> class
+        /// </summary>
+        public static EntityManager Instance { get; private set; }
+
+        /// <summary>
         /// Creates a new <see cref="EntityManager"/>
         /// </summary>
         /// <param name="player">reference to the <see cref="Good_Luck.Player"/></param>
@@ -36,6 +56,7 @@ namespace Good_Luck
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
             Walls = new List<Wall>();
+            Instance = this;
         }
         /// <summary>
         /// Draws all the <see cref="Entity"/>s and <see cref="Wall"/>s
@@ -63,38 +84,26 @@ namespace Good_Luck
         /// </summary>
         /// <param name="_graphics">The main <see cref="GraphicsDeviceManager"/></param>
         /// <param name="kb">The current <see cref="KeyboardState"/></param>
-        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb)
+        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture)
         {
+            //Move Player
             Player.Move(kb);
-            if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
+            //Enemies attacking player
+            int damage;
+            for (int i = 0; i < Enemies.Count; ++i)
             {
-                Wall w = Walls.Find(x => x.Rect.Intersects(Player.Rect));
-                Rectangle rect = Rectangle.Intersect(w.Rect, Player.Rect);
-                Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
-                if (rect.Width <= rect.Height)
+                if (Enemies[i].IsActive)
                 {
-                    if (w.Rect.X > Player.Rect.X)
+                    //Enemies[i].Move();
+                    if((damage = Enemies[i].Attack(bulletTexture)) > -1)
                     {
-                        pos.X -= rect.Width;
-                    }
-                    else
-                    {
-                        pos.X += rect.Width;
+                        Player.TakeDamage(damage);
                     }
                 }
-                else
-                {
-                    if (w.Rect.Y > Player.Rect.Y)
-                    {
-                        pos.Y -= rect.Height;
-                    }
-                    else
-                    {
-                        pos.Y += rect.Height;
-                    }
-                }
-                Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
             }
+            //Wall Collision
+            WallCollision();
+            //Bullet Collisions
             for (int i = 0; i < Bullets.Count;)
             {
                 //When the bullet is off the screen
@@ -107,7 +116,7 @@ namespace Good_Luck
                     return;
                 }
 
-                //Wall collisions
+                //Wall/Bullet collisions
                 for(int w = 0; w < Walls.Count; ++w)
                 {
                     if (Walls[w].Rect.Intersects(Bullets[i].Rect))
@@ -136,6 +145,62 @@ namespace Good_Luck
                 Bullets[i].Move();
                 ++i;
             }
+
+            //Remove inactive objects
+            Enemies = Enemies.RemoveInactive();
+            Bullets = Bullets.RemoveInactive();
         }
+
+        //Helper Methods
+        /// <summary>
+        /// Deal with player overlapping with a wall
+        /// </summary>
+        private void WallCollision()
+        {
+            if (Walls.Exists(x => x.Rect.Intersects(Player.Rect)))
+            {
+                //loop through every wall
+                foreach (Wall wall in Walls)
+                {
+                    //Get the overlapping rectangle
+                    Rectangle rect = Rectangle.Intersect(wall.Rect, Player.Rect);
+                    Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
+                    //If there is a collision and the wall is a door
+                    if(rect.Height != 0 && wall.IsDoor && Enemies.Count == 0)
+                    {
+                        DoorCollided(wall);
+                        PlayerInWall(Player);
+                        break;
+                    }
+                    //If the overlap is taller than it is wide
+                    if (rect.Width <= rect.Height)
+                    {
+                        if (wall.Rect.X > Player.Rect.X)
+                        {
+                            pos.X -= rect.Width;
+                        }
+                        else
+                        {
+                            pos.X += rect.Width;
+                        }
+                    }
+                    //If the overlap is wider than it is tall
+                    else
+                    {
+                        if (wall.Rect.Y > Player.Rect.Y)
+                        {
+                            pos.Y -= rect.Height;
+                        }
+                        else
+                        {
+                            pos.Y += rect.Height;
+                        }
+                    }
+                    //Update player location
+                    Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
+                }
+            }
+        }
+
     }
 }
