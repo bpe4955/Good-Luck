@@ -48,7 +48,7 @@ namespace Good_Luck
         {
             //Try to add room to starting room
             adjacencyList.Add(new Room[5]);
-            if(room.HasBottomDoor && startingRoom.HasTopDoor) // Top Room
+            if (room.HasBottomDoor && startingRoom.HasTopDoor) // Top Room
             {
                 adjacencyList[0][1] = room; // Connect center room to new room
                 adjacencyList[^1][0] = room; // Connect new room to itself
@@ -175,11 +175,6 @@ namespace Good_Luck
 
             //Update player location
             player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
-        }
-        //If no enemies, enable doors
-        public void UpdateRooms()
-        {
-
         }
 
         public bool LoadAllRooms(string filename)
