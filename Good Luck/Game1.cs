@@ -252,9 +252,9 @@ namespace Good_Luck
             enemy = Extensions.CreateBunny();
             wall = new Wall(wallRect, wallTexture);
 
-            entityManager = new EntityManager(player);
-            entityManager.Enemies.Add(enemy);
-            entityManager.Walls.Add(wall);
+            ///entityManager = new EntityManager(player);
+            ///entityManager.Enemies.Add(enemy);
+            ///entityManager.Walls.Add(wall);
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
