@@ -118,6 +118,28 @@ namespace Good_Luck
             CheckForDoors();
 
         }
+        /// <summary>
+        /// Creates a copy of a room
+        /// </summary>
+        /// <param name="copy">The room being copied</param>
+        /// <param name="content">Content Manager</param>
+        /// <param name="entityManager">Entity Manager of the game</param>
+        public Room(Room copy, ContentManager content, EntityManager entityManager)
+        {
+            this.hasBottomDoor = copy.hasBottomDoor;
+            this.hasTopDoor = copy.hasTopDoor;
+            this.hasLeftDoor = copy.hasLeftDoor;
+            this.hasRightDoor = copy.hasRightDoor;
+            doorLocations = copy.doorLocations;
+            //Copy other tiles
+            tiles = new List<Tile>();
+            for (int i = 0; i < copy.tiles.Count; i++)
+            {
+                tiles.Add(new Tile(copy.tiles[i].Code, content, new Rectangle(copy.tiles[i].Rect.X, copy.tiles[i].Rect.Y, copy.tiles[i].Rect.Width, copy.tiles[i].Rect.Height)));
+                walls.AddRange(tiles[i].GetWalls());
+            }
+            CheckForDoors();
+        }
 
 
         //Methods 

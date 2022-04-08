@@ -47,15 +47,17 @@ namespace Good_Luck
         /// </summary>
         public Rectangle Rect { get => rect; private set => rect = value; }
         /// <summary>
-        /// Get the tile's property but cannot set it
-        /// May want to change it so its property does its effect for one frame
-        /// then gets set to default
+        /// Get and set the tile's property
         /// </summary>
-        public TileProperty Property { get => property; private set => property = value; }
+        public TileProperty Property { get => property; set => property = value; }
         /// <summary>
         /// Get whether the tile has a door or not
         /// </summary>
         public bool HasDoor { get; private set; }
+        /// <summary>
+        /// Get the tile's code
+        /// </summary>
+        public string Code { get; }
 
         //Constructor
         public Tile(Texture2D texture, Rectangle rect)
@@ -72,6 +74,7 @@ namespace Good_Luck
         /// <param name="rect">The position and size of the tile</param>
         public Tile(string code, ContentManager content, Rectangle rect)
         {
+            Code = code;
             this.rect = rect;
             HasDoor = false;
             LoadTexture(code.Substring(0, 2), content);

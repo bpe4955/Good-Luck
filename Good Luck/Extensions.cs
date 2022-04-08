@@ -69,9 +69,9 @@ namespace Good_Luck
             return entities;
         }
 
-        public static Enemy CreateBunny()
+        public static Enemy CreateBunny(this Rectangle rect)
         {
-            return new Enemy(Game1.enemyRect, Game1.enemyTexture, 5, 10, -5, 20);
+            return new Enemy(rect, Game1.enemyTexture, 5, 10, -5, 20);
         }
     }
 }

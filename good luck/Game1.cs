@@ -507,7 +507,11 @@ namespace Good_Luck
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
                 new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
-            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 0), lightPurple);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
+
+            //Debug
+            //_spriteBatch.DrawString(MetalManiaButtons, $"Room Index (entity): {entityManager.roomIndex}", new Vector2(10, 90), lightPurple);
+            //_spriteBatch.DrawString(MetalManiaButtons, $"Enemy List Count (entity): {entityManager.Enemies.Count}", new Vector2(10, 130), lightPurple);
         }
 
         /// <summary>
