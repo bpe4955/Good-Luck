@@ -134,6 +134,7 @@ namespace Good_Luck
         public void LoadCurrentRoom()
         {
             entityManager.Walls.Clear();
+            entityManager.Bullets.Clear();
             entityManager.Walls.AddRange(currentRoom.Walls);
         }
         /// <summary>
