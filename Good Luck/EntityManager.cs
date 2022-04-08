@@ -84,10 +84,10 @@ namespace Good_Luck
         /// </summary>
         /// <param name="_graphics">The main <see cref="GraphicsDeviceManager"/></param>
         /// <param name="kb">The current <see cref="KeyboardState"/></param>
-        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture, GameTime gameTime)
+        public void UpdateEntities(GraphicsDeviceManager _graphics, KeyboardState kb, Texture2D bulletTexture, GameTime gameTime, MouseState mb)
         {
             //Move Player
-            Player.Move(kb);
+            Player.Move(kb, mb);
             //Enemies attacking player
             int damage;
             for (int i = 0; i < Enemies.Count; ++i)

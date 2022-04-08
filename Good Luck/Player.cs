@@ -16,6 +16,7 @@ namespace Good_Luck
         private int defenseStat;
         private int bulletSpeed;
         private int totalScore;
+        private float angle;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -43,19 +44,19 @@ namespace Good_Luck
             this.bulletSpeed = bulletSpeed;
         }
 
-        public void Move(KeyboardState kb)
+        public void Move(KeyboardState kb, MouseState mb)
         {
             if (kb.IsKeyDown(Game1.bindings[0])) { rect.Y -= (int)Math.Floor(speed); }
             if (kb.IsKeyDown(Game1.bindings[1])) { rect.X -= (int)Math.Floor(speed); }
             if (kb.IsKeyDown(Game1.bindings[2])) { rect.Y += (int)Math.Floor(speed); }
             if (kb.IsKeyDown(Game1.bindings[3])) { rect.X += (int)Math.Floor(speed); }
+            angle = new Vector2(mb.Position.X - rect.X, mb.Position.Y - rect.Y).GetAngle();
         }
         public Bullet Shoot(MouseState mb, Texture2D bulletTexture)
         {
-            Vector2 mouseBetweenPlayer = new Vector2(mb.Position.X - rect.X, mb.Position.Y - rect.Y);
-            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2), rect.Y+(rect.Height/2), 25, 25);
+            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2) -25, rect.Y+(rect.Height/2) - 25, 25, 25);
 
-            Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, mouseBetweenPlayer.GetAngle());
+            Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, angle);
 
             return playerBullet;
         }
@@ -64,7 +65,9 @@ namespace Good_Luck
         {
             if (isActive)
             {
-                sb.Draw(texture, rect, Color.White);
+                //sb.Draw(texture, rect, Color.White);
+                sb.Draw(texture, rect, null, Color.White, angle,
+                    new Vector2(rect.X + (rect.Width / 2f), rect.Y + (rect.Height / 2f)), SpriteEffects.None, 0);
             }
         }
 

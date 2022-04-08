@@ -34,7 +34,7 @@ namespace Good_Luck
             if (isActive)
             {
                 sb.Draw(texture, rect, null, Color.White, bulletAngle - (float)(90 * Math.PI / 180),
-                    new Vector2(rect.X + (rect.Width / 2), rect.Y + (rect.Height / 2)), SpriteEffects.None, 0);;
+                    new Vector2(rect.X + (rect.Width / 2), rect.Y + (rect.Height / 2)), SpriteEffects.None, 0);
             }
         }
 

@@ -194,7 +194,7 @@ namespace Good_Luck
             MetalManiaNormal = Content.Load<SpriteFont>("MetalManiaNormal");
             JelleeRoman20 = Content.Load<SpriteFont>("JelleeRoman20");
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
-            playerTexture = Content.Load<Texture2D>("smallSquare");
+            playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             wallTexture = Content.Load<Texture2D>("smallSquareGray");
             
@@ -310,7 +310,7 @@ namespace Good_Luck
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
                     //Loop through every bullet
-                    entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime);
+                    entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
                     if(entityManager.Enemies.Count == 0)
                     {
                         SaveHighScore();
