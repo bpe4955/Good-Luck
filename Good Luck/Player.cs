@@ -56,7 +56,7 @@ namespace Good_Luck
         }
         public Bullet Shoot(MouseState mb, Texture2D bulletTexture)
         {
-            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2) -25, rect.Y+(rect.Height/2) - 25, 25, 25);
+            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2) -12, rect.Y+(rect.Height/2) - 12, 25, 25);
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, angle);
 
