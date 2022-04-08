@@ -55,13 +55,13 @@ namespace Good_Luck
         Texture2D buttonImage;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
-        Texture2D enemyTexture;
+        public static Texture2D enemyTexture;
         Texture2D wallTexture;
         Texture2D bulletTexture;
         Texture2D[] health;
 
         Rectangle playerRect;
-        Rectangle enemyRect;
+        public static Rectangle enemyRect;
         Rectangle wallRect;
         Player player;
         Enemy enemy;
@@ -249,7 +249,7 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20);
+            enemy = Extensions.CreateBunny();
             wall = new Wall(wallRect, wallTexture);
 
             entityManager = new EntityManager(player);

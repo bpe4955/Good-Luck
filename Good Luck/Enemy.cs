@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace Good_Luck
 {
-    class Enemy : Entity, IDamageable
+    public class Enemy : Entity, IDamageable
     {
         // Fields
         private int maxHealth;
