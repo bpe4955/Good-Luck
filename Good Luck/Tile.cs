@@ -47,11 +47,9 @@ namespace Good_Luck
         /// </summary>
         public Rectangle Rect { get => rect; private set => rect = value; }
         /// <summary>
-        /// Get the tile's property but cannot set it
-        /// May want to change it so its property does its effect for one frame
-        /// then gets set to default
+        /// Get and set the tile's property
         /// </summary>
-        public TileProperty Property { get => property; private set => property = value; }
+        public TileProperty Property { get => property; set => property = value; }
         /// <summary>
         /// Get whether the tile has a door or not
         /// </summary>

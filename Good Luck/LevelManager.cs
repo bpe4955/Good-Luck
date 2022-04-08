@@ -79,6 +79,8 @@ namespace Good_Luck
                 //Disable doors to avoid overlapping edges
                 room.HasBottomDoor = false;
                 startingRoom.HasTopDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
             else if (room.HasLeftDoor && startingRoom.HasRightDoor) // Right Room
             {
@@ -88,6 +90,8 @@ namespace Good_Luck
                 adjacencyList[^1][4] = adjacencyList[0][0];
                 room.HasLeftDoor = false;
                 startingRoom.HasRightDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
             else if (room.HasTopDoor && startingRoom.HasBottomDoor) // Bottom Room
             {
@@ -97,6 +101,8 @@ namespace Good_Luck
                 adjacencyList[^1][1] = adjacencyList[0][0];
                 room.HasTopDoor = false;
                 startingRoom.HasBottomDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
             else if (room.HasRightDoor && startingRoom.HasLeftDoor) // Left Room
             {
@@ -106,6 +112,8 @@ namespace Good_Luck
                 adjacencyList[^1][2] = adjacencyList[0][0];
                 room.HasRightDoor = false;
                 startingRoom.HasLeftDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
 
             //If it cannot fit onto the starting room
@@ -126,6 +134,8 @@ namespace Good_Luck
             adjacencyList[0][0] = startingRoom;
             currentRoom = startingRoom;
             floorRooms.Add(startingRoom);
+            //Create another list of enemies
+            entityManager.Enemies.Add(new List<Enemy>());
             LoadCurrentRoom();
         }
         /// <summary>
@@ -154,11 +164,13 @@ namespace Good_Luck
                     case TileProperty.Default:
                         break;
                     case TileProperty.OneEnemy:
-                        //entityManager.Enemies[roomIndex].Add(new Enemy());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoEnemy:
-                        //entityManager.Enemies[roomIndex].Add(new Enemy());
-                        //entityManager.Enemies[roomIndex].Add(new Enemy());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
                         break;

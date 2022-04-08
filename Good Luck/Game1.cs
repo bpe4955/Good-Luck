@@ -249,12 +249,12 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-            enemy = Extensions.CreateBunny();
+           // enemy = Extensions.CreateBunny();
             wall = new Wall(wallRect, wallTexture);
 
-            ///entityManager = new EntityManager(player);
-            ///entityManager.Enemies.Add(enemy);
-            ///entityManager.Walls.Add(wall);
+            entityManager = new EntityManager(player);
+            //entityManager.Enemies[].Add(enemy);
+            entityManager.Walls.Add(wall);
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
@@ -412,6 +412,7 @@ namespace Good_Luck
                     levelManager.CurrentRoom.Draw(_spriteBatch);
                     entityManager.Draw(_spriteBatch);
                     DrawHud();
+
                     break;
 
                 case GameState.Pause:
@@ -505,6 +506,10 @@ namespace Good_Luck
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
                 new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
             _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 5), lightPurple);
+
+            //Debug
+            _spriteBatch.DrawString(MetalManiaButtons, $"Room Index (entity): {entityManager.roomIndex}", new Vector2(10, 90), lightPurple);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Enemy List Count (entity): {entityManager.Enemies.Count}", new Vector2(10, 130), lightPurple);
         }
 
         /// <summary>
