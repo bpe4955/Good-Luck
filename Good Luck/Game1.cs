@@ -258,17 +258,19 @@ namespace Good_Luck
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
-            startingRoom = new Room("Content/RoomMiddle.Level", Content, entityManager);
+            startingRoom = levelManager.LoadRoom(new Room("Content/RoomMiddle.Level", Content, entityManager));
             levelManager.SetStartRoom(startingRoom);
             //Testing Room Adding
-            roomTestTop = new Room("Content/RoomTop.level", Content, entityManager);
-            levelManager.AddRoom(roomTestTop);
-            roomTestRight = new Room("Content/RoomRight.level", Content, entityManager);
-            levelManager.AddRoom(roomTestRight);
-            roomTestBottom = new Room("Content/RoomBottom.Level", Content, entityManager);
-            levelManager.AddRoom(roomTestBottom);
-            roomTestLeft = new Room("Content/RoomLeft.Level", Content, entityManager);
-            levelManager.AddRoom(roomTestLeft);
+            roomTestTop = levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
+            //levelManager.AddRoom(roomTestTop);
+            roomTestRight = levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
+            //levelManager.AddRoom(roomTestRight);
+            roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
+            //levelManager.AddRoom(roomTestBottom);
+            roomTestLeft = levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
+            //levelManager.AddRoom(roomTestLeft);
+
+            levelManager.NextLevel();
 
 
             //Hooking up events

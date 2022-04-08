@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Good_Luck
 {
@@ -53,8 +54,8 @@ namespace Good_Luck
         {
             this.entityManager = entityManager;
             this.content = content;
-            //Initialize level to 1
-            level = 1;
+            //Initialize level to 0
+            level = 0;
         }
 
 
@@ -254,11 +255,29 @@ namespace Good_Luck
             //Update player location
             player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
         }
-
-        public bool LoadAllRooms(string filename)
+        /// <summary>
+        /// Adds a room to the list of possible rooms
+        /// </summary>
+        /// <param name="room">The room to add to the list of possible rooms</param>
+        public Room LoadRoom(Room room)
         {
-            //loop through every room file and add it to possible rooms
-            return false;
+            possibleRooms.Add(room);
+            return room;
+        }
+
+        public void NextLevel()
+        {
+            level++;
+            //Reset floor info
+            floorRooms.Clear();
+            SetStartRoom(possibleRooms[0]);
+            //Add rooms in random order
+            Random r = new Random();
+            foreach (int i in Enumerable.Range(1, possibleRooms.Count-1).OrderBy(x => r.Next()))
+            {
+                AddRoom(new Room(possibleRooms[i],content,entityManager));
+            }
+            currentRoom = floorRooms[0];
         }
     }
 

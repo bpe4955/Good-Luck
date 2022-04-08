@@ -54,6 +54,10 @@ namespace Good_Luck
         /// Get whether the tile has a door or not
         /// </summary>
         public bool HasDoor { get; private set; }
+        /// <summary>
+        /// Get the tile's code
+        /// </summary>
+        public string Code { get; }
 
         //Constructor
         public Tile(Texture2D texture, Rectangle rect)
@@ -70,6 +74,7 @@ namespace Good_Luck
         /// <param name="rect">The position and size of the tile</param>
         public Tile(string code, ContentManager content, Rectangle rect)
         {
+            Code = code;
             this.rect = rect;
             HasDoor = false;
             LoadTexture(code.Substring(0, 2), content);
