@@ -318,7 +318,10 @@ namespace Good_Luck
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
                     }
-
+                    if(player.Health <= 0)
+                    {
+                        gameState = GameState.GameOver;
+                    }
                     //This exists entirely to have a break point and debug
                     if (kb.IsKeyDown(Keys.Space))
                     {
