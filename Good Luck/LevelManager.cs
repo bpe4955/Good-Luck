@@ -135,7 +135,39 @@ namespace Good_Luck
         {
             entityManager.Walls.Clear();
             entityManager.Bullets.Clear();
+            entityManager.roomIndex = floorRooms.IndexOf(currentRoom);
+            GenerateEnemies();
             entityManager.Walls.AddRange(currentRoom.Walls);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void GenerateEnemies()
+        {
+            int roomIndex = floorRooms.IndexOf(currentRoom);
+            //Loop through every tile
+            foreach (Tile tile in currentRoom.Tiles)
+            {
+                //See what the property of the tile is
+                switch (tile.Property)
+                {
+                    case TileProperty.Default:
+                        break;
+                    case TileProperty.OneEnemy:
+                        //entityManager.Enemies[roomIndex].Add(new Enemy());
+                        break;
+                    case TileProperty.TwoEnemy:
+                        //entityManager.Enemies[roomIndex].Add(new Enemy());
+                        //entityManager.Enemies[roomIndex].Add(new Enemy());
+                        break;
+                    case TileProperty.OneCollectible:
+                        break;
+                    case TileProperty.TwoCollectible:
+                        break;
+                    case TileProperty.PlayerSpawn:
+                        break;
+                }
+            }
         }
         /// <summary>
         /// Takes in a door and changed the current room to what
