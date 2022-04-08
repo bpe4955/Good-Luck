@@ -94,7 +94,7 @@ namespace Good_Luck
             {
                 if (Enemies[i].IsActive)
                 {
-                    Enemies[i].Move(gameTime);
+                    Enemies[i].Move();
                     WallCollisionWithEnemies(Enemies[i]);
                     if((damage = Enemies[i].Attack(bulletTexture)) > -1)
                     {

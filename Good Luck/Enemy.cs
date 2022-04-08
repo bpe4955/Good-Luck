@@ -16,12 +16,8 @@ namespace Good_Luck
         private int score;
         private int reloadSpeed;
         private int damage;
-
-        private TimeSpan intervalBetweenAttack = TimeSpan.FromMilliseconds(3000);
-        private TimeSpan lastTimeAttack;
-        private Timer t = new Timer(3000f);
-
-        private bool paused;
+        private int moveTime;
+        private bool pause;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -47,7 +43,7 @@ namespace Good_Luck
             this.score = score;
             reloadSpeed = 20;
             damage = 3;
-
+            pause = false;
 
         }
         /// <summary>
@@ -128,43 +124,30 @@ namespace Good_Luck
         /// <summary>
         /// Moves the <see cref="Enemy"/>
         /// </summary>
-        public void Move(GameTime gameTime)
+        public void Move()
         {
-            Player p = EntityManager.Instance.Player;
-            float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
-            int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
-            int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
-
-
-
-            rect.X += xOffset;
-            rect.Y += yOffset;
-
-            if (lastTimeAttack + intervalBetweenAttack < gameTime.TotalGameTime)
+            if (moveTime <= 0)
             {
-                Wait();
-                lastTimeAttack = gameTime.TotalGameTime;
+                moveTime = 20;
+                pause = !pause;
             }
-        }
-
-        public void Wait()
-        {
-            /*
-            t.Start();
-
-            if (t.IsActive)//set by the .start method
+            else
             {
-                if (t.isComplete)
+                if (!pause)
                 {
-                    //do some stuff
-                    t.Stop();
+                    Player p = EntityManager.Instance.Player;
+                    float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
+                    int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
+                    int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
+
+
+
+                    rect.X += xOffset;
+                    rect.Y += yOffset;
                 }
-                else
-                {
-                    //we're still timing, nothing to do here
-                }
+
+                --moveTime;
             }
-            */
         }
 
         /// <summary>
