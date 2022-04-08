@@ -264,7 +264,9 @@ namespace Good_Luck
             possibleRooms.Add(room);
             return room;
         }
-
+        /// <summary>
+        /// Generate the next level from the list of possible rooms
+        /// </summary>
         public void NextLevel()
         {
             level++;
