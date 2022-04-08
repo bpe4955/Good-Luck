@@ -17,6 +17,7 @@ namespace Good_Luck
         private int bulletSpeed;
         private int totalScore;
         private float angle;
+        private Vector2 origin;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -42,6 +43,7 @@ namespace Good_Luck
             this.defenseStat = defense;
             this.damage = damage;
             this.bulletSpeed = bulletSpeed;
+            origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
         }
 
         public void Move(KeyboardState kb, MouseState mb)
@@ -66,8 +68,8 @@ namespace Good_Luck
             if (isActive)
             {
                 //sb.Draw(texture, rect, Color.White);
-                sb.Draw(texture, rect, null, Color.White, angle,
-                    new Vector2(rect.X + (rect.Width / 2f), rect.Y + (rect.Height / 2f)), SpriteEffects.None, 0);
+                sb.Draw(texture, new Rectangle(Rect.X + (Rect.Width / 2), Rect.Y + (Rect.Height / 2), rect.Width, rect.Height),
+                    null, Color.White, angle, origin, SpriteEffects.None, 0);
             }
         }
 
