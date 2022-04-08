@@ -95,6 +95,7 @@ namespace Good_Luck
                 if (Enemies[i].IsActive)
                 {
                     Enemies[i].Move(gameTime);
+                    WallCollisionWithEnemies(Enemies[i]);
                     if((damage = Enemies[i].Attack(bulletTexture)) > -1)
                     {
                         Player.TakeDamage(damage);
@@ -172,35 +173,62 @@ namespace Good_Luck
                         PlayerInWall(Player);
                         break;
                     }
-                    //If the overlap is taller than it is wide
-                    if (rect.Width <= rect.Height)
-                    {
-                        if (wall.Rect.X > Player.Rect.X)
-                        {
-                            pos.X -= rect.Width;
-                        }
-                        else
-                        {
-                            pos.X += rect.Width;
-                        }
-                    }
-                    //If the overlap is wider than it is tall
-                    else
-                    {
-                        if (wall.Rect.Y > Player.Rect.Y)
-                        {
-                            pos.Y -= rect.Height;
-                        }
-                        else
-                        {
-                            pos.Y += rect.Height;
-                        }
-                    }
-                    //Update player location
-                    Player.Rect = new Rectangle((int)pos.X, (int)pos.Y, Player.Rect.Width, Player.Rect.Height);
+                    RepositionCollision(Player, wall, rect, pos);
                 }
             }
         }
-
+        /// <summary>
+        /// Checks collision of enemies with walls
+        /// </summary>
+        /// <param name="enemy">The enemy to check</param>
+        private void WallCollisionWithEnemies(Enemy enemy)
+        {
+            if (Walls.Exists(x => x.Rect.Intersects(enemy.Rect)))
+            {
+                foreach (Wall wall in Walls)
+                {
+                    //Get the overlapping rectangle
+                    Rectangle rect = Rectangle.Intersect(wall.Rect, enemy.Rect);
+                    Vector2 pos = new Vector2(enemy.Rect.X, enemy.Rect.Y);
+                    RepositionCollision(enemy, wall, rect, pos);
+                }
+            }
+        }
+        /// <summary>
+        /// repositions an entity after wall collision
+        /// </summary>
+        /// <param name="entity">The entity to reposition</param>
+        /// <param name="wall">The wall to reposition</param>
+        /// <param name="rect">The intersection rect</param>
+        /// <param name="pos">The current pos of the entity</param>
+        private void RepositionCollision(Entity entity, Wall wall, Rectangle rect, Vector2 pos)
+        {
+            //If the overlap is taller than it is wide
+            if (rect.Width <= rect.Height)
+            {
+                if (wall.Rect.X > entity.Rect.X)
+                {
+                    pos.X -= rect.Width;
+                }
+                else
+                {
+                    pos.X += rect.Width;
+                }
+            }
+            //If the overlap is wider than it is tall
+            else
+            {
+                if (wall.Rect.Y > entity.Rect.Y)
+                {
+                    pos.Y -= rect.Height;
+                }
+                else
+                {
+                    pos.Y += rect.Height;
+                }
+            }
+            //Update entity location
+            entity.Rect = new Rectangle((int)pos.X, (int)pos.Y, entity.Rect.Width, entity.Rect.Height);
+        }
     }
 }
