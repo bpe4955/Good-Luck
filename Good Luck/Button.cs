@@ -23,6 +23,10 @@ namespace Good_Luck
         private bool isClicked;
         private GameState gameState;
 
+        //Delegate to allow calling a method when button is clicked
+        public delegate void ButtonClicked();
+        public ButtonClicked buttonClickAction;
+
         public Rectangle Rect { get { return rect; } }
 
         //Constructor
@@ -88,6 +92,13 @@ namespace Good_Luck
         public GameState ClickedGetState()
         {
             isClicked = true;
+
+            //If a method has been given to the button, call the method
+            if(buttonClickAction != null)
+            {
+                buttonClickAction();
+            }
+
             return gameState;
         }
     }

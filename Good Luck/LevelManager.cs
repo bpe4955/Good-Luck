@@ -41,7 +41,7 @@ namespace Good_Luck
         /// <summary>
         /// Get the current level number, can only be set in this class
         /// </summary>
-        public int Level { get => level; private set => level = value; }
+        public int Level { get => level; set => level = value; }
 
 
         //Constructor
@@ -127,7 +127,7 @@ namespace Good_Luck
         {
             //Clear the list to restart
             adjacencyList.Clear();
-            startingRoom = startRoom;
+            startingRoom = new Room(startRoom,content,entityManager);
             adjacencyList.Add(new Room[5]);
             // first value in list is the starting room, 
             // and 4 other values in the array are adjacent rooms
@@ -279,6 +279,7 @@ namespace Good_Luck
             {
                 AddRoom(new Room(possibleRooms[i],content,entityManager));
             }
+
             currentRoom = floorRooms[0];
         }
     }
