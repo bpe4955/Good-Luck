@@ -56,7 +56,7 @@ namespace Good_Luck
         Texture2D menuItemTextures;
         Texture2D playerTexture;
         Texture2D enemyTexture;
-        Texture2D wallTexture;
+        Texture2D sadEnemy;
         Texture2D bulletTexture;
         Texture2D[] health;
 
@@ -196,7 +196,7 @@ namespace Good_Luck
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
-            wallTexture = Content.Load<Texture2D>("smallSquareGray");
+            sadEnemy = Content.Load<Texture2D>("SadBunny");
             
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
@@ -250,7 +250,7 @@ namespace Good_Luck
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
             enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20);
-            wall = new Wall(wallRect, wallTexture);
+            //wall = new Wall(wallRect, sadEnemy);
 
             entityManager = new EntityManager(player);
             entityManager.Enemies.Add(enemy);
