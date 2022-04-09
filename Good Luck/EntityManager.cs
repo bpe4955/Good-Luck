@@ -124,7 +124,18 @@ namespace Good_Luck
                 //Wall/Bullet collisions
                 for(int w = 0; w < Walls.Count; ++w)
                 {
-                    if (Walls[w].Rect.Intersects(Bullets[i].Rect))
+                    //Bullets are not colliding properly with walls
+                    //It is fixed, or at least aligned visually, if I manually adjust the hitbox 
+                    Rectangle fixedRect = Bullets[i].Rect;
+
+                    fixedRect.Height /= 2;
+                    fixedRect.Y -= fixedRect.Height;
+                    fixedRect.X -= fixedRect.Width;
+                    fixedRect.X += 10;
+                    fixedRect.Width -= 20;
+                    //There should be a better way but it appears to work
+
+                    if (Walls[w].Rect.Intersects(fixedRect))
                     {
                         Bullets.RemoveAt(i);
                         return;
