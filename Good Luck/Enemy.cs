@@ -18,6 +18,7 @@ namespace Good_Luck
         private int damage;
         private int moveTime;
         private bool pause;
+        private Texture2D crying;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -34,7 +35,7 @@ namespace Good_Luck
         /// <param name="maxhealth">The maximum amount of health for this <see cref="Enemy"/></param>
         /// <param name="bulletSpeed">The bullet speed of this <see cref="Enemy"/></param>
         /// <param name="score">How much this <see cref="Enemy"/> is worth</param>
-        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score)
+        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score, Texture2D crying)
         : base(enemyTexture, enemyRect, speed)
         {
             this.maxHealth = maxhealth;
@@ -44,6 +45,7 @@ namespace Good_Luck
             reloadSpeed = 20;
             damage = 3;
             pause = false;
+            this.crying = crying;
 
         }
         /// <summary>
@@ -54,7 +56,15 @@ namespace Good_Luck
         {
             if (isActive)
             {
-                sb.Draw(texture, rect, Color.White);
+                if(maxHealth == health)
+                {
+                    sb.Draw(texture, rect, Color.White);
+                }
+                else
+                {
+                    sb.Draw(crying, rect, Color.White);
+
+                }
             }
         }
         /// <summary>
