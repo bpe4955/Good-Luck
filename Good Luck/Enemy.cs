@@ -50,7 +50,7 @@ namespace Good_Luck
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
-        /// </summary>
+        /// </summary>ss
         /// <param name="sb">The <see cref="SpriteBatch"/> to draw with</param>
         public override void Draw(SpriteBatch sb)
         {

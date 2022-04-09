@@ -56,7 +56,7 @@ namespace Good_Luck
         Texture2D menuItemTextures;
         Texture2D playerTexture;
         public static Texture2D enemyTexture;
-        Texture2D wallTexture;
+        public static Texture2D sadEnemy;
         Texture2D bulletTexture;
         Texture2D[] health;
 
@@ -250,11 +250,11 @@ namespace Good_Luck
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
            // enemy = Extensions.CreateBunny();
-            wall = new Wall(wallRect, wallTexture);
+           // wall = new Wall(wallRect, sadEnemy);
 
             entityManager = new EntityManager(player);
             //entityManager.Enemies[].Add(enemy);
-            entityManager.Walls.Add(wall);
+            //entityManager.Walls.Add(wall);
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
