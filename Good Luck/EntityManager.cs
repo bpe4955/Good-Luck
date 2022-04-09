@@ -207,8 +207,13 @@ namespace Good_Luck
         /// <param name="pos">The current pos of the entity</param>
         private void RepositionCollision(Entity entity, Wall wall, Rectangle rect, Vector2 pos)
         {
+            //If Rectangle has height and width of Zero, the player would not be moved at all
+            //So we can exit early
+            if (rect.Size == Point.Zero)
+                return;
+
             //If the overlap is taller than it is wide
-            if (rect.Width <= rect.Height)
+            if (rect.Width < rect.Height)
             {
                 if (wall.Rect.X > entity.Rect.X)
                 {
@@ -220,7 +225,7 @@ namespace Good_Luck
                 }
             }
             //If the overlap is wider than it is tall
-            else
+            else if(rect.Height < rect.Width)
             {
                 if (wall.Rect.Y > entity.Rect.Y)
                 {
@@ -231,6 +236,7 @@ namespace Good_Luck
                     pos.Y += rect.Height;
                 }
             }
+
             //Update entity location
             entity.Rect = new Rectangle((int)pos.X, (int)pos.Y, entity.Rect.Width, entity.Rect.Height);
         }
