@@ -49,8 +49,8 @@ namespace Good_Luck
         Button[][] buttons;
 
         //Assets
-        Texture2D smallSquare;
-        Texture2D smallSquareGray;
+        Texture2D buttonDefault;
+        Texture2D buttonHover;
         Texture2D buttonClick;
         Texture2D buttonImage;
         Texture2D menuItemTextures;
@@ -168,8 +168,8 @@ namespace Good_Luck
             buttonImage = Content.Load<Texture2D>("Button");
             int height = buttonImage.Height / 3;
             int width = buttonImage.Width;
-            smallSquare = buttonImage.GetTexture(new Rectangle(0, height * 2, width, height), GraphicsDevice);
-            smallSquareGray = buttonImage.GetTexture(new Rectangle(0, height * 1, width, height), GraphicsDevice);
+            buttonDefault = buttonImage.GetTexture(new Rectangle(0, height * 2, width, height), GraphicsDevice);
+            buttonHover = buttonImage.GetTexture(new Rectangle(0, height * 1, width, height), GraphicsDevice);
             buttonClick = buttonImage.GetTexture(new Rectangle(0, 0, width, height), GraphicsDevice);
 
             menuItems = new Texture2D[6]
@@ -196,7 +196,7 @@ namespace Good_Luck
             menuItemTextures = Content.Load<Texture2D>("MenuImages");
             playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
-            wallTexture = Content.Load<Texture2D>("smallSquareGray");
+            sadEnemy = Content.Load<Texture2D>("SadBunny");
             
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
@@ -207,35 +207,35 @@ namespace Good_Luck
             int currentY = 135;
             int spacing = (int)(height * 1.1f);
             {
-                buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[0][1] = new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[0][1] = new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[0][2] = new Button(GameState.Options, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[0][2] = new Button(GameState.Options, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[0][3] = new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[0][3] = new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[0][4] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[0][4] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
                 currentY = 370;
-                buttons[1][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[1][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
-                buttons[2][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[2][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
-                buttons[4][1] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
-                buttons[4][0] = new Button(GameState.Keybinds, new Rectangle(midX, currentY - spacing, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[4][1] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
+                buttons[4][0] = new Button(GameState.Keybinds, new Rectangle(midX, currentY - spacing, width, height), buttonDefault, buttonHover, buttonClick);
 
-                buttons[5][0] = new Button(GameState.Options, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[5][0] = new Button(GameState.Options, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
-                buttons[6][0] = new Button(GameState.Title, new Rectangle(midX, currentY - spacing, width, height), smallSquare, smallSquareGray, buttonClick);
-                buttons[6][1] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[6][0] = new Button(GameState.Title, new Rectangle(midX, currentY - spacing, width, height), buttonDefault, buttonHover, buttonClick);
+                buttons[6][1] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
                 currentY = (_graphics.PreferredBackBufferHeight / 2) - spacing;
-                buttons[3][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[3][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[3][1] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[3][1] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
-                buttons[3][2] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), smallSquare, smallSquareGray, buttonClick);
+                buttons[3][2] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
             }
 
             spacing = 60;
