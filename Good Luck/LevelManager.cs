@@ -71,48 +71,50 @@ namespace Good_Luck
         {
             //Try to add room to starting room
             adjacencyList.Add(new Room[5]);
-            if (room.HasBottomDoor && startingRoom.HasTopDoor) // Top Room
+            Room copyRoom = new Room(room,content,entityManager);
+            Room copyStartingRoom = new Room(startingRoom, content, entityManager);
+            if (copyRoom.HasBottomDoor && copyStartingRoom.HasTopDoor) // Top Room
             {
                 adjacencyList[0][1] = room; // Connect center room to new room
                 adjacencyList[^1][0] = room; // Connect new room to itself
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][3] = adjacencyList[0][0]; // Connect new room to center room
                 //Disable doors to avoid overlapping edges
-                room.HasBottomDoor = false;
-                startingRoom.HasTopDoor = false;
+                copyRoom.HasBottomDoor = false;
+                copyStartingRoom.HasTopDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasLeftDoor && startingRoom.HasRightDoor) // Right Room
+            else if (copyRoom.HasLeftDoor && copyStartingRoom.HasRightDoor) // Right Room
             {
                 adjacencyList[0][2] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][4] = adjacencyList[0][0];
-                room.HasLeftDoor = false;
-                startingRoom.HasRightDoor = false;
+                copyRoom.HasLeftDoor = false;
+                copyStartingRoom.HasRightDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasTopDoor && startingRoom.HasBottomDoor) // Bottom Room
+            else if (copyRoom.HasTopDoor && copyStartingRoom.HasBottomDoor) // Bottom Room
             {
                 adjacencyList[0][3] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][1] = adjacencyList[0][0];
-                room.HasTopDoor = false;
-                startingRoom.HasBottomDoor = false;
+                copyRoom.HasTopDoor = false;
+                copyStartingRoom.HasBottomDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasRightDoor && startingRoom.HasLeftDoor) // Left Room
+            else if (copyRoom.HasRightDoor && copyStartingRoom.HasLeftDoor) // Left Room
             {
                 adjacencyList[0][4] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][2] = adjacencyList[0][0];
-                room.HasRightDoor = false;
-                startingRoom.HasLeftDoor = false;
+                copyRoom.HasRightDoor = false;
+                copyStartingRoom.HasLeftDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
             }
@@ -127,7 +129,7 @@ namespace Good_Luck
         {
             //Clear the list to restart
             adjacencyList.Clear();
-            startingRoom = new Room(startRoom,content,entityManager);
+            startingRoom = startRoom;
             adjacencyList.Add(new Room[5]);
             // first value in list is the starting room, 
             // and 4 other values in the array are adjacent rooms

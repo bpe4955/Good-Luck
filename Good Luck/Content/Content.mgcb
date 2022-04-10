@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BlockedOffLeftRoom.level
+/copy:BlockedOffLeftRoom.level
+
+#begin BlockedOffRightRoom.level
+/copy:BlockedOffRightRoom.level
+
 #begin Bullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
