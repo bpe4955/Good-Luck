@@ -249,7 +249,7 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20);
+            enemy = new Enemy(enemyRect, enemyTexture, 5, 10, -5, 20, wallTexture);
             wall = new Wall(wallRect, wallTexture);
 
             entityManager = new EntityManager(player);
