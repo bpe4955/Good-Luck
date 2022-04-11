@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Good_Luck
 {
@@ -40,7 +41,7 @@ namespace Good_Luck
         /// <summary>
         /// Get the current level number, can only be set in this class
         /// </summary>
-        public int Level { get => level; private set => level = value; }
+        public int Level { get => level; set => level = value; }
 
 
         //Constructor
@@ -53,8 +54,8 @@ namespace Good_Luck
         {
             this.entityManager = entityManager;
             this.content = content;
-            //Initialize level to 1
-            level = 1;
+            //Initialize level to 0
+            level = 0;
         }
 
 
@@ -70,42 +71,52 @@ namespace Good_Luck
         {
             //Try to add room to starting room
             adjacencyList.Add(new Room[5]);
-            if (room.HasBottomDoor && startingRoom.HasTopDoor) // Top Room
+            Room copyRoom = new Room(room,content,entityManager);
+            Room copyStartingRoom = new Room(startingRoom, content, entityManager);
+            if (copyRoom.HasBottomDoor && copyStartingRoom.HasTopDoor) // Top Room
             {
                 adjacencyList[0][1] = room; // Connect center room to new room
                 adjacencyList[^1][0] = room; // Connect new room to itself
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][3] = adjacencyList[0][0]; // Connect new room to center room
                 //Disable doors to avoid overlapping edges
-                room.HasBottomDoor = false;
-                startingRoom.HasTopDoor = false;
+                copyRoom.HasBottomDoor = false;
+                copyStartingRoom.HasTopDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasLeftDoor && startingRoom.HasRightDoor) // Right Room
+            else if (copyRoom.HasLeftDoor && copyStartingRoom.HasRightDoor) // Right Room
             {
                 adjacencyList[0][2] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][4] = adjacencyList[0][0];
-                room.HasLeftDoor = false;
-                startingRoom.HasRightDoor = false;
+                copyRoom.HasLeftDoor = false;
+                copyStartingRoom.HasRightDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasTopDoor && startingRoom.HasBottomDoor) // Bottom Room
+            else if (copyRoom.HasTopDoor && copyStartingRoom.HasBottomDoor) // Bottom Room
             {
                 adjacencyList[0][3] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][1] = adjacencyList[0][0];
-                room.HasTopDoor = false;
-                startingRoom.HasBottomDoor = false;
+                copyRoom.HasTopDoor = false;
+                copyStartingRoom.HasBottomDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
-            else if (room.HasRightDoor && startingRoom.HasLeftDoor) // Left Room
+            else if (copyRoom.HasRightDoor && copyStartingRoom.HasLeftDoor) // Left Room
             {
                 adjacencyList[0][4] = room;
                 adjacencyList[^1][0] = room;
                 floorRooms.Add(room); // Add to list of rooms on floor
                 adjacencyList[^1][2] = adjacencyList[0][0];
-                room.HasRightDoor = false;
-                startingRoom.HasLeftDoor = false;
+                copyRoom.HasRightDoor = false;
+                copyStartingRoom.HasLeftDoor = false;
+                //Create another list of enemies
+                entityManager.Enemies.Add(new List<Enemy>());
             }
 
             //If it cannot fit onto the starting room
@@ -126,6 +137,8 @@ namespace Good_Luck
             adjacencyList[0][0] = startingRoom;
             currentRoom = startingRoom;
             floorRooms.Add(startingRoom);
+            //Create another list of enemies
+            entityManager.Enemies.Add(new List<Enemy>());
             LoadCurrentRoom();
         }
         /// <summary>
@@ -134,7 +147,42 @@ namespace Good_Luck
         public void LoadCurrentRoom()
         {
             entityManager.Walls.Clear();
+            entityManager.Bullets.Clear();
+            entityManager.roomIndex = floorRooms.IndexOf(currentRoom);
+            GenerateEnemies();
             entityManager.Walls.AddRange(currentRoom.Walls);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void GenerateEnemies()
+        {
+            int roomIndex = floorRooms.IndexOf(currentRoom);
+            //Loop through every tile
+            foreach (Tile tile in currentRoom.Tiles)
+            {
+                //See what the property of the tile is
+                switch (tile.Property)
+                {
+                    case TileProperty.Default:
+                        break;
+                    case TileProperty.OneEnemy:
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        tile.Property = TileProperty.Default;
+                        break;
+                    case TileProperty.TwoEnemy:
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        tile.Property = TileProperty.Default;
+                        break;
+                    case TileProperty.OneCollectible:
+                        break;
+                    case TileProperty.TwoCollectible:
+                        break;
+                    case TileProperty.PlayerSpawn:
+                        break;
+                }
+            }
         }
         /// <summary>
         /// Takes in a door and changed the current room to what
@@ -209,11 +257,32 @@ namespace Good_Luck
             //Update player location
             player.Rect = new Rectangle((int)pos.X, (int)pos.Y, player.Rect.Width, player.Rect.Height);
         }
-
-        public bool LoadAllRooms(string filename)
+        /// <summary>
+        /// Adds a room to the list of possible rooms
+        /// </summary>
+        /// <param name="room">The room to add to the list of possible rooms</param>
+        public Room LoadRoom(Room room)
         {
-            //loop through every room file and add it to possible rooms
-            return false;
+            possibleRooms.Add(room);
+            return room;
+        }
+        /// <summary>
+        /// Generate the next level from the list of possible rooms
+        /// </summary>
+        public void NextLevel()
+        {
+            level++;
+            //Reset floor info
+            floorRooms.Clear();
+            SetStartRoom(possibleRooms[0]);
+            //Add rooms in random order
+            Random r = new Random();
+            foreach (int i in Enumerable.Range(1, possibleRooms.Count-1).OrderBy(x => r.Next()))
+            {
+                AddRoom(new Room(possibleRooms[i],content,entityManager));
+            }
+
+            currentRoom = floorRooms[0];
         }
     }
 

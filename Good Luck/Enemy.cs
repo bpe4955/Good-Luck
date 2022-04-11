@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace Good_Luck
 {
-    class Enemy : Entity, IDamageable
+    public class Enemy : Entity, IDamageable
     {
         // Fields
         private int maxHealth;
@@ -46,22 +46,24 @@ namespace Good_Luck
             damage = 3;
             pause = false;
             this.crying = crying;
+
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
-        /// </summary>
+        /// </summary>ss
         /// <param name="sb">The <see cref="SpriteBatch"/> to draw with</param>
         public override void Draw(SpriteBatch sb)
         {
             if (isActive)
             {
-                if (health != maxHealth)
+                if(maxHealth == health)
                 {
-                    sb.Draw(crying, rect, Color.White);
+                    sb.Draw(texture, rect, Color.White);
                 }
                 else
                 {
-                    sb.Draw(texture, rect, Color.White);
+                    sb.Draw(crying, rect, Color.White);
+
                 }
             }
         }

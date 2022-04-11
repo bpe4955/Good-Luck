@@ -24,7 +24,11 @@ namespace Good_Luck
         //Events
         public event RoomDelegate DoorCollided;
         public event PlayerDelegate PlayerInWall;
-        
+
+        //Fields
+        public int roomIndex;
+
+        //Auto-Properties
         /// <summary>
         /// All the <see cref="Bullet"/>s on screen
         /// </summary>
@@ -32,7 +36,7 @@ namespace Good_Luck
         /// <summary>
         /// All the <see cref="Enemy"/>s on screen
         /// </summary>
-        public List<Enemy> Enemies { get; set; }
+        public List<List<Enemy>> Enemies { get; set; }
         /// <summary>
         /// The main <see cref="Good_Luck.Player"/>
         /// </summary>
@@ -54,7 +58,7 @@ namespace Good_Luck
         {
             Player = player;
             Bullets = new List<Bullet>();
-            Enemies = new List<Enemy>();
+            Enemies = new List<List<Enemy>>();
             Walls = new List<Wall>();
             Instance = this;
         }
@@ -68,9 +72,9 @@ namespace Good_Luck
             {
                 Bullets[i].Draw(sb);
             }
-            for (int i = 0; i < Enemies.Count; ++i)
+            for (int i = 0; i < Enemies[roomIndex].Count; ++i)
             {
-                Enemies[i].Draw(sb);
+                Enemies[roomIndex][i].Draw(sb);
             }
             Player.Draw(sb);
 
@@ -90,13 +94,13 @@ namespace Good_Luck
             Player.Move(kb, mb);
             //Enemies attacking player
             int damage;
-            for (int i = 0; i < Enemies.Count; ++i)
+            for (int i = 0; i < Enemies[roomIndex].Count; ++i)
             {
-                if (Enemies[i].IsActive)
+                if (Enemies[roomIndex][i].IsActive)
                 {
-                    Enemies[i].Move();
-                    WallCollisionWithEnemies(Enemies[i]);
-                    if((damage = Enemies[i].Attack(bulletTexture)) > -1)
+                    Enemies[roomIndex][i].Move();
+                    WallCollisionWithEnemies(Enemies[roomIndex][i]);
+                    if((damage = Enemies[roomIndex][i].Attack(bulletTexture)) > -1)
                     {
                         Player.TakeDamage(damage);
                     }
@@ -120,7 +124,18 @@ namespace Good_Luck
                 //Wall/Bullet collisions
                 for(int w = 0; w < Walls.Count; ++w)
                 {
-                    if (Walls[w].Rect.Intersects(Bullets[i].Rect))
+                    //Bullets are not colliding properly with walls
+                    //It is fixed, or at least aligned visually, if I manually adjust the hitbox 
+                    Rectangle fixedRect = Bullets[i].Rect;
+
+                    fixedRect.Height /= 2;
+                    fixedRect.Y -= fixedRect.Height;
+                    fixedRect.X -= fixedRect.Width;
+                    fixedRect.X += 10;
+                    fixedRect.Width -= 20;
+                    //There should be a better way but it appears to work
+
+                    if (Walls[w].Rect.Intersects(fixedRect))
                     {
                         Bullets.RemoveAt(i);
                         return;
@@ -128,16 +143,16 @@ namespace Good_Luck
                 }
 
                 //When the bullet hits an enemy, delete the bullet and make the enemy take damage
-                for(int e = 0; e < Enemies.Count; ++e)
+                for(int e = 0; e < Enemies[roomIndex].Count; ++e)
                 {
-                    if (Enemies[e].IsActive && Enemies[e].IsColliding(Bullets[i]))
+                    if (Enemies[roomIndex][e].IsActive && Enemies[roomIndex][e].IsColliding(Bullets[i]))
                     {
                         Bullets.RemoveAt(i);
-                        Enemies[e].TakeDamage(Player.Damage);
-                        if (!Enemies[e].IsActive)
+                        Enemies[roomIndex][e].TakeDamage(Player.Damage);
+                        if (!Enemies[roomIndex][e].IsActive)
                         {
-                            Player.TotalScore += Enemies[e].Score;
-                            Enemies.RemoveAt(e);
+                            Player.TotalScore += Enemies[roomIndex][e].Score;
+                            Enemies[roomIndex].RemoveAt(e);
                         }
                         return;
                     }
@@ -148,7 +163,7 @@ namespace Good_Luck
             }
 
             //Remove inactive objects
-            Enemies = Enemies.RemoveInactive();
+            Enemies[roomIndex] = Enemies[roomIndex].RemoveInactive();
             Bullets = Bullets.RemoveInactive();
         }
 
@@ -167,7 +182,7 @@ namespace Good_Luck
                     Rectangle rect = Rectangle.Intersect(wall.Rect, Player.Rect);
                     Vector2 pos = new Vector2(Player.Rect.X, Player.Rect.Y);
                     //If there is a collision and the wall is a door
-                    if(rect.Height != 0 && wall.IsDoor && Enemies.Count == 0)
+                    if(rect.Height != 0 && wall.IsDoor && Enemies[roomIndex].Count == 0)
                     {
                         DoorCollided(wall);
                         PlayerInWall(Player);
@@ -203,8 +218,13 @@ namespace Good_Luck
         /// <param name="pos">The current pos of the entity</param>
         private void RepositionCollision(Entity entity, Wall wall, Rectangle rect, Vector2 pos)
         {
+            //If Rectangle has height and width of Zero, the player would not be moved at all
+            //So we can exit early
+            if (rect.Size == Point.Zero)
+                return;
+
             //If the overlap is taller than it is wide
-            if (rect.Width <= rect.Height)
+            if (rect.Width < rect.Height)
             {
                 if (wall.Rect.X > entity.Rect.X)
                 {
@@ -216,7 +236,7 @@ namespace Good_Luck
                 }
             }
             //If the overlap is wider than it is tall
-            else
+            else if(rect.Height < rect.Width)
             {
                 if (wall.Rect.Y > entity.Rect.Y)
                 {
@@ -227,6 +247,7 @@ namespace Good_Luck
                     pos.Y += rect.Height;
                 }
             }
+
             //Update entity location
             entity.Rect = new Rectangle((int)pos.X, (int)pos.Y, entity.Rect.Width, entity.Rect.Height);
         }

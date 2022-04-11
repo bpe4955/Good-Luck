@@ -56,7 +56,14 @@ namespace Good_Luck
         }
         public Bullet Shoot(MouseState mb, Texture2D bulletTexture)
         {
-            Rectangle bulletRect = new Rectangle(rect.X+(rect.Width/2) -12, rect.Y+(rect.Height/2) - 12, 25, 25);
+            int halfWidth = rect.Width / 2;
+            int halfHeight = rect.Height / 2;
+
+            //Offsetting the bullet to shoot from the barrel of the tank
+            //Start with halfwidth to center bullet, then offset it by halfwidth*Sin(angle) to move it to the edge of the circle
+            int xOffset = (int)(halfWidth + halfWidth * MathF.Sin(angle));
+            int yOffset = (int)(halfHeight - halfHeight * MathF.Cos(angle));
+            Rectangle bulletRect = new Rectangle(rect.X+xOffset, rect.Y+yOffset, 25, 25);
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, angle);
 

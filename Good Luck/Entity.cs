@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Good_Luck
 {
-    abstract class Entity
+    public abstract class Entity
     {
         // Fields
         protected Texture2D texture;
