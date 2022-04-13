@@ -320,6 +320,7 @@ namespace Good_Luck
                     }
                     if(player.Health <= 0)
                     {
+                        SaveHighScore();
                         gameState = GameState.GameOver;
                     }
                     //This exists entirely to have a break point and debug
