@@ -62,7 +62,6 @@ namespace Good_Luck
 
         Rectangle playerRect;
         public static Rectangle enemyRect;
-        Rectangle wallRect;
         Player player;
         Enemy enemy;
         Wall wall;
@@ -112,7 +111,6 @@ namespace Good_Luck
             //buttons = new List<Button>();
             playerRect = new Rectangle(250, 250, 50, 50);
             enemyRect = new Rectangle(50, 100, 100, 100);
-            wallRect = new Rectangle(500, 250, 75, 75);
             bullets = new List<Bullet>();
 
             buttons = new Button[7][]
@@ -208,6 +206,7 @@ namespace Good_Luck
             int spacing = (int)(height * 1.1f);
             {
                 buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
+                buttons[0][0].buttonClickAction += Restart;
                 currentY += spacing;
                 buttons[0][1] = new Button(GameState.Tutorial, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
@@ -250,7 +249,6 @@ namespace Good_Luck
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
            // enemy = Extensions.CreateBunny();
-           // wall = new Wall(wallRect, sadEnemy);
 
             entityManager = new EntityManager(player);
             //entityManager.Enemies[].Add(enemy);
@@ -264,14 +262,16 @@ namespace Good_Luck
             roomTestTop = levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
             //levelManager.AddRoom(roomTestTop);
             roomTestRight = levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
+            //levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
+            //levelManager.LoadRoom(new Room("Content/HellRightRoom.level", Content, entityManager));
+
             //levelManager.AddRoom(roomTestRight);
             roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
             //levelManager.AddRoom(roomTestBottom);
             roomTestLeft = levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
+            //levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));
+
             //levelManager.AddRoom(roomTestLeft);
-
-            levelManager.NextLevel();
-
 
             //Hooking up events
             entityManager.DoorCollided += levelManager.ChangeRoom;
@@ -686,6 +686,24 @@ namespace Good_Luck
                 HighScoreData.SaveHighScores(data, saveFileName);
             }
         
+        }
+
+        /// <summary>
+        /// Sets the Game into a playable state
+        /// Resets player health, score, location
+        /// Configures room layout generation
+        /// </summary>
+        private void Restart()
+        {
+            player.Health = player.MaxHealth;
+            player.IsActive = true;
+            player.TotalScore = 0;
+            player.Rect = new Rectangle(400-25, 240-25, 50, 50);
+
+            entityManager.Enemies.Clear();
+
+            levelManager.Level = 0;
+            levelManager.NextLevel();
         }
     }
 }
