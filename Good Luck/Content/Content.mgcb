@@ -67,6 +67,9 @@
 /processorParam:TextureFormat=Color
 /build:HealthSpriteSheet.png
 
+#begin HellRightRoom.level
+/copy:HellRightRoom.level
+
 #begin JelleeRoman20.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
