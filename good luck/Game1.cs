@@ -313,13 +313,10 @@ namespace Good_Luck
                     }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
-                    if(entityManager.Enemies.Count == 0)
+                    if(player.Health <= 0)
                     {
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
-                    }
-                    if(player.Health <= 0)
-                    {
                         gameState = GameState.GameOver;
                     }
                     //This exists entirely to have a break point and debug
