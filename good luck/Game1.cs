@@ -264,13 +264,13 @@ namespace Good_Luck
             roomTestTop = levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
             //levelManager.AddRoom(roomTestTop);
             roomTestRight = levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
+
             //levelManager.AddRoom(roomTestRight);
             roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
             //levelManager.AddRoom(roomTestBottom);
             roomTestLeft = levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
-            //levelManager.AddRoom(roomTestLeft);
-
-            levelManager.NextLevel();
+            levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));
 
 
             //Hooking up events
