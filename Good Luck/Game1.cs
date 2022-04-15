@@ -317,6 +317,10 @@ namespace Good_Luck
                     {
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
+                    if (levelManager.goToNextLevelList.Count == 5 && levelManager.CurrentRoom == startingRoom)
+                    {
+                        NextLevel();
+                    }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
                     if (player.Health <= 0)
@@ -696,7 +700,7 @@ namespace Good_Luck
         /// Resets player health, score, location
         /// Configures room layout generation
         /// </summary>
-        private void Restart()
+        public void Restart()
         {
             player.Health = player.MaxHealth;
             player.IsActive = true;
@@ -706,6 +710,18 @@ namespace Good_Luck
             
 
             levelManager.Level = 0;
+            levelManager.NextLevel();
+        }
+
+        /// <summary>
+        /// Sets the Game into a playable state
+        /// Configures room layout generation
+        /// </summary>
+        public void NextLevel()
+        {
+            player.Rect = new Rectangle((400 - 25) * screenScale, (240 - 25) * screenScale, 50 * screenScale, 50 * screenScale);
+            player.TotalScore += 100 * levelManager.Level;
+            
             levelManager.NextLevel();
         }
     }

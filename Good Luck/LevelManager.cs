@@ -29,6 +29,8 @@ namespace Good_Luck
         private Room startingRoom;
         private Room currentRoom;
 
+        public List<Room> goToNextLevelList;
+
         //Property
         /// <summary>
         /// Get the adjacency list, cannot be set
@@ -54,6 +56,7 @@ namespace Good_Luck
         {
             this.entityManager = entityManager;
             this.content = content;
+            goToNextLevelList = new List<Room>();
             //Initialize level to 0
             level = 0;
         }
@@ -146,6 +149,11 @@ namespace Good_Luck
         /// </summary>
         public void LoadCurrentRoom()
         {
+            if (!goToNextLevelList.Contains(currentRoom))
+            {
+                goToNextLevelList.Add(currentRoom);
+            }
+
             entityManager.Walls.Clear();
             entityManager.Bullets.Clear();
             entityManager.roomIndex = floorRooms.IndexOf(currentRoom);
@@ -272,8 +280,10 @@ namespace Good_Luck
         public void NextLevel()
         {
             level++;
+            goToNextLevelList = new List<Room>();
             //Reset floor info
             floorRooms.Clear();
+            entityManager.Enemies.Clear();
             SetStartRoom(possibleRooms[0]);
             //Add rooms in random order
             Random r = new Random();
