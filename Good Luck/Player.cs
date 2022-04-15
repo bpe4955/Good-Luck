@@ -37,7 +37,6 @@ namespace Good_Luck
         public Player(Rectangle playerRect, Texture2D playerTexture, float speed, int maxhealth, int defense, int bulletSpeed, int damage) 
             : base(playerTexture, playerRect, speed)
         {
-
             this.maxHealth = maxhealth;
             this.health = maxhealth;
             this.defenseStat = defense;
@@ -59,11 +58,7 @@ namespace Good_Luck
             int halfWidth = rect.Width / 2;
             int halfHeight = rect.Height / 2;
 
-            //Offsetting the bullet to shoot from the barrel of the tank
-            //Start with halfwidth to center bullet, then offset it by halfwidth*Sin(angle) to move it to the edge of the circle
-            int xOffset = (int)(halfWidth + halfWidth * MathF.Sin(angle));
-            int yOffset = (int)(halfHeight - halfHeight * MathF.Cos(angle));
-            Rectangle bulletRect = new Rectangle(rect.X+xOffset, rect.Y+yOffset, 25 * Game1.screenScale, 25 * Game1.screenScale);
+            Rectangle bulletRect = new Rectangle(rect.X + halfHeight, rect.Y+halfHeight, 25*Game1.screenScale, 25 * Game1.screenScale);
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, angle);
 
@@ -74,7 +69,7 @@ namespace Good_Luck
         {
             if (isActive)
             {
-                //sb.Draw(texture, rect, Color.White);
+                //sb.Draw(texture, new Rectangle(rect.X,rect.Y,rect.Width*2,rect.Height*2), Color.White);
                 sb.Draw(texture, new Rectangle(Rect.X + (Rect.Width / 2), Rect.Y + (Rect.Height / 2), rect.Width, rect.Height),
                     null, Color.White, angle, origin, SpriteEffects.None, 0);
             }

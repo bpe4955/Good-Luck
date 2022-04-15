@@ -10,6 +10,7 @@ namespace Good_Luck
     {
         private Entity bulletOwner;
         private float bulletAngle;
+        private Vector2 origin;
 
         public Entity BulletOwner { get { return bulletOwner; } }
 
@@ -18,6 +19,7 @@ namespace Good_Luck
         {
             this.bulletOwner = bulletOwner;
             this.bulletAngle = bulletAngle;
+            origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
         }
 
         public void Move()
@@ -34,7 +36,7 @@ namespace Good_Luck
             if (isActive)
             {
                 sb.Draw(texture, rect, null, Color.White, bulletAngle - (float)(90 * Math.PI / 180),
-                    new Vector2(rect.X + (rect.Width / 2), rect.Y + (rect.Height / 2)), SpriteEffects.None, 0);
+                    origin, SpriteEffects.None, 0);
             }
         }
 
