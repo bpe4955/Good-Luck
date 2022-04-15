@@ -700,8 +700,8 @@ namespace Good_Luck
             player.Health = player.MaxHealth;
             player.IsActive = true;
             player.TotalScore = 0;
-            player.Rect = new Rectangle((400 - 25) * Game1.screenScale, (240 - 25) * Game1.screenScale, (50), (50) * Game1.screenScale);
-
+            player.Rect = new Rectangle((400 - 25) * Game1.screenScale, (240 - 25) * Game1.screenScale, (50) * Game1.screenScale, (50) * Game1.screenScale);
+            //Beep
             entityManager.Enemies.Clear();
 
             levelManager.Level = 0;
