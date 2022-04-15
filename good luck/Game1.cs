@@ -83,6 +83,7 @@ namespace Good_Luck
         public static Keys[] bindings;
         KeybindButton[] keybindButtons;
         EntityManager entityManager;
+        public static int screenScale;
 
         //Save File Fields
         private string saveFileName;
@@ -108,9 +109,13 @@ namespace Good_Luck
         {
             //Initialize fields
             gameState = GameState.Title;
+            screenScale = 2;
+            _graphics.PreferredBackBufferWidth *= screenScale;
+            _graphics.PreferredBackBufferHeight *= screenScale;
+            _graphics.ApplyChanges();
             //buttons = new List<Button>();
-            playerRect = new Rectangle(250, 250, 50, 50);
-            enemyRect = new Rectangle(50, 100, 100, 100);
+            playerRect = new Rectangle(250 * screenScale, 250 * screenScale, 50 * screenScale, 50 * screenScale);
+            enemyRect = new Rectangle(50 * screenScale, 100 * screenScale, 100 * screenScale, 100 * screenScale);
             bullets = new List<Bullet>();
 
             buttons = new Button[7][]
@@ -182,7 +187,7 @@ namespace Good_Luck
 
             Texture2D healthTexture = Content.Load<Texture2D>("HealthSpriteSheet");
             health = new Texture2D[11];
-            for(int i = 0; i < 11; ++i)
+            for (int i = 0; i < 11; ++i)
             {
                 health[i] = healthTexture.GetTexture(new Rectangle(i * 320, 0, 320, 320), GraphicsDevice);
             }
@@ -195,14 +200,14 @@ namespace Good_Luck
             playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             sadEnemy = Content.Load<Texture2D>("SadBunny");
-            
+
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
-            width = 198;
+            width = 198 * screenScale;
             int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
             height = (int)Math.Round(width * .25f);
-            int currentY = 135;
+            int currentY = 135 * screenScale;
             int spacing = (int)(height * 1.1f);
             {
                 buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -216,7 +221,7 @@ namespace Good_Luck
                 currentY += spacing;
                 buttons[0][4] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
-                currentY = 370;
+                currentY = 370 * screenScale;
                 buttons[1][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
 
                 buttons[2][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -237,9 +242,9 @@ namespace Good_Luck
                 buttons[3][2] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
             }
 
-            spacing = 60;
-            int initX = 315;
-            int initY = 190;
+            spacing = 60 * screenScale;
+            int initX = 315 * screenScale;
+            int initY = 190 * screenScale;
             for (int i = 0; i < 4; ++i)
             {
                 Point pos = new Point(initX, initY + (spacing * (i - 1)));
@@ -247,8 +252,8 @@ namespace Good_Luck
             }
 
             // Entity Loading
-            player = new Player(playerRect, playerTexture, 5, 10, 0, 6, 4);
-           // enemy = Extensions.CreateBunny();
+            player = new Player(playerRect, playerTexture, 5 * screenScale, 10, 0, 6, 4);
+            // enemy = Extensions.CreateBunny();
 
             entityManager = new EntityManager(player);
             //entityManager.Enemies[].Add(enemy);
@@ -313,7 +318,7 @@ namespace Good_Luck
                     }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
-                    if(player.Health <= 0)
+                    if (player.Health <= 0)
                     {
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
@@ -376,19 +381,19 @@ namespace Good_Luck
                 case GameState.Tutorial:
                     DisplayBackAndTitle("Controls");
                     //Keys
-                    int spacing = 55;
-                    int initX = 100;
-                    int initY = 200;
+                    int spacing = 55 * screenScale;
+                    int initX = 100 * screenScale;
+                    int initY = 200 * screenScale;
                     for (int i = 1; i < 4; ++i)
                     {
                         Point pos = new Point(initX + (spacing * (i - 1)), initY);
                         DrawKeybind(pos, i);
                     }
                     DrawKeybind(new Point(initX + spacing, initY - spacing), 0);
-                    _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing/4), initY + spacing), lightPurple);
+                    _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing / 4), initY + spacing), lightPurple);
                     //Mouse
-                    _spriteBatch.Draw(menuItems[3], new Rectangle(400, initY - (int)(spacing / 1.5f), 84, 132), Color.White);
-                    _spriteBatch.DrawString(MetalManiaNormal, "Left-Click\nto shoot", new Vector2(525, initY - (int)(spacing / 1.5f)), lightPurple);
+                    _spriteBatch.Draw(menuItems[3], new Rectangle(400 * screenScale, initY - (int)(spacing / 1.5f), 84 * screenScale, 132 * screenScale), Color.White);
+                    _spriteBatch.DrawString(MetalManiaNormal, "Left-Click\nto shoot", new Vector2(525 * screenScale, initY - (int)(spacing / 1.5f)), lightPurple);
                     //Draw all the buttons
                     DrawButtons(1);
                     DrawTextToButton("Back", buttons[1][0].Rect, 2.5f);
@@ -401,7 +406,7 @@ namespace Good_Luck
                                                               "   - Aaron Bush\n" +
                                                               "   - Brian Egan\n" +
                                                               "   - John Haley\n" +
-                                                              "   - Michaela Castle\n", new Vector2(100, 100), lightPurple);
+                                                              "   - Michaela Castle\n", new Vector2(100 * screenScale, 100 * screenScale), lightPurple);
                     //Draw all the buttons
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
@@ -420,8 +425,8 @@ namespace Good_Luck
                 case GameState.Pause:
                     DisplayBackAndTitle("Paused");
                     //Draw pause symbols
-                    int widthDisplacement = 150;
-                    initY = 65;
+                    int widthDisplacement = 150 * screenScale;
+                    initY = 65 * screenScale;
                     _spriteBatch.Draw(menuItems[1], new Rectangle(widthDisplacement, initY, menuItems[1].Width, menuItems[1].Height), Color.White);
                     _spriteBatch.Draw(menuItems[1], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[1].Width,
                                                                   initY, menuItems[1].Width, menuItems[1].Height), Color.White);
@@ -454,7 +459,7 @@ namespace Good_Luck
                     {
                         keybindButtons[i].Draw(_spriteBatch);
                         _spriteBatch.DrawString(MetalManiaNormal, text[i],
-                            new Vector2(keybindButtons[i].Rect.X + 75, keybindButtons[i].Rect.Y), lightPurple);
+                            new Vector2(keybindButtons[i].Rect.X + 75 * screenScale, keybindButtons[i].Rect.Y), lightPurple);
                     }
                     //Draw all the buttons
                     DrawButtons(5);
@@ -464,19 +469,19 @@ namespace Good_Luck
                 case GameState.GameOver:
                     DisplayBackAndTitle("Game Over");
                     //Draw the skulls
-                    widthDisplacement = 150;
-                    initY = 55;
+                    widthDisplacement = 150 * screenScale;
+                    initY = 55 * screenScale;
                     _spriteBatch.Draw(menuItems[5], new Rectangle(widthDisplacement, initY, menuItems[5].Width, menuItems[5].Height), Color.White);
                     _spriteBatch.Draw(menuItems[5], new Rectangle(_graphics.PreferredBackBufferWidth - widthDisplacement - menuItems[5].Width,
                                                                   initY, menuItems[5].Width, menuItems[5].Height), Color.White);
                     //Draw the crossbones
                     int halfWidth = _graphics.PreferredBackBufferWidth / 2;
                     _spriteBatch.Draw(menuItems[4], new Rectangle(
-                        halfWidth - (menuItems[4].Width / 2), initY + 55,
+                        halfWidth - (menuItems[4].Width / 2), initY + 55 * screenScale,
                         menuItems[4].Width, menuItems[4].Height), Color.White);
                     //Display the high score and level
-                    initY = 200;
-                    spacing = 50;
+                    initY = 200 * screenScale;
+                    spacing = 50 * screenScale;
                     Vector2 fontSize;
                     if (saveData.scores.Length > 0)
                     {
@@ -506,8 +511,8 @@ namespace Good_Luck
         private void DrawHud()
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
-                new Rectangle(_graphics.PreferredBackBufferWidth - 80, 0, 80, 80), Color.White);
-            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10, 0), lightPurple);
+                new Rectangle(_graphics.PreferredBackBufferWidth - 80 * screenScale, 0, 80 * screenScale, 80 * screenScale), Color.White);
+            _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10 * screenScale, 0), lightPurple);
         }
 
         /// <summary>
@@ -517,11 +522,11 @@ namespace Good_Luck
         /// <param name="i">What keybind to draw</param>
         private void DrawKeybind(Point pos, int i)
         {
-            _spriteBatch.Draw(menuItems[2], new Rectangle(pos.X, pos.Y, 50, 50), Color.White);
+            _spriteBatch.Draw(menuItems[2], new Rectangle(pos.X, pos.Y, 50 * screenScale, 50 * screenScale), Color.White);
             Vector2 fontSize = JelleeRoman20.MeasureString(bindings[i].ToString());
             _spriteBatch.DrawString(JelleeRoman20, bindings[i].ToString(),
-                new Vector2(pos.X + (int)(25 - (fontSize.X / 2)),
-                            pos.Y + (int)(25 - (fontSize.Y / 2))), lightPurple);
+                new Vector2(pos.X + (int)(25 * screenScale - (fontSize.X / 2)),
+                            pos.Y + (int)(25 * screenScale - (fontSize.Y / 2))), lightPurple);
         }
         /// <summary>
         /// Draws text on top of a button
@@ -540,11 +545,11 @@ namespace Good_Luck
         /// </summary>
         /// <param name="title">The title of that menu screen</param>
         private void DisplayBackAndTitle(string title)
-        { 
+        {
             _spriteBatch.Draw(menuItems[0], new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
             float titleSize = MetalManiaTitle.MeasureString(title).X;
             _spriteBatch.DrawString(MetalManiaTitle, title, new Vector2(
-                (int)((_graphics.PreferredBackBufferWidth / 2) - (titleSize / 2)), 50), lightPurple);
+                (int)((_graphics.PreferredBackBufferWidth / 2) - (titleSize / 2)), 50 * screenScale), lightPurple);
         }
 
         /// <summary>
@@ -612,7 +617,7 @@ namespace Good_Luck
                     }
                 }
             }
-            else if(Keyboard.GetState().GetPressedKeyCount() > 0)
+            else if (Keyboard.GetState().GetPressedKeyCount() > 0)
             {
                 for (int i = 0; i < 4; ++i)
                 {
@@ -628,7 +633,7 @@ namespace Good_Luck
         /// /// <param name="index">Which set of buttons to draw</param>
         private void DrawButtons(int index)
         {
-            for(int i = 0; i < buttons[index].Length; ++i)
+            for (int i = 0; i < buttons[index].Length; ++i)
             {
                 //Check for collision to determine for each button if the
                 //cursor is hovering over them then draw accordingly
@@ -656,7 +661,7 @@ namespace Good_Luck
         {
             //Create the data to save
             HighScoreData data = HighScoreData.LoadHighScores(saveFileName);
-        
+
             int scoreIndex = -1;
             //Loop through saved data to find where to place new data
             for (int i = 0; i < highScoreCount; i++)
@@ -667,7 +672,7 @@ namespace Good_Luck
                     break;
                 }
             }
-        
+
             //If new score is found, insert into list
             if (scoreIndex > -1)
             {
@@ -676,13 +681,13 @@ namespace Good_Luck
                     data.scores[i] = data.scores[i - 1];
                     data.levels[i] = data.levels[i - 1];
                 }
-        
+
                 data.scores[scoreIndex] = player.TotalScore;
                 data.levels[scoreIndex] = levelManager.Level;
-        
+
                 HighScoreData.SaveHighScores(data, saveFileName);
             }
-        
+
         }
 
         /// <summary>
@@ -695,7 +700,7 @@ namespace Good_Luck
             player.Health = player.MaxHealth;
             player.IsActive = true;
             player.TotalScore = 0;
-            player.Rect = new Rectangle(400-25, 240-25, 50, 50);
+            player.Rect = new Rectangle(400 - 25, 240 - 25, 50, 50);
 
             entityManager.Enemies.Clear();
 
