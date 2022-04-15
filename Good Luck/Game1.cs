@@ -110,8 +110,8 @@ namespace Good_Luck
             //Initialize fields
             gameState = GameState.Title;
             screenScale = 2;
-            _graphics.PreferredBackBufferHeight *= screenScale;
             _graphics.PreferredBackBufferWidth *= screenScale;
+            _graphics.PreferredBackBufferHeight *= screenScale;
             _graphics.ApplyChanges();
             //buttons = new List<Button>();
             playerRect = new Rectangle(250 * screenScale, 250 * screenScale, 50 * screenScale, 50 * screenScale);
@@ -406,7 +406,7 @@ namespace Good_Luck
                                                               "   - Aaron Bush\n" +
                                                               "   - Brian Egan\n" +
                                                               "   - John Haley\n" +
-                                                              "   - Michaela Castle\n", new Vector2(100, 100), lightPurple);
+                                                              "   - Michaela Castle\n", new Vector2(100 * screenScale, 100 * screenScale), lightPurple);
                     //Draw all the buttons
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
