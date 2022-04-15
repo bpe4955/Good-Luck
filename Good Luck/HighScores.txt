@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <HighScoreData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <scores>
-    <int>100</int>
+    <int>680</int>
   </scores>
   <levels>
-    <int>1</int>
+    <int>4</int>
   </levels>
   <count>1</count>
 </HighScoreData>
