@@ -27,7 +27,7 @@ namespace Good_Luck
             TextColor = textColor;
             this.font = font;
             fontSize = font.MeasureString(Key.ToString());
-            Rect = new Rectangle(pos.X, pos.Y, 50, 50);
+            Rect = new Rectangle(pos.X, pos.Y, 50*Game1.screenScale, 50 * Game1.screenScale);
         }
 
         public void Rebind()
@@ -66,8 +66,8 @@ namespace Good_Luck
                 _spriteBatch.Draw(DefaultImage, Rect, Color.White);
             }
             _spriteBatch.DrawString(font, Key.ToString(),
-                new Vector2(Rect.X + (int)(25 - (fontSize.X / 2)),
-                            Rect.Y + (int)(25 - (fontSize.Y / 2))), TextColor);
+                new Vector2(Rect.X + (int)(25 * Game1.screenScale - (fontSize.X / 2)),
+                            Rect.Y + (int)(25 * Game1.screenScale - (fontSize.Y / 2))), TextColor);
         }
 
     }
