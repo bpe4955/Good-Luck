@@ -161,6 +161,9 @@
 /processorParam:TextureFormat=Color
 /build:SadBunny.png
 
+#begin SmallerBlockWallTopRoom.level
+/copy:SmallerBlockWallTopRoom.level
+
 #begin smallSquare.png
 /importer:TextureImporter
 /processor:TextureProcessor

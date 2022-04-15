@@ -265,10 +265,11 @@ namespace Good_Luck
             levelManager.SetStartRoom(startingRoom);
             //Testing Room Adding
             roomTestTop = levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/SmallerBlockWallTopRoom.level", Content, entityManager));
             //levelManager.AddRoom(roomTestTop);
             roomTestRight = levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
-            //levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
-            //levelManager.LoadRoom(new Room("Content/HellRightRoom.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/HellRightRoom.level", Content, entityManager));
 
             //levelManager.AddRoom(roomTestRight);
             roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
@@ -702,7 +703,7 @@ namespace Good_Luck
             player.TotalScore = 0;
             player.Rect = new Rectangle((400 - 25)*screenScale, (240 - 25) * screenScale, 50*screenScale, 50 * screenScale);
 
-            entityManager.Enemies.Clear();
+            
 
             levelManager.Level = 0;
             levelManager.NextLevel();

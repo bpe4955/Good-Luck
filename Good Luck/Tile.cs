@@ -30,7 +30,7 @@ namespace Good_Luck
         private Texture2D texture;
         private Rectangle rect;
         private TileProperty property;
-        private int wallThickness = 7;
+        private int wallThickness = 7*Game1.screenScale;
 
         private Wall topWall;
         private Wall sideWall;
@@ -180,7 +180,7 @@ namespace Good_Luck
                 //Center-Wall
                 case ("14"):
                     texture = content.Load<Texture2D>("tile14");
-                    centerWall = new Wall(new Rectangle(rect.X+rect.Width/2, rect.Y+rect.Height, wallThickness, wallThickness)); //center Wall
+                    centerWall = new Wall(new Rectangle(rect.X+wallThickness*3, rect.Y+ wallThickness * 3, (int)(wallThickness*5.5), (int)(wallThickness * 5.5))); //center Wall
                     break;
                 //Whole-Wall
                 case ("15"):
