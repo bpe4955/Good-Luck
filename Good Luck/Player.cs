@@ -41,7 +41,7 @@ namespace Good_Luck
             this.health = maxhealth;
             this.defenseStat = defense;
             this.damage = damage;
-            this.bulletSpeed = bulletSpeed;
+            this.bulletSpeed = bulletSpeed * Game1.screenScale;
             origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
         }
 
