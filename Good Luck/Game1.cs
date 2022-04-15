@@ -110,8 +110,8 @@ namespace Good_Luck
             //Initialize fields
             gameState = GameState.Title;
             screenScale = 2;
-            _graphics.PreferredBackBufferHeight *= screenScale;
             _graphics.PreferredBackBufferWidth *= screenScale;
+            _graphics.PreferredBackBufferHeight *= screenScale;
             _graphics.ApplyChanges();
             //buttons = new List<Button>();
             playerRect = new Rectangle(250 * screenScale, 250 * screenScale, 50 * screenScale, 50 * screenScale);
@@ -187,7 +187,7 @@ namespace Good_Luck
 
             Texture2D healthTexture = Content.Load<Texture2D>("HealthSpriteSheet");
             health = new Texture2D[11];
-            for(int i = 0; i < 11; ++i)
+            for (int i = 0; i < 11; ++i)
             {
                 health[i] = healthTexture.GetTexture(new Rectangle(i * 320, 0, 320, 320), GraphicsDevice);
             }
@@ -200,7 +200,7 @@ namespace Good_Luck
             playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             sadEnemy = Content.Load<Texture2D>("SadBunny");
-            
+
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
@@ -253,7 +253,7 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5 * screenScale, 10, 0, 6, 4);
-           // enemy = Extensions.CreateBunny();
+            // enemy = Extensions.CreateBunny();
 
             entityManager = new EntityManager(player);
             //entityManager.Enemies[].Add(enemy);
@@ -318,7 +318,7 @@ namespace Good_Luck
                     }
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
-                    if(player.Health <= 0)
+                    if (player.Health <= 0)
                     {
                         SaveHighScore();
                         saveData = HighScoreData.LoadHighScores(saveFileName);
@@ -390,7 +390,7 @@ namespace Good_Luck
                         DrawKeybind(pos, i);
                     }
                     DrawKeybind(new Point(initX + spacing, initY - spacing), 0);
-                    _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing/4), initY + spacing), lightPurple);
+                    _spriteBatch.DrawString(MetalManiaNormal, "To move", new Vector2(initX + (int)(spacing / 4), initY + spacing), lightPurple);
                     //Mouse
                     _spriteBatch.Draw(menuItems[3], new Rectangle(400 * screenScale, initY - (int)(spacing / 1.5f), 84 * screenScale, 132 * screenScale), Color.White);
                     _spriteBatch.DrawString(MetalManiaNormal, "Left-Click\nto shoot", new Vector2(525 * screenScale, initY - (int)(spacing / 1.5f)), lightPurple);
@@ -406,7 +406,7 @@ namespace Good_Luck
                                                               "   - Aaron Bush\n" +
                                                               "   - Brian Egan\n" +
                                                               "   - John Haley\n" +
-                                                              "   - Michaela Castle\n", new Vector2(100, 100), lightPurple);
+                                                              "   - Michaela Castle\n", new Vector2(100 * screenScale, 100 * screenScale), lightPurple);
                     //Draw all the buttons
                     DrawButtons(2);
                     DrawTextToButton("Back", buttons[2][0].Rect, 2.5f);
@@ -545,7 +545,7 @@ namespace Good_Luck
         /// </summary>
         /// <param name="title">The title of that menu screen</param>
         private void DisplayBackAndTitle(string title)
-        { 
+        {
             _spriteBatch.Draw(menuItems[0], new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
             float titleSize = MetalManiaTitle.MeasureString(title).X;
             _spriteBatch.DrawString(MetalManiaTitle, title, new Vector2(
@@ -617,7 +617,7 @@ namespace Good_Luck
                     }
                 }
             }
-            else if(Keyboard.GetState().GetPressedKeyCount() > 0)
+            else if (Keyboard.GetState().GetPressedKeyCount() > 0)
             {
                 for (int i = 0; i < 4; ++i)
                 {
@@ -633,7 +633,7 @@ namespace Good_Luck
         /// /// <param name="index">Which set of buttons to draw</param>
         private void DrawButtons(int index)
         {
-            for(int i = 0; i < buttons[index].Length; ++i)
+            for (int i = 0; i < buttons[index].Length; ++i)
             {
                 //Check for collision to determine for each button if the
                 //cursor is hovering over them then draw accordingly
@@ -661,7 +661,7 @@ namespace Good_Luck
         {
             //Create the data to save
             HighScoreData data = HighScoreData.LoadHighScores(saveFileName);
-        
+
             int scoreIndex = -1;
             //Loop through saved data to find where to place new data
             for (int i = 0; i < highScoreCount; i++)
@@ -672,7 +672,7 @@ namespace Good_Luck
                     break;
                 }
             }
-        
+
             //If new score is found, insert into list
             if (scoreIndex > -1)
             {
@@ -681,13 +681,13 @@ namespace Good_Luck
                     data.scores[i] = data.scores[i - 1];
                     data.levels[i] = data.levels[i - 1];
                 }
-        
+
                 data.scores[scoreIndex] = player.TotalScore;
                 data.levels[scoreIndex] = levelManager.Level;
-        
+
                 HighScoreData.SaveHighScores(data, saveFileName);
             }
-        
+
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Good_Luck
             player.Health = player.MaxHealth;
             player.IsActive = true;
             player.TotalScore = 0;
-            player.Rect = new Rectangle(400-25, 240-25, 50, 50);
+            player.Rect = new Rectangle(400 - 25, 240 - 25, 50, 50);
 
             entityManager.Enemies.Clear();
 
