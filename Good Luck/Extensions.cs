@@ -71,7 +71,7 @@ namespace Good_Luck
 
         public static Enemy CreateBunny(this Rectangle rect)
         {
-            return new Enemy(rect, Game1.enemyTexture, 5, 10, -5, 20, Game1.sadEnemy);
+            return new Enemy(rect, Game1.enemyTexture, 5 * Game1.screenScale, 10, -5, 20, Game1.sadEnemy);
         }
     }
 }

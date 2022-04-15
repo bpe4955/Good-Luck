@@ -94,7 +94,7 @@ namespace Good_Luck
                     //Go through the line to generate each tile in the row
                     for (int x = 0; x < data.Length; x++)
                     {
-                        tiles.Add(new Tile(data[x], content, new Rectangle((x * 80), (y * 80), 80, 80)));
+                        tiles.Add(new Tile(data[x], content, new Rectangle((x * 80) * Game1.screenScale, (y * 80) * Game1.screenScale, 80 * Game1.screenScale, 80 * Game1.screenScale)));
                         walls.AddRange(tiles[y*10+x].GetWalls());
                     }
                     //increment the collumn spacing

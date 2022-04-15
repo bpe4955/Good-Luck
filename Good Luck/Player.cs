@@ -63,7 +63,7 @@ namespace Good_Luck
             //Start with halfwidth to center bullet, then offset it by halfwidth*Sin(angle) to move it to the edge of the circle
             int xOffset = (int)(halfWidth + halfWidth * MathF.Sin(angle));
             int yOffset = (int)(halfHeight - halfHeight * MathF.Cos(angle));
-            Rectangle bulletRect = new Rectangle(rect.X+xOffset, rect.Y+yOffset, 25, 25);
+            Rectangle bulletRect = new Rectangle(rect.X+xOffset, rect.Y+yOffset, 25 * Game1.screenScale, 25 * Game1.screenScale);
 
             Bullet playerBullet = new Bullet(bulletRect, bulletTexture, bulletSpeed, this, angle);
 
