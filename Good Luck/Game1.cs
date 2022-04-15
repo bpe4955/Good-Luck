@@ -273,6 +273,7 @@ namespace Good_Luck
 
             //levelManager.AddRoom(roomTestRight);
             roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/ChungusFunnyBottomRoom.level", Content, entityManager));
             //levelManager.AddRoom(roomTestBottom);
             roomTestLeft = levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));

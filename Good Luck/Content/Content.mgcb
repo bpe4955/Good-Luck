@@ -55,6 +55,9 @@
 /processorParam:TextureFormat=Color
 /build:Button.png
 
+#begin ChungusFunnyBottomRoom.level
+/copy:ChungusFunnyBottomRoom.level
+
 #begin HealthSpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
