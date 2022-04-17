@@ -102,9 +102,14 @@ namespace Good_Luck
             {
                 health = MaxHealth;
             }
-            else
+            else if(amount + health > 0)
             {
                 health += amount;
+            }
+            else
+            {
+                health = 0;
+                isActive = false;
             }
         }
         /// <summary>
