@@ -73,5 +73,14 @@ namespace Good_Luck
         {
             return new Enemy(rect, Game1.enemyTexture, 5 * Game1.screenScale, 10, -5, 20, Game1.sadEnemy);
         }
+
+        public static Collectible CreateScoreCollectible(this Rectangle rect)
+        {
+            return new Collectible(rect, Game1.collectibleTexture, 10, 0);
+        }
+        public static Collectible CreateHealthCollectible(this Rectangle rect)
+        {
+            return new Collectible(rect, Game1.collectibleTexture, 0, 1);
+        }
     }
 }

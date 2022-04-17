@@ -55,6 +55,7 @@ namespace Good_Luck
         Texture2D buttonImage;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
+        public static Texture2D collectibleTexture;
         public static Texture2D enemyTexture;
         public static Texture2D sadEnemy;
         Texture2D bulletTexture;
@@ -200,6 +201,7 @@ namespace Good_Luck
             playerTexture = Content.Load<Texture2D>("Player");
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             sadEnemy = Content.Load<Texture2D>("SadBunny");
+            collectibleTexture = Content.Load<Texture2D>("Collectible");
 
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
