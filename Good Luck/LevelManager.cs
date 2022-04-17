@@ -189,16 +189,18 @@ namespace Good_Luck
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
-                        Rectangle collectibleRect = new Rectangle(
-                            tile.Rect.X, (int)(tile.Rect.Y + (tile.Rect.Height - tile.Rect.Height * (353f / 454))),
-                            tile.Rect.Width, (int)(tile.Rect.Height * (353f / 454)));
+                        float scale = 0.7f;
+                        Point size = new Point((int)(tile.Rect.Width * scale), (int)(tile.Rect.Height * scale * (353f / 454)));
+                        Point position = new Point(tile.Rect.X + (int)((tile.Rect.Width / 2f) - (size.X/2f)), tile.Rect.Y + (int)((tile.Rect.Height / 2f) - (size.Y / 2f)));
+                        Rectangle collectibleRect = new Rectangle(position, size);
                         entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateScoreCollectible());
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoCollectible:
-                        collectibleRect = new Rectangle(
-                            tile.Rect.X, (int)(tile.Rect.Y + (tile.Rect.Height - tile.Rect.Height * (353f / 454))),
-                            tile.Rect.Width, (int)(tile.Rect.Height * (353f / 454)));
+                        scale = 0.7f;
+                        size = new Point((int)(tile.Rect.Width * scale), (int)(tile.Rect.Height * scale * (353f / 454)));
+                        position = new Point(tile.Rect.X + (int)((tile.Rect.Width / 2f) - (size.X / 2f)), tile.Rect.Y + (int)((tile.Rect.Height / 2f) - (size.Y / 2f)));
+                        collectibleRect = new Rectangle(position, size);
                         entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateHealthCollectible());
                         tile.Property = TileProperty.Default;
                         break;
