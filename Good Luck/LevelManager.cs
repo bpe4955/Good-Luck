@@ -301,6 +301,7 @@ namespace Good_Luck
             //Reset floor info
             floorRooms.Clear();
             entityManager.Enemies.Clear();
+            entityManager.Collectibles.Clear();
             SetStartRoom(possibleRooms[0]);
             //Add rooms in random order
             Random r = new Random();
