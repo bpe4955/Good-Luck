@@ -19,7 +19,10 @@ namespace Good_Luck
         }
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rect, Color.White);
+            if (IsActive)
+            {
+                sb.Draw(Texture, Rect, Color.White);
+            }
         }
 
         public override bool IsColliding(Entity other) => Rect.Intersects(other.Rect) && other is Player;
