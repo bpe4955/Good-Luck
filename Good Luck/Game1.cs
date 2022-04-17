@@ -121,7 +121,7 @@ namespace Good_Luck
 
             buttons = new Button[7][]
             {
-                new Button[6],
+                new Button[5],
                 new Button[1],
                 new Button[1],
                 new Button[3],
@@ -206,10 +206,10 @@ namespace Good_Luck
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
-            width = 190 * screenScale;
+            width = 198 * screenScale;
             int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
             height = (int)Math.Round(width * .25f);
-            int currentY = 115 * screenScale;
+            int currentY = 135 * screenScale;
             int spacing = (int)(height * 1.1f);
             {
                 buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -222,9 +222,6 @@ namespace Good_Luck
                 buttons[0][3] = new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
                 buttons[0][4] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
-                currentY += spacing;
-                buttons[0][5] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
-                buttons[0][5].buttonClickAction += Restart;
 
                 currentY = 370 * screenScale;
                 buttons[1][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -321,6 +318,13 @@ namespace Good_Luck
                     {
                         entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
                     }
+                    
+                    //If all rooms visited, go to next level
+                    if (levelManager.goToNextLevelList.Count == 5 && levelManager.CurrentRoom == startingRoom)
+                    {
+                        NextLevel();
+                    }
+
                     //Loop through every bullet
                     entityManager.UpdateEntities(_graphics, kb, bulletTexture, gameTime, mouseState);
                     if (player.Health <= 0)
@@ -381,7 +385,6 @@ namespace Good_Luck
                     DrawTextToButton("Options", buttons[0][2].Rect, 3.5f);
                     DrawTextToButton("Credits", buttons[0][3].Rect, 3.5f);
                     DrawTextToButton("Exit", buttons[0][4].Rect, 3.5f);
-                    DrawTextToButton("God Mode", buttons[0][5].Rect, 3.5f);
                     break;
 
                 case GameState.Tutorial:
@@ -542,10 +545,9 @@ namespace Good_Luck
         /// <param name="widthPlacement">Where on the button to put it</param>
         private void DrawTextToButton(string text, Rectangle buttonRect, float widthPlacement)
         {
-            Vector2 fontSize = MetalManiaButtons.MeasureString(text);
             _spriteBatch.DrawString(MetalManiaButtons, text,
                                 new Vector2((int)(buttonRect.X + buttonRect.Width / widthPlacement),
-                                                  buttonRect.Y + (int)((buttonRect.Height/2f) - (fontSize.Y/2f))), darkPurple);
+                                                  buttonRect.Y + buttonRect.Height / 10), darkPurple);
         }
         /// <summary>
         /// Displays the background of the menuscreens and the title at the top
@@ -602,10 +604,6 @@ namespace Good_Luck
                     if (buttons[index][i].Collision(mouseState))
                     {
                         gameState = buttons[index][i].ClickedGetState();
-                        if(index == 0 && i == 5)
-                        {
-                            entityManager.Player.DefenseStat = 10000000;
-                        }
                         return;
                     }
                     else
@@ -713,9 +711,20 @@ namespace Good_Luck
             player.TotalScore = 0;
             player.Rect = new Rectangle((400 - 25)*screenScale, (240 - 25) * screenScale, 50*screenScale, 50 * screenScale);
 
-            entityManager.Enemies.Clear();
 
             levelManager.Level = 0;
+            levelManager.NextLevel();
+        }
+
+        /// <summary>
+        /// Sets the Game into a playable state
+        /// Configures room layout generation
+        /// </summary>
+        public void NextLevel()
+        {
+            player.Rect = new Rectangle((400 - 25) * screenScale, (240 - 25) * screenScale, 50 * screenScale, 50 * screenScale);
+            player.TotalScore += 100 * levelManager.Level;
+
             levelManager.NextLevel();
         }
     }
