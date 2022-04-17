@@ -120,15 +120,15 @@ namespace Good_Luck
             bullets = new List<Bullet>();
 
             buttons = new Button[7][]
-            {
-                new Button[5],
+           {
+                new Button[6],
                 new Button[1],
                 new Button[1],
                 new Button[3],
                 new Button[2],
                 new Button[1],
                 new Button[2]
-            };
+           };
 
             lightPurple = new Color(232, 216, 255);
             darkPurple = new Color(21, 0, 51);
@@ -206,10 +206,10 @@ namespace Good_Luck
             bulletTexture = Content.Load<Texture2D>("Bullet");
 
             //Creates the buttons
-            width = 198 * screenScale;
+            width = 190 * screenScale;
             int midX = (_graphics.PreferredBackBufferWidth / 2) - (width / 2);
             height = (int)Math.Round(width * .25f);
-            int currentY = 135 * screenScale;
+            int currentY = 115 * screenScale;
             int spacing = (int)(height * 1.1f);
             {
                 buttons[0][0] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -222,6 +222,9 @@ namespace Good_Luck
                 buttons[0][3] = new Button(GameState.Credits, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
                 currentY += spacing;
                 buttons[0][4] = new Button(GameState.Exit, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
+                currentY += spacing;
+                buttons[0][5] = new Button(GameState.Game, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
+                buttons[0][5].buttonClickAction += Restart;
 
                 currentY = 370 * screenScale;
                 buttons[1][0] = new Button(GameState.Title, new Rectangle(midX, currentY, width, height), buttonDefault, buttonHover, buttonClick);
@@ -263,22 +266,26 @@ namespace Good_Luck
 
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
+
+            //Setting up starting room
             startingRoom = levelManager.LoadRoom(new Room("Content/RoomMiddle.Level", Content, entityManager));
             levelManager.SetStartRoom(startingRoom);
+
             //Testing Room Adding
-            roomTestTop = levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
-            //levelManager.AddRoom(roomTestTop);
-            roomTestRight = levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
+            //levelManager.LoadRoom(new Room("Content/SmallerBlockWallTopRoom.level", Content, entityManager));
+
+
+            levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/HellRightRoom.level", Content, entityManager));
 
-            //levelManager.AddRoom(roomTestRight);
-            roomTestBottom = levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
-            //levelManager.AddRoom(roomTestBottom);
-            roomTestLeft = levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
+            //levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/ChungusFunnyBottomRoom.Level", Content, entityManager));
+
+            levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));
 
-            //levelManager.AddRoom(roomTestLeft);
 
             //Hooking up events
             entityManager.DoorCollided += levelManager.ChangeRoom;
@@ -385,6 +392,7 @@ namespace Good_Luck
                     DrawTextToButton("Options", buttons[0][2].Rect, 3.5f);
                     DrawTextToButton("Credits", buttons[0][3].Rect, 3.5f);
                     DrawTextToButton("Exit", buttons[0][4].Rect, 3.5f);
+                    DrawTextToButton("God Mode", buttons[0][5].Rect, 3.5f);
                     break;
 
                 case GameState.Tutorial:
@@ -545,9 +553,10 @@ namespace Good_Luck
         /// <param name="widthPlacement">Where on the button to put it</param>
         private void DrawTextToButton(string text, Rectangle buttonRect, float widthPlacement)
         {
+            Vector2 fontSize = MetalManiaButtons.MeasureString(text);
             _spriteBatch.DrawString(MetalManiaButtons, text,
                                 new Vector2((int)(buttonRect.X + buttonRect.Width / widthPlacement),
-                                                  buttonRect.Y + buttonRect.Height / 10), darkPurple);
+                                                  buttonRect.Y + (int)((buttonRect.Height / 2f) - (fontSize.Y / 2f))), darkPurple);
         }
         /// <summary>
         /// Displays the background of the menuscreens and the title at the top
@@ -604,6 +613,10 @@ namespace Good_Luck
                     if (buttons[index][i].Collision(mouseState))
                     {
                         gameState = buttons[index][i].ClickedGetState();
+                        if (index == 0 && i == 5)
+                        {
+                            entityManager.Player.DefenseStat = 10000000;
+                        }
                         return;
                     }
                     else
