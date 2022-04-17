@@ -80,14 +80,10 @@ namespace Good_Luck
             {
                 Enemies[roomIndex][i].Draw(sb);
             }
-
-            //Waiting for room generation to include collectibles
-            /*
             for(int i = 0; i < Collectibles[roomIndex].Count; ++i)
             {
                 Collectibles[roomIndex][i].Draw(sb);
             }
-            */
 
             Player.Draw(sb);
 
@@ -107,7 +103,6 @@ namespace Good_Luck
             Player.Move(kb, mb);
 
             //Check collectibles
-            /*
             for(int i = 0; i < Collectibles[roomIndex].Count; ++i)
             {
                 if (Collectibles[roomIndex][i].IsActive)
@@ -128,7 +123,6 @@ namespace Good_Luck
                     }
                 }
             }
-            */
 
             //Enemies attacking player
             int damage;
@@ -202,7 +196,7 @@ namespace Good_Luck
 
             //Remove inactive objects
             Enemies[roomIndex] = Enemies[roomIndex].RemoveInactive();
-            //Collectibles[roomIndex] = Collectibles[roomIndex].RemoveInactive();
+            Collectibles[roomIndex] = Collectibles[roomIndex].RemoveInactive();
             Bullets = Bullets.RemoveInactive();
         }
 

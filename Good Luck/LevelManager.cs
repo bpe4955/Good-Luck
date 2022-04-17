@@ -87,6 +87,7 @@ namespace Good_Luck
                 copyStartingRoom.HasTopDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
+                entityManager.Collectibles.Add(new List<Collectible>());
             }
             else if (copyRoom.HasLeftDoor && copyStartingRoom.HasRightDoor) // Right Room
             {
@@ -98,6 +99,7 @@ namespace Good_Luck
                 copyStartingRoom.HasRightDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
+                entityManager.Collectibles.Add(new List<Collectible>());
             }
             else if (copyRoom.HasTopDoor && copyStartingRoom.HasBottomDoor) // Bottom Room
             {
@@ -109,6 +111,7 @@ namespace Good_Luck
                 copyStartingRoom.HasBottomDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
+                entityManager.Collectibles.Add(new List<Collectible>());
             }
             else if (copyRoom.HasRightDoor && copyStartingRoom.HasLeftDoor) // Left Room
             {
@@ -120,6 +123,7 @@ namespace Good_Luck
                 copyStartingRoom.HasLeftDoor = false;
                 //Create another list of enemies
                 entityManager.Enemies.Add(new List<Enemy>());
+                entityManager.Collectibles.Add(new List<Collectible>());
             }
 
             //If it cannot fit onto the starting room
@@ -142,6 +146,7 @@ namespace Good_Luck
             floorRooms.Add(startingRoom);
             //Create another list of enemies
             entityManager.Enemies.Add(new List<Enemy>());
+            entityManager.Collectibles.Add(new List<Collectible>());
             LoadCurrentRoom();
         }
         /// <summary>
@@ -184,8 +189,18 @@ namespace Good_Luck
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
+                        Rectangle collectibleRect = new Rectangle(
+                            tile.Rect.X, (int)(tile.Rect.Y + (tile.Rect.Height - tile.Rect.Height * (353f / 454))),
+                            tile.Rect.Width, (int)(tile.Rect.Height * (353f / 454)));
+                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateScoreCollectible());
+                        tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoCollectible:
+                        collectibleRect = new Rectangle(
+                            tile.Rect.X, (int)(tile.Rect.Y + (tile.Rect.Height - tile.Rect.Height * (353f / 454))),
+                            tile.Rect.Width, (int)(tile.Rect.Height * (353f / 454)));
+                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateHealthCollectible());
+                        tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.PlayerSpawn:
                         break;
