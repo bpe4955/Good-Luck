@@ -113,15 +113,14 @@ namespace Good_Luck
         /// <param name="amount"></param>
         public void TakeDamage(int amount)
         {
-            if (amount - defenseStat >= health)
+            if (amount - DefenseStat >= health)
             {
                 health = 0;
                 isActive = false;
             }
-            else
+            else if(DefenseStat - amount < 0)
             {
-                health -= amount - defenseStat;
-
+                health -= amount - DefenseStat;
             }
         }
     }
