@@ -184,7 +184,7 @@ namespace Good_Luck
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level));
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level*2));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
