@@ -180,11 +180,11 @@ namespace Good_Luck
                     case TileProperty.Default:
                         break;
                     case TileProperty.OneEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny(1+0.2f*level,level));
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny(1+0.2f*level,level, Color.White));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level*2));
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level*2, Color.Red));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:

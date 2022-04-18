@@ -69,18 +69,18 @@ namespace Good_Luck
             return entities;
         }
 
-        public static Enemy CreateBunny(this Rectangle rect, float strengthMultiplier, float pointMultiplier)
+        public static Enemy CreateBunny(this Rectangle rect, float strengthMultiplier, float pointMultiplier,Color color)
         {
-            return new Enemy(rect, Game1.enemyTexture, 5 * Game1.screenScale, (int)(10*strengthMultiplier), -5, (int)(20*pointMultiplier), Game1.sadEnemy);
+            return new Enemy(rect, Game1.enemyTexture, 5 * Game1.screenScale, (int)(10*strengthMultiplier), -5, (int)(20*pointMultiplier), Game1.sadEnemy, color);
         }
 
         public static Collectible CreateScoreCollectible(this Rectangle rect, float pointMultiplier)
         {
-            return new Collectible(rect, Game1.collectibleTexture, (int)(10*pointMultiplier), 0);
+            return new Collectible(rect, Game1.collectibleTexture, (int)(10*pointMultiplier), 0,Color.White);
         }
         public static Collectible CreateHealthCollectible(this Rectangle rect)
         {
-            return new Collectible(rect, Game1.collectibleTexture, 0, 1);
+            return new Collectible(rect, Game1.collectibleTexture, 0, 1,Color.IndianRed);
         }
     }
 }

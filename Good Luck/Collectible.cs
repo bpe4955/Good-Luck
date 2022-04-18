@@ -11,17 +11,21 @@ namespace Good_Luck
     {
         public int Score { get; private set; }
         public int HealthModifier { get; private set; }
-        public Collectible(Rectangle rect, Texture2D texture, int score, int health) :
+
+        private Color drawColor;
+
+        public Collectible(Rectangle rect, Texture2D texture, int score, int health, Color drawColor) :
             base(texture, rect, 0)
         {
             Score = score;
             HealthModifier = health;
+            this.drawColor = drawColor;
         }
         public override void Draw(SpriteBatch sb)
         {
             if (IsActive)
             {
-                sb.Draw(Texture, Rect, Color.White);
+                sb.Draw(Texture, Rect, drawColor);
             }
         }
 

@@ -26,6 +26,9 @@ namespace Good_Luck
         public int Score { get { return score; } set { score = value; } }
 
         public int DefenseStat { get; set; }
+
+        private Color drawColor;
+
         /// <summary>
         /// Creates a new <see cref="Enemy"/>
         /// </summary>
@@ -35,7 +38,7 @@ namespace Good_Luck
         /// <param name="maxhealth">The maximum amount of health for this <see cref="Enemy"/></param>
         /// <param name="bulletSpeed">The bullet speed of this <see cref="Enemy"/></param>
         /// <param name="score">How much this <see cref="Enemy"/> is worth</param>
-        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score, Texture2D crying)
+        public Enemy(Rectangle enemyRect, Texture2D enemyTexture, float speed, int maxhealth, int bulletSpeed, int score, Texture2D crying, Color drawColor)
         : base(enemyTexture, enemyRect, speed)
         {
             this.maxHealth = maxhealth;
@@ -46,7 +49,7 @@ namespace Good_Luck
             damage = 3;
             pause = false;
             this.crying = crying;
-
+            this.drawColor = drawColor;
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
@@ -58,11 +61,11 @@ namespace Good_Luck
             {
                 if(maxHealth == health)
                 {
-                    sb.Draw(texture, rect, Color.White);
+                    sb.Draw(texture, rect, drawColor);
                 }
                 else
                 {
-                    sb.Draw(crying, rect, Color.White);
+                    sb.Draw(crying, rect, drawColor);
 
                 }
             }
