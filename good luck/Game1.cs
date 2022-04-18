@@ -64,8 +64,6 @@ namespace Good_Luck
         Rectangle playerRect;
         public static Rectangle enemyRect;
         Player player;
-        Enemy enemy;
-        Wall wall;
 
         List<Bullet> bullets;
 
@@ -94,10 +92,6 @@ namespace Good_Luck
         //Testing room loading
         LevelManager levelManager;
         Room startingRoom;
-        Room roomTestTop;
-        Room roomTestRight;
-        Room roomTestBottom;
-        Room roomTestLeft;
 
         public Game1()
         {
@@ -271,19 +265,25 @@ namespace Good_Luck
             startingRoom = levelManager.LoadRoom(new Room("Content/RoomMiddle.Level", Content, entityManager));
             levelManager.SetStartRoom(startingRoom);
 
-            //Testing Room Adding
+            //TOP ROOM LOADING
             levelManager.LoadRoom(new Room("Content/RoomTop.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/SplitInTwoTopRoom.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/HealthCollectiblesTopRoom.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/SmallerBlockWallTopRoom.level", Content, entityManager));
 
-
+            //RIGHT ROOM LOADING
             levelManager.LoadRoom(new Room("Content/RoomRight.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffRightRoom.level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/HellRightRoom.level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/SpiralRightRoom.level", Content, entityManager));
 
-            //levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
+            //BOTTOM ROOM LOADING
+            levelManager.LoadRoom(new Room("Content/RoomBottom.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/ChungusFunnyBottomRoom.Level", Content, entityManager));
 
+            //LEFT ROOM LOADING
             levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/CShapeLeftRoom.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));
 
 
@@ -722,6 +722,7 @@ namespace Good_Luck
             player.Health = player.MaxHealth;
             player.IsActive = true;
             player.TotalScore = 0;
+            player.DefenseStat = 0;
             player.Rect = new Rectangle((400 - 25)*screenScale, (240 - 25) * screenScale, 50*screenScale, 50 * screenScale);
 
 

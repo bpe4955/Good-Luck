@@ -70,6 +70,12 @@
 /processorParam:TextureFormat=Color
 /build:Collectible.png
 
+#begin CShapeLeftRoom.level
+/copy:CShapeLeftRoom.level
+
+#begin HealthCollectiblesTopRoom.level
+/copy:HealthCollectiblesTopRoom.level
+
 #begin HealthSpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -202,6 +208,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:smallSquareGray.png
+
+#begin SpiralRightRoom.level
+/copy:SpiralRightRoom.level
+
+#begin SplitInTwoTopRoom.level
+/copy:SplitInTwoTopRoom.level
 
 #begin tile01.png
 /importer:TextureImporter

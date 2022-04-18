@@ -180,12 +180,11 @@ namespace Good_Luck
                     case TileProperty.Default:
                         break;
                     case TileProperty.OneEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny(1+0.2f*level,level));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny());
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
@@ -193,7 +192,7 @@ namespace Good_Luck
                         Point size = new Point((int)(tile.Rect.Width * scale), (int)(tile.Rect.Height * scale * (353f / 454)));
                         Point position = new Point(tile.Rect.X + (int)((tile.Rect.Width / 2f) - (size.X/2f)), tile.Rect.Y + (int)((tile.Rect.Height / 2f) - (size.Y / 2f)));
                         Rectangle collectibleRect = new Rectangle(position, size);
-                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateScoreCollectible());
+                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateScoreCollectible(level));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoCollectible:
