@@ -16,6 +16,7 @@ namespace Good_Luck
         private Rectangle rect;
         private Texture2D texture;
         private bool isDoor;
+        private bool isStair;
 
         //Properties
         /// <summary>
@@ -30,6 +31,7 @@ namespace Good_Luck
         /// Get and set whether the wall is a door or not
         /// </summary>
         public bool IsDoor { get => isDoor; set => isDoor = value; }
+        public bool IsStair { get => isStair; set => isStair = value; }
 
         //Constructor
         /// <summary>
@@ -42,6 +44,7 @@ namespace Good_Luck
             this.rect = rect;
             this.texture = texture;
             isDoor = false;
+            isStair = false;
         }
         /// <summary>
         /// Constructor for an invisible wall with only a rectangle
@@ -51,6 +54,7 @@ namespace Good_Luck
         {
             this.rect = rect;
             isDoor = false;
+            isStair = false;
         }
 
         //Method

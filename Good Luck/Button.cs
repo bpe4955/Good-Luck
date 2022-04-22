@@ -12,6 +12,8 @@ using System.IO;
 
 namespace Good_Luck
 {
+    //Delegate to allow calling a method when button is clicked
+    public delegate void ButtonClicked();
     class Button
     {
         //Fields
@@ -23,8 +25,7 @@ namespace Good_Luck
         private bool isClicked;
         private GameState gameState;
 
-        //Delegate to allow calling a method when button is clicked
-        public delegate void ButtonClicked();
+        
         public ButtonClicked buttonClickAction;
 
         public Rectangle Rect { get { return rect; } }
