@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.Timers;
+using System.Diagnostics;
 
 namespace Good_Luck
 {
@@ -20,6 +21,7 @@ namespace Good_Luck
         private bool pause;
         private Texture2D crying;
         private Texture2D bulletTexture;
+        private int direction;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -53,6 +55,7 @@ namespace Good_Luck
             this.crying = crying;
             this.drawColor = drawColor;
             bulletTexture = Game1.carrotTexture;
+            direction = 1;
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
@@ -135,7 +138,7 @@ namespace Good_Luck
             int halfWidth = rect.Width / 2;
             int halfHeight = rect.Height / 2;
 
-            Rectangle bulletRect = new Rectangle(rect.X + halfWidth, rect.Y + halfHeight, 10 * Game1.screenScale, (int)(10 * 3.25f * Game1.screenScale));
+            Rectangle bulletRect = new Rectangle(rect.X + halfWidth, rect.Y + halfHeight, 12 * Game1.screenScale, (int)(12 * 3.25f * Game1.screenScale));
             Vector2 mouseBetweenPlayer = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y);
             
             return new Bullet(bulletRect, bulletTexture, bulletSpeed, this, mouseBetweenPlayer.GetAngle());
@@ -146,28 +149,65 @@ namespace Good_Luck
         /// </summary>
         public void Move()
         {
-            if (moveTime <= 0)
+            
+            if (bulletSpeed <= -1) //Code for bunny bomb.
             {
-                moveTime = 20;
-                pause = !pause;
-            }
-            else
-            {
-                if (!pause)
+                if (moveTime <= 0)
                 {
-                    Player p = EntityManager.Instance.Player;
-                    float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
-                    int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
-                    int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
-
-
-
-                    rect.X += xOffset;
-                    rect.Y += yOffset;
+                    moveTime = 20;
+                    pause = !pause;
                 }
+                else
+                {
+                    if (!pause)
+                    {
+                        Player p = EntityManager.Instance.Player;
+                        float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
+                        int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
+                        int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
 
-                --moveTime;
+
+
+                        rect.X += xOffset;
+                        rect.Y += yOffset;
+                    }
+
+                    --moveTime;
+                }
             }
+            else // Code for Bunny Shooter
+            {
+                Player p = EntityManager.Instance.Player;
+
+                if (moveTime <= 0)
+                {
+                    if(Vector2.Distance(new Vector2(p.Rect.X, p.Rect.Y), new Vector2(Rect.X, Rect.Y)) > 250)
+                    {
+                        direction = 1;
+                    }
+                    else
+                    {
+                        direction = -1;
+                    }
+                    moveTime = 20;
+                    pause = !pause;
+                }
+                else
+                {
+                    if (!pause)
+                    {
+                        float enemyAndPlayerAngle = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y).GetAngle();
+                        int xOffset = (int)(Math.Sin(enemyAndPlayerAngle) * speed);
+                        int yOffset = (int)(-Math.Cos(enemyAndPlayerAngle) * speed);
+
+                        rect.X += xOffset * direction;
+                        rect.Y += yOffset * direction;
+
+                    }
+                    --moveTime;
+                }
+            }
+
         }
 
         /// <summary>
