@@ -299,6 +299,8 @@ namespace Good_Luck
             //Hooking up events
             entityManager.DoorCollided += levelManager.ChangeRoom;
             entityManager.PlayerInWall += levelManager.MovePlayerToDoor;
+            entityManager.StairCollided += NextLevel;
+            
 
 
         }
@@ -355,10 +357,11 @@ namespace Good_Luck
                         }
                     }
                     
-                    //If all rooms visited, go to next level
+                    //If all rooms visited, spawn stairs
                     if (levelManager.goToNextLevelList.Count == 5 && levelManager.CurrentRoom == startingRoom)
                     {
-                        NextLevel();
+                        levelManager.AdjacencyList[0][0].Tiles[24] = new Tile("16pp", Content, levelManager.AdjacencyList[0][0].Tiles[24].Rect);
+                        entityManager.Walls.AddRange(levelManager.AdjacencyList[0][0].Tiles[24].GetWalls());
                     }
 
                     //Loop through every bullet
@@ -767,7 +770,7 @@ namespace Good_Luck
         {
             player.Rect = new Rectangle((400 - 25) * screenScale, (240 - 25) * screenScale, 50 * screenScale, 50 * screenScale);
             player.TotalScore += 100 * levelManager.Level;
-
+            levelManager.AdjacencyList[0][0].Tiles[24] = new Tile("05ff", Content, levelManager.AdjacencyList[0][0].Tiles[24].Rect);
             levelManager.NextLevel();
         }
     }

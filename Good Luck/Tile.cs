@@ -187,6 +187,12 @@ namespace Good_Luck
                     texture = content.Load<Texture2D>("Tiles/tile15");
                     centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height)); //full Wall
                     break;
+                //Stair
+                case ("16"):
+                    texture = content.Load<Texture2D>("Tiles/tile16");
+                    centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height)); //full Wall
+                    centerWall.IsStair = true;
+                    break;
             }
         }
         /// <summary>

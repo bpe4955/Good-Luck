@@ -22,6 +22,7 @@ namespace Good_Luck
     class EntityManager
     {
         //Events
+        public event ButtonClicked StairCollided;
         public event RoomDelegate DoorCollided;
         public event PlayerDelegate PlayerInWall;
 
@@ -220,6 +221,11 @@ namespace Good_Luck
                     {
                         DoorCollided(wall);
                         PlayerInWall(Player);
+                        break;
+                    }
+                    if (rect.Height != 0 && wall.IsStair)
+                    {
+                        StairCollided();
                         break;
                     }
                     RepositionCollision(Player, wall, rect, pos);
