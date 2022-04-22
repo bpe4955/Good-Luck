@@ -103,88 +103,88 @@ namespace Good_Luck
             {
                 //Top-Left
                 case ("01"):
-                    texture = content.Load<Texture2D>("tile01");
+                    texture = content.Load<Texture2D>("Tiles/tile01");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
                 //Top-Center
                 case ("02"):
-                    texture = content.Load<Texture2D>("tile02");
+                    texture = content.Load<Texture2D>("Tiles/tile02");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     break;
                 //Top-Right
                 case ("03"):
-                    texture = content.Load<Texture2D>("tile03");
+                    texture = content.Load<Texture2D>("Tiles/tile03");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
                 //Left
                 case ("04"):
-                    texture = content.Load<Texture2D>("tile04");
+                    texture = content.Load<Texture2D>("Tiles/tile04");
                     sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
                 //Center
                 case ("05"):
-                    texture = content.Load<Texture2D>("tile05");
+                    texture = content.Load<Texture2D>("Tiles/tile05");
                     break;
                 //Right
                 case ("06"):
-                    texture = content.Load<Texture2D>("tile06");
+                    texture = content.Load<Texture2D>("Tiles/tile06");
                     sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
                 //Bottom-Left
                 case ("07"):
-                    texture = content.Load<Texture2D>("tile07");
+                    texture = content.Load<Texture2D>("Tiles/tile07");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y+rect.Height-wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     break;
                 //Bottom-Center
                 case ("08"):
-                    texture = content.Load<Texture2D>("tile08");
+                    texture = content.Load<Texture2D>("Tiles/tile08");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     break;
                 //Bottom-Right
                 case ("09"):
-                    texture = content.Load<Texture2D>("tile09");
+                    texture = content.Load<Texture2D>("Tiles/tile09");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     break;
                 //Top-Door
                 case ("10"):
-                    texture = content.Load<Texture2D>("tile10");
+                    texture = content.Load<Texture2D>("Tiles/tile10");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, wallThickness)); //Top Wall
                     topWall.IsDoor = true;
                     HasDoor = true;
                     break;
                 //Right-Door
                 case ("11"):
-                    texture = content.Load<Texture2D>("tile11");
+                    texture = content.Load<Texture2D>("Tiles/tile11");
                     sideWall = new Wall(new Rectangle(rect.X + rect.Width - wallThickness, rect.Y, wallThickness, rect.Height)); //Right Wall
                     sideWall.IsDoor = true;
                     HasDoor = true;
                     break;
                 //Bottom-Door
                 case ("12"):
-                    texture = content.Load<Texture2D>("tile12");
+                    texture = content.Load<Texture2D>("Tiles/tile12");
                     topWall = new Wall(new Rectangle(rect.X, rect.Y + rect.Height - wallThickness, rect.Width, wallThickness)); //Bottom Wall
                     topWall.IsDoor = true;
                     HasDoor = true;
                     break;
                 //Left-Door
                 case ("13"):
-                    texture = content.Load<Texture2D>("tile13");
+                    texture = content.Load<Texture2D>("Tiles/tile13");
                     sideWall = new Wall(new Rectangle(rect.X, rect.Y, wallThickness, rect.Height)); //Left Wall
                     sideWall.IsDoor = true;
                     HasDoor = true;
                     break;
                 //Center-Wall
                 case ("14"):
-                    texture = content.Load<Texture2D>("tile14");
+                    texture = content.Load<Texture2D>("Tiles/tile14");
                     centerWall = new Wall(new Rectangle(rect.X+wallThickness*3, rect.Y+ wallThickness * 3, (int)(wallThickness*5.5), (int)(wallThickness * 5.5))); //center Wall
                     break;
                 //Whole-Wall
                 case ("15"):
-                    texture = content.Load<Texture2D>("tile15");
+                    texture = content.Load<Texture2D>("Tiles/tile15");
                     centerWall = new Wall(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height)); //full Wall
                     break;
             }
