@@ -64,6 +64,7 @@ namespace Good_Luck
         Rectangle playerRect;
         public static Rectangle enemyRect;
         Player player;
+        public static Texture2D healthCollectibleTexture;
 
         List<Bullet> bullets;
 
@@ -196,6 +197,7 @@ namespace Good_Luck
             enemyTexture = Content.Load<Texture2D>("BunnyBomb");
             sadEnemy = Content.Load<Texture2D>("SadBunny");
             collectibleTexture = Content.Load<Texture2D>("Collectible");
+            healthCollectibleTexture = Content.Load<Texture2D>("HealthCollectible");
 
             bulletTexture = Content.Load<Texture2D>("Bullet");
 

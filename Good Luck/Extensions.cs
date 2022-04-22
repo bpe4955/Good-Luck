@@ -80,7 +80,7 @@ namespace Good_Luck
         }
         public static Collectible CreateHealthCollectible(this Rectangle rect)
         {
-            return new Collectible(rect, Game1.collectibleTexture, 0, 1,Color.IndianRed);
+            return new Collectible(rect, Game1.healthCollectibleTexture, 0, 1,Color.White);
         }
     }
 }
