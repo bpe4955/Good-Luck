@@ -55,6 +55,7 @@ namespace Good_Luck
         Texture2D buttonImage;
         Texture2D menuItemTextures;
         Texture2D playerTexture;
+        int shootTime;
         public static Texture2D collectibleTexture;
         public static Texture2D enemyTexture;
         public static Texture2D sadEnemy;
@@ -258,6 +259,7 @@ namespace Good_Luck
 
             // Entity Loading
             player = new Player(playerRect, playerTexture, 5 * screenScale, 10, 0, 6, 4);
+            shootTime = player.ReloadSpeed;
             // enemy = Extensions.CreateBunny();
 
             entityManager = new EntityManager(player);
@@ -297,6 +299,7 @@ namespace Good_Luck
             entityManager.DoorCollided += levelManager.ChangeRoom;
             entityManager.PlayerInWall += levelManager.MovePlayerToDoor;
 
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -332,9 +335,23 @@ namespace Good_Luck
                     {
                         gameState = GameState.Pause;
                     }
-                    if (SingleMouseClick(MouseButton.Left))
+
+                    if (mouseState.LeftButton.Equals(ButtonState.Pressed))
                     {
-                        entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
+                        if (SingleMouseClick(MouseButton.Left))
+                        {
+                            shootTime = player.ReloadSpeed;
+                            entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
+                        }
+                        else if(shootTime <= 0)
+                        {
+                            shootTime = player.ReloadSpeed;
+                            entityManager.Bullets.Add(player.Shoot(mouseState, bulletTexture));
+                        }
+                        else
+                        {
+                            --shootTime;
+                        }
                     }
                     
                     //If all rooms visited, go to next level

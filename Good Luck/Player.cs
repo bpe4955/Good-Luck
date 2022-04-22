@@ -18,6 +18,8 @@ namespace Good_Luck
         private int totalScore;
         private float angle;
         private Vector2 origin;
+        private int shootTime;
+        private int reloadSpeed;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -25,6 +27,7 @@ namespace Good_Luck
         public int DefenseStat { get { return defenseStat; } set { defenseStat = value; } }
         public int Damage { get { return damage; } set { damage = value; } }
         public int TotalScore { get { return totalScore; } set { totalScore = value; } }
+        public int ReloadSpeed { get { return shootTime; } set { shootTime = value; } }
 
         /// <summary>
         /// Creates the Player Character that will be controlled in Gameplay
@@ -43,6 +46,7 @@ namespace Good_Luck
             this.damage = damage;
             this.bulletSpeed = bulletSpeed * Game1.screenScale;
             origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            ReloadSpeed = 20;
         }
 
         public void Move(KeyboardState kb, MouseState mb)
