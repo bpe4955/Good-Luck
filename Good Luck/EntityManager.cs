@@ -132,7 +132,7 @@ namespace Good_Luck
                 {
                     Enemies[roomIndex][i].Move();
                     WallCollisionWithEnemies(Enemies[roomIndex][i]);
-                    if((damage = Enemies[roomIndex][i].Attack(bulletTexture)) > -1)
+                    if((damage = Enemies[roomIndex][i].Attack()) > -1)
                     {
                         Player.TakeDamage(damage);
                     }
@@ -143,6 +143,15 @@ namespace Good_Luck
             //Bullet Collisions
             for (int i = 0; i < Bullets.Count;)
             {
+                //Check player collision
+                if(Bullets[i].BulletOwner != Player && Player.IsColliding(Bullets[i]))
+                {
+                    Player.TakeDamage((Bullets[i].BulletOwner as Enemy).Damage);
+                    //Delete the button
+                    Bullets.RemoveAt(i);
+                    return;
+                }
+
                 //When the bullet is off the screen
                 //May want to replace with wall collision
                 if (Bullets[i].Rect.X <= 0 - Bullets[i].Rect.Width || Bullets[i].Rect.X >= _graphics.PreferredBackBufferWidth
@@ -175,18 +184,21 @@ namespace Good_Luck
                 }
 
                 //When the bullet hits an enemy, delete the bullet and make the enemy take damage
-                for(int e = 0; e < Enemies[roomIndex].Count; ++e)
+                if (Bullets[i].BulletOwner is Player)
                 {
-                    if (Enemies[roomIndex][e].IsActive && Enemies[roomIndex][e].IsColliding(Bullets[i]))
+                    for (int e = 0; e < Enemies[roomIndex].Count; ++e)
                     {
-                        Bullets.RemoveAt(i);
-                        Enemies[roomIndex][e].TakeDamage(Player.Damage);
-                        if (!Enemies[roomIndex][e].IsActive)
+                        if (Enemies[roomIndex][e].IsActive && Enemies[roomIndex][e].IsColliding(Bullets[i]))
                         {
-                            Player.TotalScore += Enemies[roomIndex][e].Score;
-                            Enemies[roomIndex].RemoveAt(e);
+                            Bullets.RemoveAt(i);
+                            Enemies[roomIndex][e].TakeDamage(Player.Damage);
+                            if (!Enemies[roomIndex][e].IsActive)
+                            {
+                                Player.TotalScore += Enemies[roomIndex][e].Score;
+                                Enemies[roomIndex].RemoveAt(e);
+                            }
+                            return;
                         }
-                        return;
                     }
                 }
                 //If this bullet hits nothing, move on to the next bullet

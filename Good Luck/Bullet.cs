@@ -35,8 +35,16 @@ namespace Good_Luck
         {
             if (isActive)
             {
-                sb.Draw(texture, rect, null, Color.White, bulletAngle - (float)(90 * Math.PI / 180),
-                    origin, SpriteEffects.None, 0);
+                if (bulletOwner is Enemy)
+                {
+                    sb.Draw(texture, rect, null, Color.White, bulletAngle - (float)Math.PI,
+                        origin, SpriteEffects.None, 0);
+                }
+                else
+                {
+                    sb.Draw(texture, rect, null, Color.White, bulletAngle - (float)(90 * Math.PI / 180),
+                        origin, SpriteEffects.None, 0);
+                }
             }
         }
 
