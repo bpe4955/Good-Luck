@@ -53,7 +53,7 @@ namespace Good_Luck
             Rectangle collidedRect = new Rectangle(other.Rect.X, other.Rect.Y, other.Rect.Width, other.Rect.Height);
             if(other != bulletOwner)
             {
-                if (Rect.Intersects(collidedRect))
+                if (rect.Intersects(collidedRect))
                 {
                     isActive = false;
                 }

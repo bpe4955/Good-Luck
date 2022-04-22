@@ -81,6 +81,7 @@ namespace Good_Luck
         SpriteFont JelleeRoman20;
 
         //Misc
+        public static Random rng = new Random();
         Color lightPurple;
         Color darkPurple;
         public static Keys[] bindings;

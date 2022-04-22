@@ -49,13 +49,14 @@ namespace Good_Luck
             this.health = maxhealth;
             this.bulletSpeed = bulletSpeed;
             this.score = score;
-            reloadSpeed = 100;
+            reloadSpeed = 70;
             damage = 3;
-            pause = false;
+            pause = true;
             this.crying = crying;
             this.drawColor = drawColor;
             bulletTexture = Game1.carrotTexture;
             direction = 1;
+            moveTime = 50;
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
@@ -120,7 +121,7 @@ namespace Good_Luck
             {
                 if (reloadSpeed <= 0)
                 {
-                    reloadSpeed = 40;
+                    reloadSpeed = Game1.rng.Next(30, 50);
                     EntityManager.Instance.Bullets.Add(Shoot());
                 }
                 else
@@ -155,6 +156,10 @@ namespace Good_Luck
                 if (moveTime <= 0)
                 {
                     moveTime = 20;
+                    if (Game1.rng.Next(1,20) == 1)
+                    {
+                        pause = !pause;
+                    }
                     pause = !pause;
                 }
                 else

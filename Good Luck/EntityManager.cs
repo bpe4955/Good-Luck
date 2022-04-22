@@ -143,8 +143,18 @@ namespace Good_Luck
             //Bullet Collisions
             for (int i = 0; i < Bullets.Count;)
             {
+                //Wall/Bullet collisions
+                for (int w = 0; w < Walls.Count; ++w)
+                {
+                    if (Bullets[i].Rect.Intersects(Walls[w].Rect))
+                    {
+                        Bullets.RemoveAt(i);
+                        return;
+                    }
+                }
+
                 //Check player collision
-                if(Bullets[i].BulletOwner != Player && Player.IsColliding(Bullets[i]))
+                if (Bullets[i].BulletOwner != Player && Player.IsColliding(Bullets[i]))
                 {
                     Player.TakeDamage((Bullets[i].BulletOwner as Enemy).Damage);
                     //Delete the button
@@ -160,27 +170,6 @@ namespace Good_Luck
                     //Delete the button
                     Bullets.RemoveAt(i);
                     return;
-                }
-
-                //Wall/Bullet collisions
-                for(int w = 0; w < Walls.Count; ++w)
-                {
-                    //Bullets are not colliding properly with walls
-                    //It is fixed, or at least aligned visually, if I manually adjust the hitbox 
-                    Rectangle fixedRect = Bullets[i].Rect;
-
-                    fixedRect.Height /= 2;
-                    fixedRect.Y -= fixedRect.Height;
-                    fixedRect.X -= fixedRect.Width;
-                    fixedRect.X += 10;
-                    fixedRect.Width -= 20;
-                    //There should be a better way but it appears to work
-
-                    if (Walls[w].Rect.Intersects(fixedRect))
-                    {
-                        Bullets.RemoveAt(i);
-                        return;
-                    }
                 }
 
                 //When the bullet hits an enemy, delete the bullet and make the enemy take damage
