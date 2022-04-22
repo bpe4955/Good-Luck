@@ -73,6 +73,10 @@ namespace Good_Luck
         {
             return new Enemy(rect, Game1.enemyTexture, 5 * Game1.screenScale, (int)(10*strengthMultiplier), -5, (int)(20*pointMultiplier), Game1.sadEnemy, color);
         }
+        public static Enemy CreateBunnyBazooka(this Rectangle rect, float strengthMultiplier, float pointMultiplier, Color color)
+        {
+            return new Enemy(rect, Game1.shooterEnemyTexture, 3 * Game1.screenScale, (int)(10 * strengthMultiplier), 5 * Game1.screenScale, (int)(20 * pointMultiplier), Game1.shooterEnemyTexture, color);
+        }
 
         public static Collectible CreateScoreCollectible(this Rectangle rect, float pointMultiplier)
         {
@@ -81,6 +85,19 @@ namespace Good_Luck
         public static Collectible CreateHealthCollectible(this Rectangle rect)
         {
             return new Collectible(rect, Game1.healthCollectibleTexture, 0, 1,Color.White);
+        }
+
+        public static Rectangle CenterRect(this Rectangle rect, float widthScale, float heightScale)
+        {
+            Point size = new Point((int)(rect.Width * widthScale), (int)(rect.Height * heightScale));
+            Point position = new Point(rect.X + (int)((rect.Width / 2f) - (size.X / 2f)), rect.Y + (int)((rect.Height / 2f) - (size.Y / 2f)));
+            return new Rectangle(position, size);
+        }
+        public static Rectangle CenterRect(this Rectangle rect, float scale)
+        {
+            Point size = new Point((int)(rect.Width * scale), (int)(rect.Height * scale));
+            Point position = new Point(rect.X + (int)((rect.Width / 2f) - (size.X / 2f)), rect.Y + (int)((rect.Height / 2f) - (size.Y / 2f)));
+            return new Rectangle(position, size);
         }
     }
 }

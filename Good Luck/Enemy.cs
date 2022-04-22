@@ -19,6 +19,7 @@ namespace Good_Luck
         private int moveTime;
         private bool pause;
         private Texture2D crying;
+        private Texture2D bulletTexture;
 
         // Properties
         public int MaxHealth { get { return maxHealth; } }
@@ -26,6 +27,7 @@ namespace Good_Luck
         public int Score { get { return score; } set { score = value; } }
 
         public int DefenseStat { get; set; }
+        public int Damage { get { return damage; } }
 
         private Color drawColor;
 
@@ -45,11 +47,12 @@ namespace Good_Luck
             this.health = maxhealth;
             this.bulletSpeed = bulletSpeed;
             this.score = score;
-            reloadSpeed = 20;
+            reloadSpeed = 100;
             damage = 3;
             pause = false;
             this.crying = crying;
             this.drawColor = drawColor;
+            bulletTexture = Game1.carrotTexture;
         }
         /// <summary>
         /// Draws the <see cref="Enemy"/>
@@ -98,7 +101,7 @@ namespace Good_Luck
         /// Attacks the player when called
         /// </summary>
         /// <returns>The damage amount for mele attacks</returns>
-        public int Attack(Texture2D bullectTexture)
+        public int Attack()
         {
             //Code for bunny attack. Attacks by running into player
             if(bulletSpeed <= -1)
@@ -114,8 +117,8 @@ namespace Good_Luck
             {
                 if (reloadSpeed <= 0)
                 {
-                    reloadSpeed = 20;
-                    EntityManager.Instance.Bullets.Add(Shoot(bullectTexture));
+                    reloadSpeed = 40;
+                    EntityManager.Instance.Bullets.Add(Shoot());
                 }
                 else
                 {
@@ -125,12 +128,16 @@ namespace Good_Luck
             return -1;
         }
 
-        private Bullet Shoot(Texture2D bulletTexture)
+        private Bullet Shoot()
         {
             Player p = EntityManager.Instance.Player;
-            Vector2 mouseBetweenPlayer = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y);
-            Rectangle bulletRect = new Rectangle(rect.X + (rect.Width / 2), rect.Y + (rect.Height / 2), 25, 25);
 
+            int halfWidth = rect.Width / 2;
+            int halfHeight = rect.Height / 2;
+
+            Rectangle bulletRect = new Rectangle(rect.X + halfWidth, rect.Y + halfHeight, 10 * Game1.screenScale, (int)(10 * 3.25f * Game1.screenScale));
+            Vector2 mouseBetweenPlayer = new Vector2(p.Rect.X - rect.X, p.Rect.Y - rect.Y);
+            
             return new Bullet(bulletRect, bulletTexture, bulletSpeed, this, mouseBetweenPlayer.GetAngle());
         }
 

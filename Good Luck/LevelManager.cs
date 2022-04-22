@@ -180,27 +180,23 @@ namespace Good_Luck
                     case TileProperty.Default:
                         break;
                     case TileProperty.OneEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny(1+0.2f*level,level, Color.White));
+                        float scale = 0.85f;
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CenterRect((4 / 5f) * scale, scale).CreateBunnyBazooka(1+0.2f*level,level, Color.White));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoEnemy:
-                        entityManager.Enemies[roomIndex].Add(tile.Rect.CreateBunny((1 + 0.2f*level)*2,level*2, Color.Red));
+                        scale = 0.85f;
+                        entityManager.Enemies[roomIndex].Add(tile.Rect.CenterRect(scale).CreateBunny((1 + 0.2f*level)*2,level, Color.White));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.OneCollectible:
-                        float scale = 0.7f;
-                        Point size = new Point((int)(tile.Rect.Width * scale), (int)(tile.Rect.Height * scale * (353f / 454)));
-                        Point position = new Point(tile.Rect.X + (int)((tile.Rect.Width / 2f) - (size.X/2f)), tile.Rect.Y + (int)((tile.Rect.Height / 2f) - (size.Y / 2f)));
-                        Rectangle collectibleRect = new Rectangle(position, size);
-                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateScoreCollectible(level));
+                        scale = 0.7f;
+                        entityManager.Collectibles[roomIndex].Add(tile.Rect.CenterRect(scale, scale * (353f / 454)).CreateScoreCollectible(level));
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.TwoCollectible:
                         scale = 0.7f;
-                        size = new Point((int)(tile.Rect.Width * scale), (int)(tile.Rect.Height * scale * (353f / 454)));
-                        position = new Point(tile.Rect.X + (int)((tile.Rect.Width / 2f) - (size.X / 2f)), tile.Rect.Y + (int)((tile.Rect.Height / 2f) - (size.Y / 2f)));
-                        collectibleRect = new Rectangle(position, size);
-                        entityManager.Collectibles[roomIndex].Add(collectibleRect.CreateHealthCollectible());
+                        entityManager.Collectibles[roomIndex].Add(tile.Rect.CenterRect(scale, scale * (353f / 454)).CreateHealthCollectible());
                         tile.Property = TileProperty.Default;
                         break;
                     case TileProperty.PlayerSpawn:
