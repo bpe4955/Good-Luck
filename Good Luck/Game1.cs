@@ -528,7 +528,7 @@ namespace Good_Luck
         private void DrawHud()
         {
             _spriteBatch.Draw(health[entityManager.Player.MaxHealth - entityManager.Player.Health],
-                new Rectangle(_graphics.PreferredBackBufferWidth - 80 * screenScale, 0, 80 * screenScale, 80 * screenScale), Color.White);
+                new Rectangle(_graphics.PreferredBackBufferWidth - 60 * screenScale, 0, 60 * screenScale, 60 * screenScale), Color.White);
             _spriteBatch.DrawString(MetalManiaButtons, $"Level: {levelManager.Level}\nScore: {player.TotalScore}", new Vector2(10 * screenScale, 0), lightPurple);
         }
 
