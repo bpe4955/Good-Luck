@@ -307,6 +307,11 @@ namespace Good_Luck
             mouseState = Mouse.GetState();
             kb = Keyboard.GetState();
 
+            if (!IsActive && gameState == GameState.Game)
+            {
+                gameState = GameState.Pause;
+            }
+
             switch (gameState)
             {
                 case GameState.Title:
