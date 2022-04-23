@@ -19,6 +19,12 @@
 #begin BlockedOffRightRoom.level
 /copy:BlockedOffRightRoom.level
 
+#begin Bottom_CollectiblesCaptureEnemies.level
+/copy:Bottom_CollectiblesCaptureEnemies.level
+
+#begin Bottom_EnemyStoppingTreasure.level
+/copy:Bottom_EnemyStoppingTreasure.level
+
 #begin Bullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -134,6 +140,12 @@
 /processorParam:TextureFormat=Compressed
 /build:JelleeRoman20.spritefont
 
+#begin Left_CommandedAmbush.level
+/copy:Left_CommandedAmbush.level
+
+#begin Left_TreasureBaitStrong.level
+/copy:Left_TreasureBaitStrong.level
+
 #begin MenuImages.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -190,6 +202,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player.png
+
+#begin Right_GuardedHealHallway.level
+/copy:Right_GuardedHealHallway.level
+
+#begin Right_RewardAboveEnemiesBelow.level
+/copy:Right_RewardAboveEnemiesBelow.level
 
 #begin RoomBottom.level
 /copy:RoomBottom.level
@@ -454,4 +472,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/TileSheet.jpg
+
+#begin Top_ObstaclCourse.level
+/copy:Top_ObstaclCourse.level
+
+#begin Top_Pillars.level
+/copy:Top_Pillars.level
 

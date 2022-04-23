@@ -267,6 +267,7 @@ namespace Good_Luck
             //entityManager.Enemies[].Add(enemy);
             //entityManager.Walls.Add(wall);
 
+            #region Level Loading
             //Testing room loading 
             levelManager = new LevelManager(Content, entityManager);
 
@@ -294,6 +295,28 @@ namespace Good_Luck
             levelManager.LoadRoom(new Room("Content/RoomLeft.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/CShapeLeftRoom.level", Content, entityManager));
             //levelManager.LoadRoom(new Room("Content/BlockedOffLeftRoom.Level", Content, entityManager));
+
+            #region John Levels
+            //Left Rooms
+            levelManager.LoadRoom(new Room("Content/Left_CommandedAmbush.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_TreasureBaitStrong.Level", Content, entityManager));
+
+            //Right Rooms
+            levelManager.LoadRoom(new Room("Content/Right_GuardedHealHallway.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_RewardAboveEnemiesBelow.Level", Content, entityManager));
+
+            //Top Rooms
+            levelManager.LoadRoom(new Room("Content/Top_ObstaclCourse.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_Pillars.Level", Content, entityManager));
+
+            //Bottom Rooms
+            levelManager.LoadRoom(new Room("Content/Bottom_CollectiblesCaptureEnemies.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_EnemyStoppingTreasure.Level", Content, entityManager));
+
+            #endregion
+
+            #endregion
+
 
 
             //Hooking up events
