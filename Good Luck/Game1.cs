@@ -300,18 +300,59 @@ namespace Good_Luck
             //Left Rooms
             levelManager.LoadRoom(new Room("Content/Left_CommandedAmbush.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/Left_TreasureBaitStrong.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_BombRushHeal.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_BoxAmbushHeal.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_Corners.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_DesperateHeal.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_PassageWay.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_PillarsAmbushReward.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_ProtectededStash.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_Pyramid.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_RewardEnemyPillars.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Left_TheBorringRoom.Level", Content, entityManager));
 
             //Right Rooms
             levelManager.LoadRoom(new Room("Content/Right_GuardedHealHallway.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/Right_RewardAboveEnemiesBelow.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_Alcove.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_Barage.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_CatchersHeal.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_CornerMoney.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_CoveredShootOut.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_HallwayFightHeal.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_HardAmbush.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_HealAndMoney.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_OperationBust.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Right_Routes.Level", Content, entityManager));
 
             //Top Rooms
             levelManager.LoadRoom(new Room("Content/Top_ObstaclCourse.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/Top_Pillars.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_Box.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_CageMatch.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_Enclosure.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_FightClub.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_FiringSquad.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_HappyReward.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_HealingStash.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_Hotel.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_PipeLine.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Top_Units.Level", Content, entityManager));
+
 
             //Bottom Rooms
             levelManager.LoadRoom(new Room("Content/Bottom_CollectiblesCaptureEnemies.Level", Content, entityManager));
             levelManager.LoadRoom(new Room("Content/Bottom_EnemyStoppingTreasure.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_CrusherHealer.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Divide.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Guidance.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Indents.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Release.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Selection.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Snake.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Spiral.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_Stairs.Level", Content, entityManager));
+            levelManager.LoadRoom(new Room("Content/Bottom_PillarOHealth.Level", Content, entityManager));
 
             #endregion
 

@@ -22,8 +22,38 @@
 #begin Bottom_CollectiblesCaptureEnemies.level
 /copy:Bottom_CollectiblesCaptureEnemies.level
 
+#begin Bottom_CrusherHealer.level
+/copy:Bottom_CrusherHealer.level
+
+#begin Bottom_Divide.level
+/copy:Bottom_Divide.level
+
 #begin Bottom_EnemyStoppingTreasure.level
 /copy:Bottom_EnemyStoppingTreasure.level
+
+#begin Bottom_Guidance.level
+/copy:Bottom_Guidance.level
+
+#begin Bottom_Indents.level
+/copy:Bottom_Indents.level
+
+#begin Bottom_PillarOHealth.level
+/copy:Bottom_PillarOHealth.level
+
+#begin Bottom_Release.level
+/copy:Bottom_Release.level
+
+#begin Bottom_Selection.level
+/copy:Bottom_Selection.level
+
+#begin Bottom_Snake.level
+/copy:Bottom_Snake.level
+
+#begin Bottom_Spiral.level
+/copy:Bottom_Spiral.level
+
+#begin Bottom_Stairs.level
+/copy:Bottom_Stairs.level
 
 #begin Bullet.png
 /importer:TextureImporter
@@ -140,8 +170,38 @@
 /processorParam:TextureFormat=Compressed
 /build:JelleeRoman20.spritefont
 
+#begin Left_BombRushHeal.level
+/copy:Left_BombRushHeal.level
+
+#begin Left_BoxAmbushHeal.level
+/copy:Left_BoxAmbushHeal.level
+
 #begin Left_CommandedAmbush.level
 /copy:Left_CommandedAmbush.level
+
+#begin Left_Corners.level
+/copy:Left_Corners.level
+
+#begin Left_DesperateHeal.level
+/copy:Left_DesperateHeal.level
+
+#begin Left_PassageWay.level
+/copy:Left_PassageWay.level
+
+#begin Left_PillarsAmbushReward.level
+/copy:Left_PillarsAmbushReward.level
+
+#begin Left_ProtectededStash.level
+/copy:Left_ProtectededStash.level
+
+#begin Left_Pyramid.level
+/copy:Left_Pyramid.level
+
+#begin Left_RewardEnemyPillars.level
+/copy:Left_RewardEnemyPillars.level
+
+#begin Left_TheBorringRoom.level
+/copy:Left_TheBorringRoom.level
 
 #begin Left_TreasureBaitStrong.level
 /copy:Left_TreasureBaitStrong.level
@@ -203,11 +263,41 @@
 /processorParam:TextureFormat=Color
 /build:Player.png
 
+#begin Right_Alcove.level
+/copy:Right_Alcove.level
+
+#begin Right_Barage.level
+/copy:Right_Barage.level
+
+#begin Right_CatchersHeal.level
+/copy:Right_CatchersHeal.level
+
+#begin Right_CornerMoney.level
+/copy:Right_CornerMoney.level
+
+#begin Right_CoveredShootOut.level
+/copy:Right_CoveredShootOut.level
+
 #begin Right_GuardedHealHallway.level
 /copy:Right_GuardedHealHallway.level
 
+#begin Right_HallwayFightHeal.level
+/copy:Right_HallwayFightHeal.level
+
+#begin Right_HardAmbush.level
+/copy:Right_HardAmbush.level
+
+#begin Right_HealAndMoney.level
+/copy:Right_HealAndMoney.level
+
+#begin Right_OperationBust.level
+/copy:Right_OperationBust.level
+
 #begin Right_RewardAboveEnemiesBelow.level
 /copy:Right_RewardAboveEnemiesBelow.level
+
+#begin Right_Routes.level
+/copy:Right_Routes.level
 
 #begin RoomBottom.level
 /copy:RoomBottom.level
@@ -473,9 +563,39 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/TileSheet.jpg
 
+#begin Top_Box.level
+/copy:Top_Box.level
+
+#begin Top_CageMatch.level
+/copy:Top_CageMatch.level
+
+#begin Top_Enclosure.level
+/copy:Top_Enclosure.level
+
+#begin Top_FightClub.level
+/copy:Top_FightClub.level
+
+#begin Top_FiringSquad.level
+/copy:Top_FiringSquad.level
+
+#begin Top_HappyReward.level
+/copy:Top_HappyReward.level
+
+#begin Top_HealingStash.level
+/copy:Top_HealingStash.level
+
+#begin Top_Hotel.level
+/copy:Top_Hotel.level
+
 #begin Top_ObstaclCourse.level
 /copy:Top_ObstaclCourse.level
 
 #begin Top_Pillars.level
 /copy:Top_Pillars.level
+
+#begin Top_PipeLine.level
+/copy:Top_PipeLine.level
+
+#begin Top_Units.level
+/copy:Top_Units.level
 
